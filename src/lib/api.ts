@@ -3,14 +3,14 @@ import { sessionManager } from './sessionManager';
 
 // Create axios instance
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://localhost:1132/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://simamen.belakanglayar.com/api',
   timeout: 30000, // 30 second timeout
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-console.log('API Base URL:', process.env.NEXT_PUBLIC_API_URL || 'https://localhost:44385/api');
+console.log('API Base URL:', process.env.NEXT_PUBLIC_API_URL || 'https://simamen.belakanglayar.com/api');
 
 // Request interceptor for auth
 api.interceptors.request.use(
