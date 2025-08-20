@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button, Card, Input, Select } from '@/components/ui';
 import { stockTransactionsApi } from '@/services/api';
@@ -22,11 +22,7 @@ export default function TransactionsPage() {
     notes: ''
   });
 
-  useEffect(() => {
-    loadData();
-  }, [filterType, filterItemType]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -143,7 +139,11 @@ export default function TransactionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filterType, filterItemType]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -286,7 +286,7 @@ export default function TransactionsPage() {
             </div>
           </div>
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-            <div className="text-sm font-medium text-gray-600">Today's Transactions</div>
+            <div className="text-sm font-medium text-gray-600">Today&apos;s Transactions</div>
             <div className="text-2xl font-bold text-blue-600">
               {transactions.filter(t => 
                 new Date(t.createdAt).toDateString() === new Date().toDateString()

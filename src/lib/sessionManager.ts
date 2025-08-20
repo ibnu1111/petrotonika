@@ -1,7 +1,7 @@
 // Utility for handling offline storage and session persistence
 
 interface StorageItem {
-  data: any;
+  data: unknown;
   timestamp: number;
   expiresIn?: number; // milliseconds
 }
@@ -19,7 +19,7 @@ class SessionManager {
   }
 
   // Store data with optional expiration
-  setItem(key: string, data: any, expiresIn?: number): void {
+  setItem(key: string, data: unknown, expiresIn?: number): void {
     try {
       const item: StorageItem = {
         data,
@@ -33,7 +33,7 @@ class SessionManager {
   }
 
   // Get data and check if it's expired
-  getItem(key: string): any | null {
+  getItem(key: string): unknown | null {
     try {
       const stored = localStorage.getItem(key);
       if (!stored) return null;
@@ -70,7 +70,7 @@ class SessionManager {
   }
 
   // Store user session with 7 days expiration
-  storeUserSession(token: string, user: any): void {
+  storeUserSession(token: string, user: Record<string, unknown>): void {
     const sevenDays = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
     this.setItem('token', token, sevenDays);
     this.setItem('user', user, sevenDays);
@@ -85,7 +85,7 @@ class SessionManager {
   // Check if user has been inactive for too long
   isInactive(maxInactiveTime: number = 24 * 60 * 60 * 1000): boolean {
     const lastActivity = this.getItem('lastActivity');
-    if (!lastActivity) return true;
+    if (!lastActivity || typeof lastActivity !== 'number') return true;
     
     return Date.now() - lastActivity > maxInactiveTime;
   }
@@ -98,7 +98,7 @@ class SessionManager {
   }
 
   // Get debug info about session
-  getSessionInfo(): any {
+  getSessionInfo(): Record<string, unknown> {
     return {
       hasToken: !!this.getItem('token'),
       hasUser: !!this.getItem('user'),

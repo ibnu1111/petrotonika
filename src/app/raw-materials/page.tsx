@@ -55,12 +55,13 @@ export default function RawMaterialsPage() {
             suppliers: suppliersResponse.data
           });
         }
-      } catch (apiError: any) {
+      } catch (apiError: unknown) {
         console.warn('Backend API not available, using mock data:', apiError);
+        const error = apiError as { message?: string; response?: { data?: unknown; status?: number } };
         console.warn('API Error details:', {
-          message: apiError.message,
-          response: apiError.response?.data,
-          status: apiError.response?.status
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status
         });
       }
       
@@ -157,9 +158,10 @@ export default function RawMaterialsPage() {
       setEditingItem(null);
       resetForm();
       await loadData();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to save raw material:', error);
-      alert('Failed to save raw material: ' + (error.response?.data?.message || error.message));
+      const errorMsg = error as { response?: { data?: { message?: string } }; message?: string };
+      alert('Failed to save raw material: ' + (errorMsg.response?.data?.message || errorMsg.message));
     }
   };
 
@@ -179,9 +181,10 @@ export default function RawMaterialsPage() {
       } else {
         throw new Error('Delete failed: ' + response.data.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to delete raw material:', error);
-      alert('Failed to delete raw material: ' + (error.response?.data?.message || error.message));
+      const errorMsg = error as { response?: { data?: { message?: string } }; message?: string };
+      alert('Failed to delete raw material: ' + (errorMsg.response?.data?.message || errorMsg.message));
     }
   };
 

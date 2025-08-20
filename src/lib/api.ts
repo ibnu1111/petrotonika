@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ApiResponse, PaginatedResponse } from '@/types/inventory';
 import { sessionManager } from './sessionManager';
 
 // Create axios instance

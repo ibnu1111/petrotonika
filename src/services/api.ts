@@ -61,12 +61,12 @@ export const dashboardApi = {
   getRecentTransactions: (limit = 10) => 
     api.get<ApiResponse<StockTransaction[]>>(`/dashboard/recent-transactions?limit=${limit}`),
   getLowStockAlerts: () => 
-    api.get<ApiResponse<any[]>>('/dashboard/low-stock-alerts'),
+    api.get<ApiResponse<Record<string, unknown>[]>>('/dashboard/low-stock-alerts'),
 };
 
 // Auth API
 export const authApi = {
   login: (credentials: { username: string; password: string }) =>
-    api.post<ApiResponse<{ token: string; user: any }>>('/auth/login', credentials),
-  me: () => api.get<ApiResponse<any>>('/auth/me'),
+    api.post<ApiResponse<{ token: string; user: Record<string, unknown> }>>('/auth/login', credentials),
+  me: () => api.get<ApiResponse<Record<string, unknown>>>('/auth/me'),
 };

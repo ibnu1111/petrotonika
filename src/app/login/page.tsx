@@ -41,7 +41,7 @@ export default function LoginPage() {
         console.log('Login failed: success = false');
         setError('Username atau password salah');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error in component:', error);
       setError('Terjadi kesalahan saat login. Silakan coba lagi.');
     } finally {

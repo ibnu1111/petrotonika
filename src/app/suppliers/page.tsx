@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Layout } from '@/components/Layout';
-import { Button, Card, Input, Select } from '@/components/ui';
+import { Button, Card, Input } from '@/components/ui';
 import { suppliersApi } from '@/services/api';
 import { Supplier } from '@/types/inventory';
 
@@ -34,11 +34,14 @@ export default function SuppliersPage() {
         const response = await suppliersApi.getAll();
         if (response.data.success) {
           // Process suppliers data to ensure dates are proper Date objects
-          const processedSuppliers = response.data.data.map((supplier: any) => ({
-            ...supplier,
-            createdAt: supplier.createdAt ? new Date(supplier.createdAt) : new Date(),
-            updatedAt: supplier.updatedAt ? new Date(supplier.updatedAt) : new Date()
-          }));
+          const processedSuppliers = response.data.data.map((supplier: unknown) => {
+            const s = supplier as Record<string, unknown>;
+            return {
+              ...s,
+              createdAt: s.createdAt ? new Date(s.createdAt as string) : new Date(),
+              updatedAt: s.updatedAt ? new Date(s.updatedAt as string) : new Date()
+            } as Supplier;
+          });
           setSuppliers(processedSuppliers);
           console.log('Successfully loaded suppliers from backend');
           return;

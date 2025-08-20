@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { authApi } from '@/services/api';
 import { sessionManager } from '@/lib/sessionManager';
 
@@ -24,11 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = async () => {
+  const checkAuthStatus = useCallback(async () => {
     try {
       // Check if session is valid using sessionManager
       if (!sessionManager.isSessionValid()) {
@@ -47,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Get user from session manager
       const savedUser = sessionManager.getItem('user');
       if (savedUser) {
-        setUser(savedUser);
+        setUser(savedUser as User);
         sessionManager.updateActivity();
         setLoading(false);
         
@@ -57,9 +53,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             await authApi.me();
             console.log('Background token verification successful');
             sessionManager.updateActivity();
-          } catch (error: any) {
+          } catch (error: unknown) {
             console.warn('Background token verification failed');
-            if (error.response?.status === 401 || error.response?.status === 403) {
+            const errorResponse = error as { response?: { status?: number } };
+            if (errorResponse.response?.status === 401 || errorResponse.response?.status === 403) {
               logout();
             }
           }
@@ -71,18 +68,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // If no cached user, verify with backend
       const response = await authApi.me();
       if (response.data.success) {
-        const userData = response.data.data;
+        const userData = response.data.data as unknown as User;
         setUser(userData);
-        sessionManager.storeUserSession(sessionManager.getItem('token'), userData);
+        const token = sessionManager.getItem('token');
+        if (typeof token === 'string') {
+          sessionManager.storeUserSession(token, response.data.data);
+        }
       } else {
         console.warn('Auth verification failed:', response.data);
         sessionManager.clearSession();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Auth check failed:', error);
       
       // Only logout if it's a clear authentication error
-      if (error.response?.status === 401 || error.response?.status === 403) {
+      const errorResponse = error as { response?: { status?: number } };
+      if (errorResponse.response?.status === 401 || errorResponse.response?.status === 403) {
         console.log('Authentication expired, logging out');
         sessionManager.clearSession();
         setUser(null);
@@ -90,14 +91,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // For network errors, keep user logged in with cached data
         console.warn('Network error during auth check, using cached user data');
         const savedUser = sessionManager.getItem('user');
-        if (savedUser) {
-          setUser(savedUser);
+        if (savedUser && typeof savedUser === 'object') {
+          setUser(savedUser as User);
         }
       }
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
@@ -111,16 +116,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         console.log('Login successful, storing session data');
         sessionManager.storeUserSession(token, userData);
-        setUser(userData);
+        setUser(userData as unknown as User);
         
         return true;
       } else {
         console.log('Login failed: Invalid response structure');
         return false;
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login failed:', error);
-      console.error('Error response:', error.response?.data);
+      const errorResponse = error as { response?: { data?: unknown } };
+      console.error('Error response:', errorResponse.response?.data);
       return false;
     }
   };
