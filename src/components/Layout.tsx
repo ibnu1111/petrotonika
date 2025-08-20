@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,6 +23,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -31,10 +32,26 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 z-40 lg:hidden bg-black bg-opacity-50"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-sm">
-        <div className="flex h-16 items-center justify-center border-b border-gray-200">
-          <h1 className="text-xl font-bold text-gray-900">PT Petronika</h1>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-sm transform transition-transform duration-300 ease-in-out lg:transform-none ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}>
+        <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-900">PT Petronika</h1>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600"
+          >
+            ✕
+          </button>
         </div>
         <nav className="mt-8 px-4">
           <ul className="space-y-2">
@@ -44,6 +61,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <li key={item.name}>
                   <Link
                     href={item.href}
+                    onClick={() => setSidebarOpen(false)}
                     className={`flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                       isActive
                         ? 'bg-blue-100 text-blue-900'
@@ -80,17 +98,25 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </div>
 
       {/* Main content */}
-      <div className="pl-64">
+      <div className="lg:pl-64">
         {/* Top header */}
         <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="mx-auto px-6 py-4">
+          <div className="mx-auto px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900">
-                Inventory Management System
-              </h2>
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-500">Welcome, {user?.username}</span>
-                <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
+              <div className="flex items-center">
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 mr-3"
+                >
+                  ☰
+                </button>
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
+                  Inventory Management System
+                </h2>
+              </div>
+              <div className="flex items-center space-x-2 sm:space-x-4">
+                <span className="hidden sm:inline text-sm text-gray-500">Welcome, {user?.username}</span>
+                <span className="inline-flex items-center rounded-full bg-blue-100 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-blue-800">
                   {user?.role}
                 </span>
               </div>
@@ -99,7 +125,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </header>
 
         {/* Page content */}
-        <main className="p-6">{children}</main>
+        <main className="p-4 sm:p-6">{children}</main>
       </div>
       
       {/* Connection Status */}

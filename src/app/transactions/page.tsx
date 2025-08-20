@@ -380,7 +380,8 @@ export default function TransactionsPage() {
 
         {/* Transactions List */}
         <Card title="Recent Transactions">
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden lg:block overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -452,6 +453,53 @@ export default function TransactionsPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="lg:hidden space-y-4">
+            {transactions.map((transaction) => (
+              <div key={transaction.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        transaction.transactionType === 'IN'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {transaction.transactionType === 'IN' ? 'Stock In' : 'Stock Out'}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {transaction.itemType === 'RAW_MATERIAL' ? 'Raw Material' : 'Finished Product'}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-medium text-gray-900 mt-1 truncate">Item #{transaction.itemId}</h3>
+                    <p className="text-xs text-gray-500">{transaction.reference}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-medium">
+                      <span className={transaction.transactionType === 'IN' ? 'text-green-600' : 'text-red-600'}>
+                        {transaction.transactionType === 'IN' ? '+' : '-'}{transaction.quantity.toLocaleString()} {transaction.unit}
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500">{transaction.createdAt.toLocaleDateString('id-ID')}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 text-xs">
+                  <div>
+                    <span className="text-gray-500">User:</span>
+                    <span className="ml-1 font-medium">{transaction.user?.username}</span>
+                  </div>
+                  {transaction.notes && (
+                    <div>
+                      <span className="text-gray-500">Notes:</span>
+                      <p className="font-medium mt-1">{transaction.notes}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </Card>
       </div>

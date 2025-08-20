@@ -42,17 +42,17 @@ export const StatsCard: React.FC<StatsCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-3 sm:p-6">
       <div className="flex items-center">
         {icon && (
-          <div className={`p-2 rounded-md ${colorClasses[color]} mr-4`}>
+          <div className={`p-1 sm:p-2 rounded-md ${colorClasses[color]} mr-2 sm:mr-4 flex-shrink-0`}>
             {icon}
           </div>
         )}
-        <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
-          {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+        <div className="min-w-0 flex-1">
+          <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{title}</p>
+          <p className="text-lg sm:text-2xl font-bold text-gray-900">{value}</p>
+          {subtitle && <p className="text-xs sm:text-sm text-gray-500 truncate">{subtitle}</p>}
         </div>
       </div>
     </div>

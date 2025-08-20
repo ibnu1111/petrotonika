@@ -294,7 +294,8 @@ export default function SuppliersPage() {
 
         {/* Suppliers List */}
         <Card title="Suppliers List">
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden lg:block overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -382,6 +383,67 @@ export default function SuppliersPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="lg:hidden space-y-4">
+            {suppliers.map((supplier) => (
+              <div key={supplier.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-medium text-gray-900 truncate">{supplier.name}</h3>
+                    <p className="text-xs text-gray-500">{supplier.code}</p>
+                  </div>
+                  <button
+                    onClick={() => console.log('Toggle status:', supplier.id)}
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors ${
+                      supplier.isActive
+                        ? 'text-green-800 bg-green-100 hover:bg-green-200'
+                        : 'text-red-800 bg-red-100 hover:bg-red-200'
+                    }`}
+                  >
+                    {supplier.isActive ? 'Active' : 'Inactive'}
+                  </button>
+                </div>
+                
+                <div className="space-y-2 text-xs">
+                  <div>
+                    <span className="text-gray-500">Contact:</span>
+                    <p className="font-medium">{supplier.contact}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Last Updated:</span>
+                    <p className="font-medium">
+                      {supplier.updatedAt ? 
+                        new Date(supplier.updatedAt).toLocaleDateString('id-ID') : 
+                        'N/A'
+                      }
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end space-x-3 mt-3 pt-3 border-t border-gray-200">
+                  <button
+                    onClick={() => handleEdit(supplier)}
+                    className="text-blue-600 hover:text-blue-900 text-sm font-medium"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => console.log('View details:', supplier.id)}
+                    className="text-green-600 hover:text-green-900 text-sm font-medium"
+                  >
+                    View
+                  </button>
+                  <button
+                    onClick={() => console.log('Delete:', supplier.id)}
+                    className="text-red-600 hover:text-red-900 text-sm font-medium"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </Card>
       </div>

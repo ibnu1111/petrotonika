@@ -62,14 +62,14 @@ export default function Dashboard() {
   return (
     <ProtectedRoute>
       <Layout>
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">Overview of inventory status</p>
+        <div className="space-y-4 sm:space-y-6 p-4 sm:p-0">
+          <div className="text-center sm:text-left">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Overview of inventory status</p>
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <StatsCard
               title="Raw Materials"
               value={stats?.totalRawMaterials || 0}
@@ -104,64 +104,64 @@ export default function Dashboard() {
           </div>
 
           {/* Total Value */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Inventory Value</h3>
-            <div className="text-3xl font-bold text-green-600">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3 sm:mb-4">Inventory Value</h3>
+            <div className="text-2xl sm:text-3xl font-bold text-green-600">
               Rp {(stats?.totalValue || 0).toLocaleString('id-ID')}
             </div>
-            <p className="text-sm text-gray-500 mt-2">Total inventory value</p>
+            <p className="text-xs sm:text-sm text-gray-500 mt-2">Total inventory value</p>
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-left transition-colors">
-                <div className="text-xl mb-2">➕</div>
-                <h4 className="font-medium text-gray-900">Add Raw Material</h4>
-                <p className="text-sm text-gray-500">Register new raw material</p>
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3 sm:mb-4">Quick Actions</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              <button className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-left transition-colors">
+                <div className="text-lg sm:text-xl mb-2">➕</div>
+                <h4 className="font-medium text-gray-900 text-sm sm:text-base">Add Raw Material</h4>
+                <p className="text-xs sm:text-sm text-gray-500">Register new raw material</p>
               </button>
               
-              <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-left transition-colors">
-                <div className="text-xl mb-2">📥</div>
-                <h4 className="font-medium text-gray-900">Record Stock In</h4>
-                <p className="text-sm text-gray-500">Add incoming stock</p>
+              <button className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-left transition-colors">
+                <div className="text-lg sm:text-xl mb-2">📥</div>
+                <h4 className="font-medium text-gray-900 text-sm sm:text-base">Record Stock In</h4>
+                <p className="text-xs sm:text-sm text-gray-500">Add incoming stock</p>
               </button>
               
-              <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-left transition-colors">
-                <div className="text-xl mb-2">📤</div>
-                <h4 className="font-medium text-gray-900">Record Stock Out</h4>
-                <p className="text-sm text-gray-500">Record outgoing stock</p>
+              <button className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-left transition-colors">
+                <div className="text-lg sm:text-xl mb-2">📤</div>
+                <h4 className="font-medium text-gray-900 text-sm sm:text-base">Record Stock Out</h4>
+                <p className="text-xs sm:text-sm text-gray-500">Record outgoing stock</p>
               </button>
             </div>
           </div>
 
           {/* Recent Activity */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h3>
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3 sm:mb-4">Recent Activity</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <div>
-                  <p className="font-medium text-gray-900">Stock In - Chemical A</p>
-                  <p className="text-sm text-gray-500">+500 kg</p>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-gray-900 text-sm sm:text-base truncate">Stock In - Chemical A</p>
+                  <p className="text-xs sm:text-sm text-gray-500">+500 kg</p>
                 </div>
-                <span className="text-sm text-gray-500">2 hours ago</span>
+                <span className="text-xs sm:text-sm text-gray-500 ml-2 flex-shrink-0">2 hours ago</span>
               </div>
               
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <div>
-                  <p className="font-medium text-gray-900">Production - DOP</p>
-                  <p className="text-sm text-gray-500">+100 drums</p>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-gray-900 text-sm sm:text-base truncate">Production - DOP</p>
+                  <p className="text-xs sm:text-sm text-gray-500">+100 drums</p>
                 </div>
-                <span className="text-sm text-gray-500">4 hours ago</span>
+                <span className="text-xs sm:text-sm text-gray-500 ml-2 flex-shrink-0">4 hours ago</span>
               </div>
               
               <div className="flex items-center justify-between py-2">
-                <div>
-                  <p className="font-medium text-gray-900">Shipment - DNIP</p>
-                  <p className="text-sm text-gray-500">-50 drums</p>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-gray-900 text-sm sm:text-base truncate">Shipment - DNIP</p>
+                  <p className="text-xs sm:text-sm text-gray-500">-50 drums</p>
                 </div>
-                <span className="text-sm text-gray-500">6 hours ago</span>
+                <span className="text-xs sm:text-sm text-gray-500 ml-2 flex-shrink-0">6 hours ago</span>
               </div>
             </div>
           </div>

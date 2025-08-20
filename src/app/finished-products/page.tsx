@@ -276,7 +276,8 @@ export default function FinishedProductsPage() {
 
         {/* Finished Products List */}
         <Card title="Finished Products List">
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden lg:block overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -365,6 +366,60 @@ export default function FinishedProductsPage() {
                 })}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="lg:hidden space-y-4">
+            {finishedProducts.map((item) => {
+              const isLowStock = item.currentStock <= item.minimumStock;
+              return (
+                <div key={item.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-gray-900 truncate">{item.name}</h3>
+                      <p className="text-xs text-gray-500">{item.code}</p>
+                    </div>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      isLowStock 
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-green-100 text-green-800'
+                    }`}>
+                      {isLowStock ? 'Low Stock' : 'In Stock'}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <span className="text-gray-500">Current Stock:</span>
+                      <p className="font-medium">{item.currentStock} {item.unit}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Min Stock:</span>
+                      <p className="font-medium">{item.minimumStock} {item.unit}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-gray-500">Price:</span>
+                      <p className="font-medium">Rp {item.price.toLocaleString('id-ID')}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3 mt-3 pt-3 border-t border-gray-200">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="text-blue-600 hover:text-blue-900 text-sm font-medium"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => console.log('Delete:', item.id)}
+                      className="text-red-600 hover:text-red-900 text-sm font-medium"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </Card>
       </div>
