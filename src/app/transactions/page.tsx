@@ -482,7 +482,7 @@ export default function TransactionsPage() {
                         {transaction.transactionType === 'IN' ? '+' : '-'}{transaction.quantity.toLocaleString()} {transaction.unit}
                       </span>
                     </p>
-                    <p className="text-xs text-gray-500">{transaction.createdAt.toLocaleDateString('id-ID')}</p>
+                    <p className="text-xs text-gray-500">{new Date(transaction.createdAt).toLocaleDateString('id-ID')}</p>
                   </div>
                 </div>
                 

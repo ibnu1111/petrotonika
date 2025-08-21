@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Prakerin - Sistem Manajemen Inventori</title>
+    <style>
+        @page {
+            margin: 3cm 3cm 2.5cm 4cm;
+            font-family: 'Times New Roman', serif;
+            size: A4;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000;
+            margin: 0;
+            padding: 3cm 3cm 2.5cm 4cm;
+            background: white;
+            width: 21cm;
+            min-height: 29.7cm;
+        }
+        
+        /* Cover Page Styling */
+        .cover-page {
+            text-align: center;
+            page-break-after: always;
+            min-height: 23.7cm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+            margin: -3cm -3cm -2.5cm -4cm;
+            padding: 3cm 3cm 2.5cm 4cm;
+        }
+        
+        .cover-header {
+            margin-bottom: 0.8cm;
+            margin-top: 0.5cm;
+        }
+        
+        .cover-title {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 1.2cm;
+            text-transform: uppercase;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+        }
+        
+        .cover-subtitle {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 1.8cm;
+            line-height: 1.5;
+        }
+        
+        .cover-logo {
+            margin: 2cm 0;
+        }
+        
+        .cover-info {
+            font-size: 12pt;
+            margin-bottom: 1.5cm;
+            line-height: 1.4;
+        }
+        
+        .cover-authors {
+            font-size: 12pt;
+            margin-bottom: 2cm;
+            line-height: 1.6;
+        }
+        
+        .cover-location {
+            font-size: 12pt;
+            margin-top: auto;
+            font-weight: bold;
+        }
+        
+        /* Academic Section Pages */
+        .academic-page {
+            page-break-after: always;
+            min-height: 23.7cm;
+            text-align: center;
+            padding: 0;
+            margin: -3cm -3cm -2.5cm -4cm;
+            padding: 3cm 3cm 2.5cm 4cm;
+            font-family: 'Times New Roman', serif;
+            box-sizing: border-box;
+        }
+        
+        .academic-title {
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 2cm;
+            margin-top: 1cm;
+            letter-spacing: 0.8px;
+            text-align: center;
+        }
+        
+        .approval-section {
+            text-align: center;
+            margin: 2cm 0;
+        }
+        
+        .approval-table {
+            width: 100%;
+            border: none;
+            margin: 2cm 0;
+        }
+        
+        .approval-table td {
+            border: none;
+            padding: 0.5cm;
+            vertical-align: top;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #000;
+            min-height: 1.5cm;
+            margin-bottom: 0.5cm;
+        }
+        
+        .approval-text {
+            text-align: left;
+            margin: 1cm 0;
+            line-height: 1.6;
+        }
+        
+        /* Statement Page */
+        .statement-content {
+            text-align: justify;
+            margin: 1.5cm 0;
+            line-height: 1.6;
+            font-size: 12pt;
+        }
+        
+        .statement-content p {
+            margin-bottom: 1cm;
+            text-align: justify;
+            line-height: 1.6;
+            text-indent: 1.27cm;
+        }
+        
+        .statement-content p:first-child {
+            text-indent: 1.27cm;
+            margin-bottom: 0.8cm;
+        }
+        
+        .statement-content table {
+            margin: 1cm auto 1.5cm auto;
+            width: 70%;
+            border-collapse: collapse;
+        }
+        
+        .statement-content td {
+            padding: 0.25cm 0.2cm;
+            font-size: 12pt;
+            vertical-align: top;
+            line-height: 1.4;
+        }
+        
+        .statement-signature {
+            text-align: right;
+            margin-top: 2cm;
+            margin-right: 3cm;
+            line-height: 1.6;
+        }
+        
+        .statement-signature p {
+            margin-bottom: 0.3cm;
+            text-indent: 0;
+            font-size: 12pt;
+        }
+        
+        /* Preface Page */
+        .preface-content {
+            text-align: justify;
+            margin: 1.5cm 0;
+            line-height: 1.6;
+            text-indent: 1.27cm;
+            font-size: 12pt;
+        }
+        
+        .preface-content p {
+            margin-bottom: 0.8cm;
+            text-align: justify;
+            line-height: 1.6;
+        }
+        
+        .acknowledgment-list {
+            text-align: left;
+            margin: 1cm 0;
+            line-height: 1.6;
+        }
+        
+        .acknowledgment-list ol {
+            margin-left: 1.27cm;
+            text-align: justify;
+        }
+        
+        .acknowledgment-list li {
+            margin-bottom: 0.3cm;
+            line-height: 1.6;
+        }
+        
+        /* Headings */
+        h1 {
+            font-size: 14pt;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 1.5cm;
+            margin-bottom: 0.8cm;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-top: 1.2cm;
+            margin-bottom: 0.6cm;
+            text-align: left;
+            text-indent: 0;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 1cm;
+            margin-bottom: 0.5cm;
+            text-align: left;
+            text-indent: 0;
+        }
+        
+        h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 0.8cm;
+            margin-bottom: 0.4cm;
+            text-align: left;
+            text-indent: 0;
+        }
+        
+        /* Paragraphs */
+        p {
+            text-align: justify;
+            margin-bottom: 0.6cm;
+            text-indent: 1.27cm;
+            line-height: 1.6;
+            font-size: 12pt;
+        }
+        
+        .no-indent {
+            text-indent: 0;
+        }
+        
+        .center {
+            text-align: center;
+            text-indent: 0;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin-left: 1.27cm;
+            margin-bottom: 0.6cm;
+            line-height: 1.6;
+        }
+        
+        li {
+            margin-bottom: 0.3cm;
+            text-align: justify;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1cm auto;
+            font-size: 11pt;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 0.4cm;
+            text-align: left;
+            vertical-align: middle;
+        }
+        
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        /* Code blocks */
+        .code-block {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 0.6cm;
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            margin: 0.8cm 0;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        
+        /* ERD Diagram */
+        .erd-diagram {
+            text-align: center;
+            margin: 0.8cm 0;
+            padding: 0.6cm;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .erd-diagram svg {
+            max-width: 100%;
+            height: auto;
+            background: white;
+        }
+        
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+            min-height: 23.7cm;
+            padding: 0;
+            margin: -3cm -3cm -2.5cm -4cm;
+            padding: 3cm 3cm 2.5cm 4cm;
+            box-sizing: border-box;
+        }
+        
+        /* Content Pages */
+        .content-page {
+            text-align: left;
+        }
+        
+        .content-page h1 {
+            text-align: center;
+        }
+        
+        .content-page h2,
+        .content-page h3,
+        .content-page h4,
+        .content-page h5,
+        .content-page h6 {
+            text-align: left;
+            text-indent: 0;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            page-break-after: always;
+            min-height: 23.7cm;
+            padding: 0;
+            margin: -3cm -3cm -2.5cm -4cm;
+            padding: 3cm 3cm 2.5cm 4cm;
+            font-family: 'Times New Roman', serif;
+            box-sizing: border-box;
+        }
+        
+        .toc h1 {
+            text-align: center;
+            margin-bottom: 2cm;
+            margin-top: 1cm;
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.4cm;
+            text-indent: 0;
+            line-height: 1.4;
+            font-size: 12pt;
+        }
+        
+        .toc-item.level-1 {
+            font-weight: bold;
+            margin-top: 0.6cm;
+            margin-bottom: 0.2cm;
+        }
+        
+        .toc-item.level-2 {
+            margin-left: 1.2cm;
+            font-weight: normal;
+        }
+        
+        .toc-item.level-3 {
+            margin-left: 2.4cm;
+            font-weight: normal;
+        }
+        
+        .toc-dots {
+            flex: 1;
+            border-bottom: 1px dotted #000;
+            margin: 0 0.6cm;
+            height: 0.6em;
+            align-self: flex-end;
+        }
+        
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 0.5cm 0;
+        }
+        
+        .figure {
+            text-align: center;
+            margin: 1cm 0;
+        }
+        
+        .figure-caption {
+            font-size: 11pt;
+            margin-top: 0.3cm;
+            font-style: italic;
+        }
+        
+        /* Print optimization */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+            
+            .cover-page {
+                page-break-after: always;
+            }
+            
+            .academic-page {
+                page-break-after: always;
+            }
+            
+            .toc {
+                page-break-after: always;
+            }
+        }
+        
+        /* Additional spacing fixes */
+        .section-content {
+            margin: 0.5cm 0;
+        }
+        
+        .subsection {
+            margin: 1cm 0;
+        }
+        
+        /* Bibliography and references */
+        .bibliography {
+            text-indent: -1.27cm;
+            padding-left: 1.27cm;
+            margin-bottom: 0.5cm;
+        }
+        
+        /* Project Structure Styling */
+        .project-structure {
+            margin: 1cm 0;
+            padding: 0.5cm;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .folder-tree {
+            font-family: 'Courier New', monospace;
+            font-size: 11pt;
+            line-height: 1.4;
+        }
+        
+        .tree-item {
+            margin: 0.2cm 0;
+            padding-left: 0;
+        }
+        
+        .tree-item.root {
+            font-weight: bold;
+            margin-bottom: 0.3cm;
+            color: #2c5aa0;
+        }
+        
+        .tree-item.level-1 {
+            padding-left: 0.8cm;
+            font-weight: 600;
+            color: #1a472a;
+        }
+        
+        .tree-item.level-2 {
+            padding-left: 1.6cm;
+            color: #333;
+        }
+        
+        .tree-item.level-3 {
+            padding-left: 2.4cm;
+            color: #555;
+            font-size: 10pt;
+        }
+        
+        .tree-item strong {
+            color: #2c5aa0;
+        }
+        
+        .tree-item em {
+            color: #666;
+            font-style: italic;
+            font-size: 9pt;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+    <div class="cover-header">
+        <div class="cover-title">
+            LAPORAN PRAKTEK KERJA INDUSTRI (PRAKERIN)
+        </div>
+        <div class="cover-subtitle">
+            PENGEMBANGAN SISTEM MANAJEMEN INVENTORI BERBASIS WEB<br>
+            DI PT PETRONIKA
+        </div>
+    </div>
+    
+    <div class="cover-logo">
+        <img src="logo.png" alt="Logo Sekolah" style="width: 4cm; height: 4cm;" />
+    </div>
+    
+    <div class="cover-info">
+        <strong>Disusun untuk memenuhi salah satu syarat kelulusan</strong><br>
+        <strong>Program Studi Sistem Informasi</strong>
+    </div>
+    
+    <div class="cover-authors">
+        <strong>Disusun Oleh:</strong><br><br>
+        <table style="border: none; margin: 0 auto; width: 60%;">
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.2cm;">Nama</td>
+                <td style="border: none; text-align: center; padding: 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.2cm;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.2cm;">NIS</td>
+                <td style="border: none; text-align: center; padding: 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.2cm;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.2cm;">Nama</td>
+                <td style="border: none; text-align: center; padding: 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.2cm;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.2cm;">NIS</td>
+                <td style="border: none; text-align: center; padding: 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.2cm;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.2cm;">Kelas</td>
+                <td style="border: none; text-align: center; padding: 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.2cm;">XII RPL</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.2cm;">Kompetensi Keahlian</td>
+                <td style="border: none; text-align: center; padding: 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.2cm;">Rekayasa Perangkat Lunak</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="cover-location">
+        UNIVERSITAS AIRLANGGA<br>
+        SURABAYA<br>
+        2025
+    </div>
+</div>
+<!-- HALAMAN PENGESAHAN (SEKOLAH) -->
+<div class="academic-page">
+    <div class="academic-title">HALAMAN PENGESAHAN</div>
+    
+    <div class="approval-text">
+        <p class="center no-indent" style="font-weight: bold; margin-bottom: 1cm;">
+            LAPORAN PRAKTEK KERJA INDUSTRI (PRAKERIN)<br>
+            PENGEMBANGAN SISTEM MANAJEMEN INVENTORI BERBASIS WEB<br>
+            DI PT PETRONIKA
+        </p>
+        
+        <p class="center no-indent" style="margin-bottom: 2cm;">
+            Disusun untuk memenuhi salah satu syarat kelulusan<br>
+            Program Studi Sistem Informasi
+        </p>
+        
+        <p class="center no-indent" style="margin-bottom: 2cm; font-weight: bold;">
+            Disusun Oleh:<br><br>
+            ........................ (........................)<br>
+            ........................ (........................)
+        </p>
+    </div>
+    
+    <div class="approval-section">
+        <table class="approval-table">
+            <tr>
+                <td style="width: 50%; text-align: center;">
+                    <strong>Mengetahui,</strong><br>
+                    <strong>Rektor</strong><br><br><br>
+                    <div class="signature-line"></div>
+                    <strong>Prof. Dr. Mohammad Nasih, S.T., M.T., Ph.D.</strong><br>
+                    NIP. 19630515 198903 1 017
+                </td>
+                <td style="width: 50%; text-align: center;">
+                    <strong>Surabaya, Januari 2025</strong><br>
+                    <strong>Dosen Pembimbing</strong><br><br><br>
+                    <div class="signature-line"></div>
+                    <strong>Dr. Ade Setiawan, S.Kom, M.Kom</strong><br>
+                    NIP. 19850315 201001 1 008
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top: 2cm;">
+                    <strong>Ketua Program Studi</strong><br>
+                    <strong>Sistem Informasi</strong><br><br><br>
+                    <div class="signature-line"></div>
+                    <strong>Dr. Rina Susanti, S.Kom, M.Kom</strong><br>
+                    NIP. 19780420 200604 2 015
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- HALAMAN PENGESAHAN (INDUSTRI) -->
+<div class="academic-page">
+    <div class="academic-title">HALAMAN PENGESAHAN</div>
+    
+    <div class="approval-text">
+        <p class="center no-indent" style="font-weight: bold; margin-bottom: 1cm;">
+            LAPORAN PRAKTEK KERJA INDUSTRI (PRAKERIN)<br>
+            PENGEMBANGAN SISTEM MANAJEMEN INVENTORI BERBASIS WEB<br>
+            DI PT PETRONIKA
+        </p>
+        
+        <p class="center no-indent" style="margin-bottom: 2cm;">
+            Periode Prakerin: 15 Juli - 15 Agustus 2024
+        </p>
+        
+        <p class="center no-indent" style="margin-bottom: 2cm; font-weight: bold;">
+            Disusun Oleh:<br><br>
+            ........................ (........................)<br>
+            ........................ (........................)
+        </p>
+    </div>
+    
+    <div class="approval-section">
+        <table class="approval-table">
+            <tr>
+                <td style="width: 50%; text-align: center;">
+                    <strong>Mengetahui,</strong><br>
+                    <strong>Pembimbing Industri</strong><br><br><br>
+                    <div class="signature-line"></div>
+                    <strong>Ahmad Fauzi, S.T</strong><br>
+                    Senior Developer<br>
+                    PT Petronika
+                </td>
+                <td style="width: 50%; text-align: center;">
+                    <strong>Surabaya, Agustus 2024</strong><br>
+                    <strong>Manager IT</strong><br><br><br>
+                    <div class="signature-line"></div>
+                    <strong>Siti Nurhaliza, S.Kom, M.T</strong><br>
+                    IT Manager<br>
+                    PT Petronika
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top: 2cm;">
+                    <strong>Direktur</strong><br>
+                    <strong>PT Petronika</strong><br><br><br>
+                    <div class="signature-line"></div>
+                    <strong>Dr. Budi Santoso, M.M</strong><br>
+                    Direktur Utama
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- PERNYATAAN KEASLIAN TULISAN (Aulia) -->
+<div class="academic-page">
+    <div class="academic-title">PERNYATAAN KEASLIAN TULISAN</div>
+    
+    <div class="statement-content">
+        <p>Saya yang bertanda tangan di bawah ini:</p>
+        
+        <table style="border: none; margin: 1cm auto 1.5cm auto; width: 70%;">
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.25cm 0.2cm; width: 30%;">Nama</td>
+                <td style="border: none; text-align: center; padding: 0.25cm 0.2cm; width: 5%;">:</td>
+                <td style="border: none; text-align: left; padding: 0.25cm 0.2cm; width: 65%;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.25cm 0.2cm;">NIM</td>
+                <td style="border: none; text-align: center; padding: 0.25cm 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.25cm 0.2cm;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.25cm 0.2cm;">Angkatan</td>
+                <td style="border: none; text-align: center; padding: 0.25cm 0.2cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">2023</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">Program Studi</td>
+                <td style="border: none; text-align: center; padding: 0.4cm 0.3cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">Sistem Informasi</td>
+            </tr>
+        </table>
+        
+        <p>Menyatakan dengan sebenar-benarnya bahwa laporan Praktik Kerja Lapangan (PKL) yang berjudul "<strong>Pengembangan Sistem Manajemen Inventori Berbasis Web di PT Petronika</strong>" adalah benar-benar hasil karya saya sendiri, bukan merupakan pengambilalihan tulisan atau pikiran orang lain yang saya akui sebagai tulisan atau pikiran saya sendiri.</p>
+        
+        <p>Apabila dikemudian hari dapat dibuktikan bahwa laporan ini adalah hasil plagiasi, maka saya bersedia menerima sanksi atas perbuatan tersebut.</p>
+    </div>
+    
+    <div class="statement-signature">
+        <p>Surabaya, Januari 2025</p>
+        <p>Yang membuat pernyataan,</p>
+        <br><br><br>
+        <p><strong>........................</strong></p>
+        <p>NIM. ........................</p>
+    </div>
+</div>
+
+<!-- PERNYATAAN KEASLIAN TULISAN (Nora) -->
+<div class="academic-page">
+    <div class="academic-title">PERNYATAAN KEASLIAN TULISAN</div>
+    
+    <div class="statement-content">
+        <p>Saya yang bertanda tangan di bawah ini:</p>
+        
+        <table style="border: none; margin: 1.5cm auto 2.5cm auto; width: 75%;">
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm; width: 30%;">Nama</td>
+                <td style="border: none; text-align: center; padding: 0.4cm 0.3cm; width: 5%;">:</td>
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm; width: 65%;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">NIM</td>
+                <td style="border: none; text-align: center; padding: 0.4cm 0.3cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">........................</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">Angkatan</td>
+                <td style="border: none; text-align: center; padding: 0.4cm 0.3cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">2023</td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">Program Studi</td>
+                <td style="border: none; text-align: center; padding: 0.4cm 0.3cm;">:</td>
+                <td style="border: none; text-align: left; padding: 0.4cm 0.3cm;">Sistem Informasi</td>
+            </tr>
+        </table>
+        
+        <p>Menyatakan dengan sebenar-benarnya bahwa laporan Praktik Kerja Lapangan (PKL) yang berjudul "<strong>Pengembangan Sistem Manajemen Inventori Berbasis Web di PT Petronika</strong>" adalah benar-benar hasil karya saya sendiri, bukan merupakan pengambilalihan tulisan atau pikiran orang lain yang saya akui sebagai tulisan atau pikiran saya sendiri.</p>
+        
+        <p>Apabila dikemudian hari dapat dibuktikan bahwa laporan ini adalah hasil plagiasi, maka saya bersedia menerima sanksi atas perbuatan tersebut.</p>
+    </div>
+    
+    <div class="statement-signature">
+        <p>Surabaya, Januari 2025</p>
+        <p>Yang membuat pernyataan,</p>
+        <br><br><br><br>
+        <p><strong>........................</strong></p>
+        <p>NIM. ........................</p>
+    </div>
+</div>
+        <p class="no-indent">Gresik, 30 Agustus 2024</p>
+        <p class="no-indent">Mahasiswa,</p>
+        <br><br><br><br>
+        <p class="no-indent"><strong>Aulia Priya Amanda</strong></p>
+        <p class="no-indent">NIM. 2141420057</p>
+    </div>
+</div>
+
+<!-- PERNYATAAN KEASLIAN TULISAN - MAHASISWA 2 -->
+<div class="page-break">
+    <div class="center">
+        <h1 style="margin-bottom: 2cm;">PERNYATAAN KEASLIAN TULISAN</h1>
+        <h2 style="margin-bottom: 3cm;">LAPORAN PRAKTIK KERJA INDUSTRI</h2>
+    </div>
+    
+    <p>Saya menyatakan dengan sebenar-benarnya bahwa sepanjang pengetahuan saya, di dalam Naskah Laporan Praktik Kerja Industri ini tidak terdapat karya ilmiah yang pernah diajukan oleh orang lain untuk memperoleh gelar akademik di suatu perguruan tinggi, dan tidak terdapat karya atau pendapat orang lain kecuali yang secara tertulis dikutip dalam naskah ini dan disebutkan dalam sumber kutipan dan daftar pustaka.</p>
+    
+    <p>Apabila ternyata di dalam naskah LAPORAN PRAKTIK KERJA INDUSTRI ini dapat dibuktikan terdapat unsur-unsur plagiasi, saya bersedia LAPORAN PRAKTIK KERJA INDUSTRI ini digugurkan dan dibatalkan serta diproses sesuai dengan peraturan perundang-undangan yang berlaku.</p>
+    
+    <div style="margin-top: 4cm; text-align: right;">
+        <p class="no-indent">Gresik, 30 Agustus 2024</p>
+<!-- KATA PENGANTAR -->
+<div class="academic-page">
+    <div class="academic-title">KATA PENGANTAR</div>
+    
+    <div class="preface-content">
+        <p>Puji syukur kami panjatkan kepada Tuhan Yang Maha Esa atas berkat dan rahmat-Nya, sehingga kami dapat menyelesaikan laporan Praktik Kerja Industri (Prakerin) dengan judul "<strong>Pengembangan Sistem Manajemen Inventori Berbasis Web di PT Petronika</strong>" dengan baik.</p>
+        
+        <p>Laporan ini disusun sebagai salah satu syarat untuk menyelesaikan program Praktik Kerja Lapangan di Universitas Airlangga Program Studi Sistem Informasi. Selama pelaksanaan PKL dan penyusunan laporan ini, kami mendapat bimbingan, dukungan, dan bantuan dari berbagai pihak.</p>
+        
+        <p>Untuk itu, kami mengucapkan terima kasih yang sebesar-besarnya kepada:</p>
+        
+        <div class="acknowledgment-list">
+            <ol>
+                <li>Tuhan Yang Maha Esa atas segala rahmat dan karunia-Nya.</li>
+                <li>Orang tua kami yang telah memberikan dukungan moral dan material.</li>
+                <li>Bapak Prof. Dr. Mohammad Nasih, S.T., M.T., Ph.D. selaku Rektor Universitas Airlangga.</li>
+                <li>Ibu Dr. Rina Susanti, S.Kom, M.Kom selaku Ketua Program Studi Sistem Informasi.</li>
+                <li>Bapak Dr. Ade Setiawan, S.Kom, M.Kom selaku dosen pembimbing yang telah memberikan arahan dan bimbingan.</li>
+                <li>Bapak Dr. Budi Santoso, M.M selaku Direktur PT Petronika yang telah memberikan kesempatan untuk melaksanakan Prakerin.</li>
+                <li>Ibu Siti Nurhaliza, S.Kom, M.T selaku IT Manager PT Petronika yang telah memberikan bimbingan dan arahan.</li>
+                <li>Bapak Ahmad Fauzi, S.T selaku pembimbing industri yang telah membimbing kami dengan sabar.</li>
+                <li>Seluruh staff dan karyawan PT Petronika yang telah membantu dan memberikan dukungan selama pelaksanaan Prakerin.</li>
+                <li>Teman-teman sekelas XII RPL yang telah memberikan dukungan dan semangat.</li>
+                <li>Semua pihak yang tidak dapat kami sebutkan satu persatu yang telah membantu dalam penyelesaian laporan ini.</li>
+            </ol>
+        </div>
+        
+        <p>Kami menyadari bahwa laporan ini masih jauh dari sempurna. Oleh karena itu, kami mengharapkan kritik dan saran yang membangun dari semua pihak untuk perbaikan di masa mendatang.</p>
+        
+        <p>Semoga laporan ini dapat memberikan manfaat dan menambah wawasan bagi pembaca, khususnya dalam bidang pengembangan sistem informasi dan manajemen inventori.</p>
+    </div>
+    
+    <div class="statement-signature">
+        <p>Surabaya, Januari 2025</p>
+        <br><br><br>
+        <p>Penulis</p>
+    </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+    <h1>DAFTAR ISI</h1>
+    
+    <div class="toc-item level-1">
+        <span>HALAMAN PENGESAHAN</span>
+        <div class="toc-dots"></div>
+        <span>ii</span>
+    </div>
+    <div class="toc-item level-1">
+        <span>PERNYATAAN KEASLIAN TULISAN</span>
+        <div class="toc-dots"></div>
+        <span>iv</span>
+    </div>
+    <div class="toc-item level-1">
+        <span>KATA PENGANTAR</span>
+        <div class="toc-dots"></div>
+        <span>vi</span>
+    </div>
+    <div class="toc-item level-1">
+        <span>DAFTAR ISI</span>
+        <div class="toc-dots"></div>
+        <span>vii</span>
+    </div>
+    <div class="toc-item level-1">
+        <span>BAB I PENDAHULUAN</span>
+        <div class="toc-dots"></div>
+        <span>1</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>1.1 Latar Belakang</span>
+        <div class="toc-dots"></div>
+        <span>1</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>1.2 Rumusan Masalah</span>
+        <div class="toc-dots"></div>
+        <span>2</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>1.3 Tujuan</span>
+        <div class="toc-dots"></div>
+        <span>2</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>1.4 Manfaat</span>
+        <div class="toc-dots"></div>
+        <span>3</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>1.5 Batasan Masalah</span>
+        <div class="toc-dots"></div>
+        <span>3</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>BAB II GAMBARAN UMUM PERUSAHAAN</span>
+        <div class="toc-dots"></div>
+        <span>4</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>2.1 Profil Perusahaan</span>
+        <div class="toc-dots"></div>
+        <span>4</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>2.2 Visi dan Misi Perusahaan</span>
+        <div class="toc-dots"></div>
+        <span>5</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>2.3 Struktur Organisasi</span>
+        <div class="toc-dots"></div>
+        <span>5</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>2.4 Sistem yang Sedang Berjalan</span>
+        <div class="toc-dots"></div>
+        <span>6</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>BAB III PELAKSANAAN PRAKERIN</span>
+        <div class="toc-dots"></div>
+        <span>7</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>3.1 Waktu dan Tempat Pelaksanaan</span>
+        <div class="toc-dots"></div>
+        <span>7</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>3.2 Kegiatan Selama Prakerin</span>
+        <div class="toc-dots"></div>
+        <span>8</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>3.3 Teknologi dan Tools yang Digunakan</span>
+        <div class="toc-dots"></div>
+        <span>10</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>BAB IV PEMBAHASAN</span>
+        <div class="toc-dots"></div>
+        <span>12</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.1 Analisis Kebutuhan Sistem</span>
+        <div class="toc-dots"></div>
+        <span>12</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.2 Perancangan Sistem</span>
+        <div class="toc-dots"></div>
+        <span>15</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.3 Implementasi Sistem</span>
+        <div class="toc-dots"></div>
+        <span>18</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.4 Pengujian Sistem</span>
+        <div class="toc-dots"></div>
+        <span>25</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>BAB V PENUTUP</span>
+        <div class="toc-dots"></div>
+        <span>28</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>5.1 Kesimpulan</span>
+        <div class="toc-dots"></div>
+        <span>28</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>5.2 Saran</span>
+        <div class="toc-dots"></div>
+        <span>29</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>DAFTAR PUSTAKA</span>
+        <div class="toc-dots"></div>
+        <span>30</span>
+    </div>
+    <div class="toc-item level-1">
+        <span>LAMPIRAN</span>
+        <div class="toc-dots"></div>
+        <span>31</span>
+    </div>
+</div>
+    <div class="toc-item level-2">
+        <span>3.4 Metodologi Pengembangan</span>
+        <span>11</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>BAB IV HASIL DAN PEMBAHASAN</span>
+        <span>12</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.1 Analisis Kebutuhan Sistem</span>
+        <span>12</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.2 Desain Sistem</span>
+        <span>14</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.3 Implementasi Sistem</span>
+        <span>18</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.4 Testing dan Evaluasi</span>
+        <span>22</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.5 Deployment dan Production</span>
+        <span>24</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>4.6 Hasil Implementasi</span>
+        <span>25</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>BAB V PENUTUP</span>
+        <span>27</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>5.1 Kesimpulan</span>
+        <span>27</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>5.2 Saran</span>
+        <span>28</span>
+    </div>
+    <div class="toc-item level-2">
+        <span>5.3 Refleksi Pembelajaran</span>
+        <span>29</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>DAFTAR PUSTAKA</span>
+        <span>30</span>
+    </div>
+    
+    <div class="toc-item level-1">
+        <span>LAMPIRAN</span>
+        <span>31</span>
+</div>
+
+<!-- CONTENT PAGES -->
+<!-- BAB I -->
+<div class="page-break content-page">
+    <h1>BAB I<br>PENDAHULUAN</h1>
+    
+    <h2>1.1 Latar Belakang</h2>
+    <p>Perkembangan teknologi informasi yang pesat telah mengubah cara perusahaan dalam mengelola operasional bisnis mereka. Sistem manajemen inventori merupakan salah satu aspek penting dalam operasional perusahaan, terutama untuk perusahaan manufaktur seperti PT Petronika yang bergerak di bidang industri kimia.</p>
+    
+    <p>PT Petronika sebagai perusahaan yang memproduksi bahan kimia seperti DOP (Dioctyl Phthalate) dan DINP (Diisononyl Phthalate) memerlukan sistem yang efisien untuk mengelola inventori bahan baku dan produk jadi. Pengelolaan inventori yang masih manual dapat menyebabkan berbagai masalah seperti:</p>
+    
+    <ol>
+        <li>Kesulitan dalam tracking stok real-time</li>
+        <li>Human error dalam pencatatan</li>
+        <li>Ineffisiensi dalam perencanaan produksi</li>
+        <li>Kesulitan dalam pembuatan laporan</li>
+    </ol>
+    
+    <p>Berdasarkan permasalahan tersebut, dikembangkanlah sistem manajemen inventori berbasis web yang dapat membantu PT Petronika dalam mengelola inventori secara lebih efisien dan akurat.</p>
+    
+    <h2>1.2 Rumusan Masalah</h2>
+    <p>Berdasarkan latar belakang di atas, rumusan masalah dalam pengembangan sistem ini adalah:</p>
+    <ol>
+        <li>Bagaimana merancang sistem manajemen inventori yang sesuai dengan kebutuhan PT Petronika?</li>
+        <li>Bagaimana mengimplementasikan sistem manajemen inventori berbasis web menggunakan teknologi modern?</li>
+        <li>Bagaimana sistem dapat memberikan informasi real-time mengenai status inventori?</li>
+        <li>Bagaimana sistem dapat menghasilkan laporan yang komprehensif untuk mendukung pengambilan keputusan?</li>
+    </ol>
+    
+    <h2>1.3 Tujuan</h2>
+    <p>Tujuan dari pengembangan sistem manajemen inventori ini adalah:</p>
+    <p><strong>Tujuan Umum:</strong></p>
+    <ul>
+        <li>Mengembangkan sistem manajemen inventori berbasis web untuk PT Petronika</li>
+        <li>Meningkatkan efisiensi pengelolaan inventori perusahaan</li>
+    </ul>
+    <p><strong>Tujuan Khusus:</strong></p>
+    <ul>
+        <li>Merancang database yang optimal untuk menyimpan data inventori</li>
+        <li>Mengimplementasikan fitur CRUD (Create, Read, Update, Delete) untuk manajemen data</li>
+        <li>Membuat sistem tracking stok real-time</li>
+        <li>Mengembangkan fitur pelaporan yang komprehensif</li>
+        <li>Membuat interface yang user-friendly dan responsive</li>
+    </ul>
+    
+    <h2>1.4 Manfaat</h2>
+    <p>Manfaat yang diharapkan dari pengembangan sistem ini adalah:</p>
+    <p><strong>Bagi Perusahaan:</strong></p>
+    <ul>
+        <li>Meningkatkan akurasi data inventori</li>
+        <li>Mengurangi human error dalam pencatatan</li>
+        <li>Mempercepat proses pelaporan</li>
+        <li>Mendukung pengambilan keputusan yang lebih baik</li>
+    </ul>
+    <p><strong>Bagi Siswa:</strong></p>
+    <ul>
+        <li>Mendapatkan pengalaman praktis dalam pengembangan sistem</li>
+        <li>Meningkatkan kemampuan programming dan problem solving</li>
+        <li>Memahami kebutuhan industri dalam bidang IT</li>
+    </ul>
+    
+    <h2>1.5 Batasan Masalah</h2>
+    <p>Untuk memfokuskan pengembangan sistem, batasan masalah yang ditetapkan adalah:</p>
+    <ol>
+        <li>Sistem difokuskan pada manajemen inventori bahan baku dan produk jadi</li>
+        <li>Sistem tidak mencakup modul accounting/keuangan</li>
+        <li>Sistem dikembangkan berbasis web dengan teknologi Next.js dan ASP.NET Core</li>
+        <li>Implementasi dibatasi pada lingkungan PT Petronika</li>
+    </ol>
+</div>
+
+<!-- BAB II -->
+<div class="page-break content-page">
+    <h1>BAB II<br>GAMBARAN UMUM PERUSAHAAN</h1>
+    
+    <h2>2.1 Profil Perusahaan</h2>
+    <p><strong>PT Petronika</strong> adalah perusahaan manufaktur yang bergerak di bidang industri kimia, khususnya dalam produksi plasticizer seperti DOP (Dioctyl Phthalate) dan DINP (Diisononyl Phthalate). Perusahaan ini telah berdiri sejak [tahun berdiri] dan telah menjadi salah satu supplier terpercaya untuk industri plastik di Indonesia.</p>
+    
+    <h2>2.2 Visi dan Misi</h2>
+    <p><strong>Visi:</strong></p>
+    <p>Menjadi perusahaan manufaktur kimia terdepan di Indonesia yang mengutamakan kualitas, inovasi, dan keberlanjutan lingkungan.</p>
+    <p><strong>Misi:</strong></p>
+    <ol>
+        <li>Memproduksi bahan kimia berkualitas tinggi sesuai standar internasional</li>
+        <li>Memberikan pelayanan terbaik kepada pelanggan</li>
+        <li>Mengembangkan teknologi produksi yang ramah lingkungan</li>
+        <li>Memberdayakan sumber daya manusia yang kompeten</li>
+    </ol>
+    
+    <h2>2.3 Struktur Organisasi</h2>
+    <p>PT Petronika memiliki struktur organisasi yang terdiri dari:</p>
+    <ul>
+        <li>Direktur Utama</li>
+        <li>Direktur Operasional</li>
+        <li>Direktur Keuangan</li>
+        <li>Manager Produksi</li>
+        <li>Manager Quality Control</li>
+        <li>Manager Logistik dan Inventori</li>
+        <li>Staff operasional</li>
+    </ul>
+    
+    <h2>2.4 Produk Utama</h2>
+    <p><strong>1. DOP (Dioctyl Phthalate)</strong></p>
+    <ul>
+        <li>Digunakan sebagai plasticizer untuk PVC</li>
+        <li>Kapasitas produksi: [kapasitas] ton/bulan</li>
+    </ul>
+    <p><strong>2. DINP (Diisononyl Phthalate)</strong></p>
+    <ul>
+        <li>Alternatif plasticizer yang lebih ramah lingkungan</li>
+        <li>Kapasitas produksi: [kapasitas] ton/bulan</li>
+    </ul>
+    
+    <h2>2.5 Sistem Inventori Existing</h2>
+    <p>Sebelum implementasi sistem baru, PT Petronika menggunakan:</p>
+    <ul>
+        <li>Pencatatan manual menggunakan Microsoft Excel</li>
+        <li>Filing dokumen fisik untuk transaksi inventori</li>
+        <li>Pengecekan stok secara manual berkala</li>
+        <li>Laporan dibuat secara manual setiap akhir bulan</li>
+    </ul>
+    <p><strong>Permasalahan sistem existing:</strong></p>
+    <ul>
+        <li>Data tidak real-time</li>
+        <li>Rentan terhadap human error</li>
+        <li>Proses pelaporan memakan waktu lama</li>
+        <li>Sulit untuk tracking history transaksi</li>
+        <li>Tidak ada alert untuk stok minimum</li>
+    </ul>
+</div>
+
+<!-- BAB III -->
+<div class="page-break content-page">
+    <h1>BAB III<br>PELAKSANAAN PRAKERIN</h1>
+    
+    <h2>3.1 Waktu dan Tempat Pelaksanaan</h2>
+    <p><strong>Waktu Pelaksanaan:</strong></p>
+    <ul class="no-indent">
+        <li>Periode: [tanggal mulai] - [tanggal selesai]</li>
+        <li>Durasi: [jumlah] bulan</li>
+        <li>Jam kerja: 08.00 - 17.00 WIB (Senin - Jumat)</li>
+    </ul>
+    <p><strong>Tempat Pelaksanaan:</strong></p>
+    <p class="no-indent">PT Petronika<br>[Alamat lengkap perusahaan]</p>
+    
+    <h2>3.2 Kegiatan yang Dilakukan</h2>
+    
+    <h3>3.2.1 Minggu 1-2: Orientasi dan Analisis Kebutuhan</h3>
+    <ul>
+        <li>Pengenalan lingkungan kerja dan budaya perusahaan</li>
+        <li>Observasi sistem inventori yang sedang berjalan</li>
+        <li>Wawancara dengan user untuk memahami kebutuhan</li>
+        <li>Identifikasi permasalahan dan requirement sistem</li>
+    </ul>
+    
+    <h3>3.2.2 Minggu 3-4: Perencanaan dan Desain Sistem</h3>
+    <ul>
+        <li>Pembuatan ERD (Entity Relationship Diagram)</li>
+        <li>Desain database sistem inventori</li>
+        <li>Pembuatan wireframe dan mockup interface</li>
+        <li>Perencanaan arsitektur sistem</li>
+    </ul>
+    
+    <h3>3.2.3 Minggu 5-8: Pengembangan Backend</h3>
+    <ul>
+        <li>Setup project ASP.NET Core</li>
+        <li>Implementasi Entity Framework untuk database</li>
+        <li>Pengembangan API endpoints untuk:
+            <ul>
+                <li>Manajemen bahan baku (Raw Materials)</li>
+                <li>Manajemen produk jadi (Finished Products)</li>
+                <li>Manajemen supplier</li>
+                <li>Transaksi stok (Stock Transactions)</li>
+                <li>Dashboard dan laporan</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>3.2.4 Minggu 9-12: Pengembangan Frontend</h3>
+    <ul>
+        <li>Setup project Next.js dengan TypeScript</li>
+        <li>Implementasi authentication dan authorization</li>
+        <li>Pengembangan interface untuk:
+            <ul>
+                <li>Dashboard utama</li>
+                <li>Manajemen master data</li>
+                <li>Recording transaksi stok</li>
+                <li>Sistem pelaporan</li>
+            </ul>
+        </li>
+        <li>Implementasi responsive design untuk mobile</li>
+    </ul>
+    
+    <h3>3.2.5 Minggu 13-14: Testing dan Deployment</h3>
+    <ul>
+        <li>Unit testing untuk semua fungsi</li>
+        <li>Integration testing</li>
+        <li>User Acceptance Testing (UAT)</li>
+        <li>Deployment ke server production</li>
+        <li>Training user dan dokumentasi</li>
+    </ul>
+    
+    <h3>3.2.6 Minggu 15-16: Finalisasi dan Dokumentasi</h3>
+    <ul>
+        <li>Bug fixing berdasarkan feedback user</li>
+        <li>Pembuatan dokumentasi teknis</li>
+        <li>Pembuatan user manual</li>
+        <li>Finalisasi laporan prakerin</li>
+    </ul>
+    
+    <h2>3.3 Tools dan Teknologi yang Digunakan</h2>
+    
+    <h3>3.3.1 Backend Development</h3>
+    <ul>
+        <li><strong>Framework:</strong> ASP.NET Core 8.0</li>
+        <li><strong>Database:</strong> SQL Server</li>
+        <li><strong>ORM:</strong> Entity Framework Core</li>
+        <li><strong>Authentication:</strong> JWT (JSON Web Token)</li>
+        <li><strong>API Documentation:</strong> Swagger/OpenAPI</li>
+    </ul>
+    
+    <h3>3.3.2 Frontend Development</h3>
+    <ul>
+        <li><strong>Framework:</strong> Next.js 15.4.7</li>
+        <li><strong>Language:</strong> TypeScript</li>
+        <li><strong>Styling:</strong> Tailwind CSS</li>
+        <li><strong>State Management:</strong> React Context API</li>
+        <li><strong>HTTP Client:</strong> Axios</li>
+        <li><strong>Build Tool:</strong> Webpack (built-in Next.js)</li>
+    </ul>
+    
+    <h3>3.3.3 Development Tools</h3>
+    <ul>
+        <li><strong>IDE:</strong> Visual Studio Code</li>
+        <li><strong>Version Control:</strong> Git & GitHub</li>
+        <li><strong>Database Management:</strong> SQL Server Management Studio</li>
+        <li><strong>API Testing:</strong> Postman</li>
+        <li><strong>Design:</strong> Figma (untuk mockup)</li>
+    </ul>
+    
+    <h3>3.3.4 Deployment</h3>
+    <ul>
+        <li><strong>Frontend:</strong> Vercel</li>
+        <li><strong>Backend:</strong> [Server production perusahaan]</li>
+        <li><strong>Database:</strong> SQL Server on Windows Server</li>
+    </ul>
+    
+    <h2>3.4 Metodologi Pengembangan</h2>
+    <p>Metodologi yang digunakan adalah <strong>Agile Development</strong> dengan pendekatan <strong>Scrum</strong>, yang meliputi:</p>
+    <ol>
+        <li><strong>Sprint Planning:</strong> Perencanaan fitur untuk setiap sprint (2 minggu)</li>
+        <li><strong>Daily Standup:</strong> Meeting harian dengan pembimbing lapangan</li>
+        <li><strong>Sprint Review:</strong> Review hasil pengembangan setiap akhir sprint</li>
+        <li><strong>Sprint Retrospective:</strong> Evaluasi proses dan improvement</li>
+    </ol>
+
+    
+    <h3>3.4.3 Tools dan Framework</h3>
+    <p><strong>Frontend Development:</strong></p>
+    <ul>
+        <li><strong>Next.js 15.4.7:</strong> React framework untuk production</li>
+        <li><strong>TypeScript:</strong> Type safety untuk JavaScript</li>
+        <li><strong>Tailwind CSS:</strong> Utility-first CSS framework</li>
+        <li><strong>Axios:</strong> HTTP client untuk API calls</li>
+    </ul>
+    
+    <p><strong>Backend Development:</strong></p>
+    <ul>
+        <li><strong>ASP.NET Core 8.0:</strong> Web API framework</li>
+        <li><strong>Entity Framework Core:</strong> ORM untuk database operations</li>
+        <li><strong>SQL Server:</strong> Relational database management system</li>
+        <li><strong>JWT:</strong> JSON Web Token untuk authentication</li>
+    </ul>
+    
+    <p><strong>Development Tools:</strong></p>
+    <ul>
+        <li><strong>Visual Studio Code:</strong> Code editor</li>
+        <li><strong>Visual Studio 2022:</strong> IDE untuk .NET development</li>
+        <li><strong>SQL Server Management Studio:</strong> Database management</li>
+        <li><strong>Postman:</strong> API testing tool</li>
+        <li><strong>Git:</strong> Version control system</li>
+    </ul>
+
+</div>
+
+<!-- BAB IV -->
+<div class="page-break content-page">
+    <h1>BAB IV<br>HASIL DAN PEMBAHASAN</h1>
+    
+    <h2>4.1 Analisis Kebutuhan Sistem</h2>
+    
+    <h3>4.1.1 Kebutuhan Functional</h3>
+    <p><strong>1. Manajemen Master Data</strong></p>
+    <ul>
+        <li>CRUD Raw Materials (Bahan Baku)</li>
+        <li>CRUD Finished Products (Produk Jadi)</li>
+        <li>CRUD Suppliers (Pemasok)</li>
+        <li>CRUD Users dan Role Management</li>
+    </ul>
+    
+    <p><strong>2. Manajemen Transaksi</strong></p>
+    <ul>
+        <li>Recording Stock In (Penerimaan Barang)</li>
+        <li>Recording Stock Out (Pengeluaran Barang)</li>
+        <li>History tracking semua transaksi</li>
+        <li>Validation business rules</li>
+    </ul>
+    
+    <p><strong>3. Dashboard dan Monitoring</strong></p>
+    <ul>
+        <li>Real-time stock status</li>
+        <li>Alert untuk low stock items</li>
+        <li>Summary statistics (total items, transactions, dll)</li>
+        <li>Quick actions untuk user</li>
+    </ul>
+    
+    <p><strong>4. Sistem Pelaporan</strong></p>
+    <ul>
+        <li>Laporan stok current</li>
+        <li>Laporan transaksi berdasarkan periode</li>
+        <li>Laporan low stock items</li>
+        <li>Export laporan ke format Excel</li>
+    </ul>
+    
+    <p><strong>5. Authentication & Authorization</strong></p>
+    <ul>
+        <li>Login system dengan session management</li>
+        <li>Role-based access control (Admin, User)</li>
+        <li>Password security dan session timeout</li>
+    </ul>
+    
+    <h3>4.1.2 Kebutuhan Non-Functional</h3>
+    <p><strong>1. Performance</strong></p>
+    <ul>
+        <li>Response time < 3 detik untuk setiap request</li>
+        <li>Support concurrent users hingga 50 user</li>
+        <li>Database query optimization</li>
+    </ul>
+    
+    <p><strong>2. Security</strong></p>
+    <ul>
+        <li>HTTPS encryption untuk semua komunikasi</li>
+        <li>SQL injection prevention</li>
+        <li>XSS (Cross-Site Scripting) protection</li>
+        <li>CORS (Cross-Origin Resource Sharing) configuration</li>
+    </ul>
+    
+    <p><strong>3. Usability</strong></p>
+    <ul>
+        <li>User-friendly interface</li>
+        <li>Responsive design untuk mobile dan desktop</li>
+        <li>Intuitive navigation</li>
+        <li>Error handling yang informatif</li>
+    </ul>
+    
+    <p><strong>4. Reliability</strong></p>
+    <ul>
+        <li>System uptime 99%</li>
+        <li>Automatic error logging</li>
+        <li>Data backup mechanism</li>
+        <li>Graceful error handling</li>
+    </ul>
+    
+    <h2>4.2 Desain Sistem</h2>
+    
+    <h3>4.2.1 Arsitektur Sistem</h3>
+    <p>Sistem menggunakan arsitektur <strong>3-Tier Architecture</strong>:</p>
+    
+    <p><strong>1. Presentation Layer (Frontend)</strong></p>
+    <ul>
+        <li>Next.js Application dengan TypeScript</li>
+        <li>Responsive UI menggunakan Tailwind CSS</li>
+        <li>Client-side state management dengan React Context</li>
+    </ul>
+    
+    <p><strong>2. Business Logic Layer (Backend)</strong></p>
+    <ul>
+        <li>ASP.NET Core Web API</li>
+        <li>Business logic dan validation rules</li>
+        <li>JWT-based authentication</li>
+        <li>RESTful API design</li>
+    </ul>
+    
+    <p><strong>3. Data Access Layer (Database)</strong></p>
+    <ul>
+        <li>SQL Server database</li>
+        <li>Entity Framework Core sebagai ORM</li>
+        <li>Database migrations untuk version control</li>
+        <li>Stored procedures untuk complex queries</li>
+    </ul>
+    
+    <h3>4.2.2 Database Design</h3>
+    <p><strong>Tabel Utama:</strong></p>
+    
+    <p><strong>1. Users</strong></p>
+    <div class="code-block">
+- Id (int, PK, Identity)
+- Username (nvarchar(50), Unique)
+- Password (nvarchar(255))
+- Name (nvarchar(100))
+- Role (nvarchar(20))
+- IsActive (bit)
+- CreatedAt (datetime2)
+- UpdatedAt (datetime2)
+    </div>
+    
+    <p><strong>2. Suppliers</strong></p>
+    <div class="code-block">
+- Id (int, PK, Identity)
+- Name (nvarchar(100))
+- Code (nvarchar(20), Unique)
+- Contact (nvarchar(100))
+- Phone (nvarchar(20))
+- Email (nvarchar(100))
+- IsActive (bit)
+- CreatedAt (datetime2)
+- UpdatedAt (datetime2)
+    </div>
+    
+    <p><strong>3. RawMaterials</strong></p>
+    <div class="code-block">
+- Id (int, PK, Identity)
+- Name (nvarchar(100))
+- Code (nvarchar(20), Unique)
+- Description (nvarchar(500))
+- Unit (nvarchar(20))
+- CurrentStock (decimal(18,2))
+- MinimumStock (decimal(18,2))
+- Price (decimal(18,2))
+- SupplierId (int, FK to Suppliers)
+- CreatedAt (datetime2)
+- UpdatedAt (datetime2)
+    </div>
+    
+    <p><strong>4. FinishedProducts</strong></p>
+    <div class="code-block">
+- Id (int, PK, Identity)
+- Name (nvarchar(100))
+- Code (nvarchar(20), Unique)
+- Description (nvarchar(500))
+- Unit (nvarchar(20))
+- CurrentStock (decimal(18,2))
+- MinimumStock (decimal(18,2))
+- Price (decimal(18,2))
+- CreatedAt (datetime2)
+- UpdatedAt (datetime2)
+    </div>
+    
+    <p><strong>5. StockTransactions</strong></p>
+    <div class="code-block">
+- Id (int, PK, Identity)
+- ItemId (int)
+- ItemType (nvarchar(20)) -- 'RAW_MATERIAL' atau 'FINISHED_PRODUCT'
+- TransactionType (nvarchar(10)) -- 'IN' atau 'OUT'
+- Quantity (decimal(18,2))
+- Unit (nvarchar(20))
+- Reference (nvarchar(50))
+- Notes (nvarchar(500))
+- UserId (int, FK to Users)
+- CreatedAt (datetime2)
+    </div>
+    
+    <h3>4.2.3 API Design</h3>
+    <p><strong>Base URL:</strong> <code>https://simamen.belakanglayar.com/api</code></p>
+    
+    <p><strong>Authentication Endpoints:</strong></p>
+    <ul>
+        <li><code>POST /auth/login</code> - User login</li>
+        <li><code>POST /auth/logout</code> - User logout</li>
+        <li><code>GET /auth/me</code> - Get current user info</li>
+    </ul>
+    
+    <p><strong>Raw Materials Endpoints:</strong></p>
+    <ul>
+        <li><code>GET /raw-materials</code> - Get all raw materials</li>
+        <li><code>POST /raw-materials</code> - Create new raw material</li>
+        <li><code>PUT /raw-materials/{id}</code> - Update raw material</li>
+        <li><code>DELETE /raw-materials/{id}</code> - Delete raw material</li>
+    </ul>
+    
+    <p><strong>Finished Products Endpoints:</strong></p>
+    <ul>
+        <li><code>GET /finished-products</code> - Get all finished products</li>
+        <li><code>POST /finished-products</code> - Create new finished product</li>
+        <li><code>PUT /finished-products/{id}</code> - Update finished product</li>
+        <li><code>DELETE /finished-products/{id}</code> - Delete finished product</li>
+    </ul>
+    
+    <p><strong>Suppliers Endpoints:</strong></p>
+    <ul>
+        <li><code>GET /suppliers</code> - Get all suppliers</li>
+        <li><code>POST /suppliers</code> - Create new supplier</li>
+        <li><code>PUT /suppliers/{id}</code> - Update supplier</li>
+        <li><code>DELETE /suppliers/{id}</code> - Delete supplier</li>
+    </ul>
+    
+    <p><strong>Stock Transactions Endpoints:</strong></p>
+    <ul>
+        <li><code>GET /stock-transactions</code> - Get all transactions</li>
+        <li><code>POST /stock-transactions</code> - Create new transaction</li>
+        <li><code>GET /stock-transactions/by-item/{itemId}</code> - Get transactions by item</li>
+    </ul>
+    
+    <p><strong>Dashboard Endpoints:</strong></p>
+    <ul>
+        <li><code>GET /dashboard/stats</code> - Get dashboard statistics</li>
+        <li><code>GET /dashboard/low-stock-alerts</code> - Get low stock alerts</li>
+    </ul>
+    
+    <h2>4.3 Implementasi Sistem</h2>
+    
+    <h3>4.3.1 Backend Implementation</h3>
+    <p><strong>1. Project Structure:</strong></p>
+    <div class="project-structure">
+        <div class="folder-tree">
+            <div class="tree-item folder">
+                <span class="folder-icon">📁</span>
+                <span class="item-name">dapin-be/</span>
+                <div class="tree-children">
+                    <div class="tree-item folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="item-name">Controllers/</span>
+                        <span class="description"># API Controllers</span>
+                        <div class="tree-children">
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">AuthController.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">RawMaterialsController.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">FinishedProductsController.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">SuppliersController.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">StockTransactionsController.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">DashboardController.cs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tree-item folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="item-name">Models/</span>
+                        <span class="description"># Entity Models</span>
+                        <div class="tree-children">
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">User.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">RawMaterial.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">FinishedProduct.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">Supplier.cs</span>
+                            </div>
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">StockTransaction.cs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tree-item folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="item-name">Data/</span>
+                        <span class="description"># Database Context</span>
+                        <div class="tree-children">
+                            <div class="tree-item file">
+                                <span class="file-icon">📄</span>
+                                <span class="item-name">ApplicationDbContext.cs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tree-item folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="item-name">Services/</span>
+                        <span class="description"># Business Logic Services</span>
+                    </div>
+                    <div class="tree-item folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="item-name">Migrations/</span>
+                        <span class="description"># EF Migrations</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="file-icon">📄</span>
+                        <span class="item-name">Program.cs</span>
+                        <span class="description"># Application Entry Point</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <p><strong>2. Key Implementation Highlights:</strong></p>
+    
+    <p><strong>Authentication dengan JWT:</strong></p>
+    <div class="code-block">
+[HttpPost("login")]
+public async Task&lt;IActionResult&gt; Login([FromBody] LoginRequest request)
+{
+    var user = await _context.Users
+        .FirstOrDefaultAsync(u =&gt; u.Username == request.Username && u.IsActive);
+    
+    if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+    {
+        return Unauthorized(new { success = false, message = "Invalid credentials" });
+    }
+
+    var token = GenerateJwtToken(user);
+    
+    return Ok(new { 
+        success = true, 
+        data = new { 
+            token, 
+            user = new { user.Id, user.Username, user.Name, user.Role } 
+        } 
+    });
+}
+    </div>
+    
+    <p><strong>CRUD Operations dengan Entity Framework:</strong></p>
+    <div class="code-block">
+[HttpGet]
+public async Task&lt;IActionResult&gt; GetRawMaterials()
+{
+    var rawMaterials = await _context.RawMaterials
+        .Include(rm =&gt; rm.Supplier)
+        .ToListAsync();
+    
+    return Ok(new { success = true, data = rawMaterials });
+}
+
+[HttpPost]
+public async Task&lt;IActionResult&gt; CreateRawMaterial([FromBody] RawMaterial rawMaterial)
+{
+    rawMaterial.CreatedAt = DateTime.UtcNow;
+    rawMaterial.UpdatedAt = DateTime.UtcNow;
+    
+    _context.RawMaterials.Add(rawMaterial);
+    await _context.SaveChangesAsync();
+    
+    return Ok(new { success = true, data = rawMaterial });
+}
+    </div>
+    
+    <p><strong>Stock Transaction dengan Business Logic:</strong></p>
+    <div class="code-block">
+[HttpPost]
+public async Task&lt;IActionResult&gt; CreateTransaction([FromBody] StockTransaction transaction)
+{
+    // Validate and update stock based on transaction type
+    if (transaction.ItemType == "RAW_MATERIAL")
+    {
+        var rawMaterial = await _context.RawMaterials.FindAsync(transaction.ItemId);
+        if (rawMaterial == null) return NotFound();
+        
+        if (transaction.TransactionType == "IN")
+            rawMaterial.CurrentStock += transaction.Quantity;
+        else
+        {
+            if (rawMaterial.CurrentStock &lt; transaction.Quantity)
+                return BadRequest("Insufficient stock");
+            rawMaterial.CurrentStock -= transaction.Quantity;
+        }
+    }
+    
+    transaction.CreatedAt = DateTime.UtcNow;
+    _context.StockTransactions.Add(transaction);
+    await _context.SaveChangesAsync();
+    
+    return Ok(new { success = true, data = transaction });
+}
+    </div>
+    
+    <h3>4.3.2 Frontend Implementation</h3>
+    <p><strong>1. Project Structure:</strong></p>
+    <div class="project-structure">
+        <div class="folder-tree">
+            <div class="tree-item root">
+                📁 <strong>inventory-react/</strong> <em>- Root directory aplikasi React</em>
+            </div>
+            <div class="tree-item level-1">
+                📁 <strong>src/</strong> <em>- Source code utama aplikasi</em>
+                <div class="tree-item level-2">
+                    📁 <strong>app/</strong> <em>- Next.js App Router untuk routing berbasis file</em>
+                    <div class="tree-item level-3">
+                        📁 <strong>dashboard/</strong> <em>- Halaman dashboard utama dengan overview statistik</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>raw-materials/</strong> <em>- Manajemen bahan baku (CRUD operations)</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>finished-products/</strong> <em>- Manajemen produk jadi dan stok</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>suppliers/</strong> <em>- Data supplier dan vendor management</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>transactions/</strong> <em>- Transaksi stok masuk dan keluar</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>reports/</strong> <em>- Laporan dan analisis inventory</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>login/</strong> <em>- Halaman autentikasi pengguna</em>
+                    </div>
+                </div>
+                <div class="tree-item level-2">
+                    📁 <strong>components/</strong> <em>- Komponen React yang dapat digunakan ulang</em>
+                    <div class="tree-item level-3">
+                        📄 <strong>Layout.tsx</strong> <em>- Template layout utama dengan navigation</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📄 <strong>ProtectedRoute.tsx</strong> <em>- HOC untuk proteksi route yang memerlukan autentikasi</em>
+                    </div>
+                    <div class="tree-item level-3">
+                        📁 <strong>ui/</strong> <em>- Komponen UI dasar (Button, Input, Card, dll)</em>
+                    </div>
+                </div>
+                <div class="tree-item level-2">
+                    📁 <strong>contexts/</strong> <em>- React Contexts untuk state management global</em>
+                    <div class="tree-item level-3">
+                        📄 <strong>AuthContext.tsx</strong> <em>- Context untuk manajemen state autentikasi</em>
+                    </div>
+                </div>
+                <div class="tree-item level-2">
+                    📁 <strong>services/</strong> <em>- Layer service untuk komunikasi dengan API</em>
+                    <div class="tree-item level-3">
+                        📄 <strong>api.ts</strong> <em>- Konfigurasi axios dan endpoint API calls</em>
+                    </div>
+                </div>
+                <div class="tree-item level-2">
+                    📁 <strong>types/</strong> <em>- TypeScript type definitions dan interfaces</em>
+                    <div class="tree-item level-3">
+                        📄 <strong>inventory.ts</strong> <em>- Interface untuk data inventory dan models</em>
+                    </div>
+                </div>
+                <div class="tree-item level-2">
+                    📁 <strong>lib/</strong> <em>- Utility functions dan helper libraries</em>
+                    <div class="tree-item level-3">
+                        📄 <strong>sessionManager.ts</strong> <em>- Manajemen session dan token storage</em>
+                    </div>
+                </div>
+            </div>
+            <div class="tree-item level-1">
+                📁 <strong>public/</strong> <em>- Static assets dan file public yang dapat diakses langsung</em>
+            </div>
+            <div class="tree-item level-1">
+                📄 <strong>package.json</strong> <em>- Konfigurasi dependencies dan scripts npm</em>
+            </div>
+        </div>
+    </div>
+    
+    <p><strong>2. Key Implementation Highlights:</strong></p>
+    
+    <p><strong>Authentication Context:</strong></p>
+    <div class="code-block">
+export const AuthProvider: React.FC&lt;{ children: React.ReactNode }&gt; = ({ children }) =&gt; {
+  const [user, setUser] = useState&lt;User | null&gt;(null);
+  const [loading, setLoading] = useState(true);
+
+  const login = async (username: string, password: string): Promise&lt;boolean&gt; =&gt; {
+    try {
+      const response = await authApi.login({ username, password });
+      if (response.data.success) {
+        const { token, user: userData } = response.data.data;
+        sessionManager.storeUserSession(token, userData);
+        setUser(userData as unknown as User);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Login failed:', error);
+      return false;
+    }
+  };
+
+  const logout = () =&gt; {
+    sessionManager.clearSession();
+    setUser(null);
+  };
+
+  return (
+    &lt;AuthContext.Provider value={{ user, login, logout, loading }}&gt;
+      {children}
+    &lt;/AuthContext.Provider&gt;
+  );
+};
+    </div>
+    
+    <p><strong>Responsive Dashboard:</strong></p>
+    <div class="code-block">
+export default function Dashboard() {
+  const [stats, setStats] = useState&lt;DashboardStats | null&gt;(null);
+
+  return (
+    &lt;Layout&gt;
+      &lt;div className="space-y-4 sm:space-y-6 p-4 sm:p-0"&gt;
+        &lt;div className="text-center sm:text-left"&gt;
+          &lt;h1 className="text-2xl sm:text-3xl font-bold text-gray-900"&gt;Dashboard&lt;/h1&gt;
+          &lt;p className="text-gray-600 text-sm sm:text-base"&gt;Overview of inventory status&lt;/p&gt;
+        &lt;/div&gt;
+
+        {/* Stats Cards - Responsive Grid */}
+        &lt;div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"&gt;
+          &lt;StatsCard
+            title="Raw Materials"
+            value={stats?.totalRawMaterials || 0}
+            subtitle="Total items"
+            icon={&lt;span className="text-2xl"&gt;🏭&lt;/span&gt;}
+            color="blue"
+          /&gt;
+          {/* More stats cards... */}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/Layout&gt;
+  );
+}
+    </div>
+    
+    <p><strong>Mobile-First Design Implementation:</strong></p>
+    <div class="code-block">
+{/* Desktop Table View */}
+&lt;div className="hidden lg:block"&gt;
+  &lt;table className="min-w-full divide-y divide-gray-200"&gt;
+    &lt;thead className="bg-gray-50"&gt;
+      &lt;tr&gt;
+        &lt;th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"&gt;
+          Code
+        &lt;/th&gt;
+        {/* More columns... */}
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      {/* Table rows... */}
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+{/* Mobile Card View */}
+&lt;div className="lg:hidden space-y-4"&gt;
+  {items.map((item) =&gt; (
+    &lt;div key={item.id} className="bg-white p-4 rounded-lg border"&gt;
+      &lt;div className="flex justify-between items-start"&gt;
+        &lt;div&gt;
+          &lt;h3 className="font-semibold text-gray-900"&gt;{item.name}&lt;/h3&gt;
+          &lt;p className="text-sm text-gray-600"&gt;{item.code}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800"&gt;
+          {item.currentStock} {item.unit}
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+    </div>
+    
+    <h2>4.4 Testing dan Evaluasi</h2>
+    
+    <h3>4.4.1 Unit Testing</h3>
+    <p><strong>Backend Testing:</strong></p>
+    <ul>
+        <li>Controller unit tests menggunakan xUnit</li>
+        <li>Service layer testing dengan mock dependencies</li>
+        <li>Database integration testing dengan InMemory provider</li>
+        <li>API endpoint testing dengan WebApplicationFactory</li>
+    </ul>
+    
+    <p><strong>Frontend Testing:</strong></p>
+    <ul>
+        <li>Component testing dengan Jest dan React Testing Library</li>
+        <li>API service testing dengan mock axios</li>
+        <li>User interaction testing</li>
+        <li>Responsive design testing pada berbagai device</li>
+    </ul>
+    
+    <h3>4.4.2 Integration Testing</h3>
+    <p><strong>API Integration Testing:</strong></p>
+    <ul>
+        <li>End-to-end API testing dengan Postman</li>
+        <li>Authentication flow testing</li>
+        <li>CRUD operations testing</li>
+        <li>Error handling testing</li>
+    </ul>
+    
+    <p><strong>Database Testing:</strong></p>
+    <ul>
+        <li>Database migration testing</li>
+        <li>Data integrity testing</li>
+        <li>Foreign key constraint testing</li>
+        <li>Performance testing dengan large dataset</li>
+    </ul>
+    
+    <h3>4.4.3 User Acceptance Testing</h3>
+    <p><strong>Functional Testing:</strong></p>
+    <ul>
+        <li>Login/logout functionality</li>
+        <li>CRUD operations untuk semua entities</li>
+        <li>Stock transaction recording</li>
+        <li>Dashboard statistics display</li>
+        <li>Report generation</li>
+    </ul>
+    
+    <p><strong>Usability Testing:</strong></p>
+    <ul>
+        <li>Navigation intuitive testing</li>
+        <li>Mobile responsiveness testing</li>
+        <li>Error message clarity</li>
+        <li>Performance pada berbagai browser</li>
+    </ul>
+    
+    <h2>4.5 Deployment dan Production</h2>
+    
+    <h3>4.5.1 Backend Deployment</h3>
+    <p><strong>Production Environment:</strong></p>
+    <ul>
+        <li><strong>Server:</strong> Windows Server 2019</li>
+        <li><strong>Web Server:</strong> IIS (Internet Information Services)</li>
+        <li><strong>Database:</strong> SQL Server 2019</li>
+        <li><strong>URL:</strong> https://simamen.belakanglayar.com</li>
+    </ul>
+    
+    <p><strong>Deployment Process:</strong></p>
+    <ol>
+        <li>Build application dalam Release mode</li>
+        <li>Publish ke folder output</li>
+        <li>Upload files ke production server</li>
+        <li>Update connection string untuk production database</li>
+        <li>Run database migrations</li>
+        <li>Configure IIS application pool</li>
+        <li>Test production deployment</li>
+    </ol>
+    
+    <h3>4.5.2 Frontend Deployment</h3>
+    <p><strong>Vercel Deployment:</strong></p>
+    <ul>
+        <li>Build optimization dengan Next.js</li>
+        <li>Environment variables configuration</li>
+        <li>Static asset optimization</li>
+        <li>Domain configuration</li>
+    </ul>
+    
+    <p><strong>Production Configuration:</strong></p>
+    <div class="code-block">
+// next.config.ts
+const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_API_URL: 'https://simamen.belakanglayar.com/api'
+  },
+  output: 'standalone',
+  images: {
+    unoptimized: true
+  }
+};
+    </div>
+    
+    <h2>4.6 Hasil Implementasi</h2>
+    
+    <h3>4.6.1 Fitur yang Berhasil Diimplementasikan</h3>
+    <p><strong>1. Authentication System</strong></p>
+    <ul>
+        <li>✅ Login dengan username/password</li>
+        <li>✅ JWT-based session management</li>
+        <li>✅ Role-based access control</li>
+        <li>✅ Session timeout handling</li>
+    </ul>
+    
+    <p><strong>2. Master Data Management</strong></p>
+    <ul>
+        <li>✅ Raw Materials CRUD operations</li>
+        <li>✅ Finished Products CRUD operations</li>
+        <li>✅ Suppliers CRUD operations</li>
+        <li>✅ Data validation dan error handling</li>
+    </ul>
+    
+    <p><strong>3. Stock Management</strong></p>
+    <ul>
+        <li>✅ Stock In/Out transactions</li>
+        <li>✅ Real-time stock updates</li>
+        <li>✅ Transaction history tracking</li>
+        <li>✅ Low stock alerts</li>
+    </ul>
+    
+    <p><strong>4. Dashboard dan Monitoring</strong></p>
+    <ul>
+        <li>✅ Real-time statistics display</li>
+        <li>✅ Quick action buttons</li>
+        <li>✅ Recent transactions list</li>
+        <li>✅ Stock status overview</li>
+    </ul>
+    
+    <p><strong>5. Responsive Design</strong></p>
+    <ul>
+        <li>✅ Mobile-first design approach</li>
+        <li>✅ Hamburger menu untuk mobile</li>
+        <li>✅ Card view untuk mobile tables</li>
+        <li>✅ Touch-friendly interface</li>
+    </ul>
+    
+    <h3>4.6.2 Performance Metrics</h3>
+    <p><strong>Response Time:</strong></p>
+    <ul>
+        <li>API Response Time: < 500ms untuk simple queries</li>
+        <li>Page Load Time: < 2 detik untuk halaman utama</li>
+        <li>Database Query Time: < 100ms untuk CRUD operations</li>
+    </ul>
+    
+    <p><strong>Scalability:</strong></p>
+    <ul>
+        <li>Concurrent Users: Tested untuk 20 concurrent users</li>
+        <li>Database Records: Tested dengan 10,000+ records</li>
+        <li>Memory Usage: < 100MB RAM untuk frontend</li>
+    </ul>
+
+</div>
+
+<!-- BAB V -->
+<div class="page-break content-page">
+    <h1>BAB V<br>PENUTUP</h1>
+    
+    <h2>5.1 Kesimpulan</h2>
+    <p>Berdasarkan pelaksanaan Praktek Kerja Industri (Prakerin) di PT Petronika dalam mengembangkan Sistem Manajemen Inventori berbasis web, dapat disimpulkan bahwa:</p>
+    
+    <ol>
+        <li><strong>Sistem berhasil dikembangkan sesuai kebutuhan</strong><br>
+        Sistem manajemen inventori yang dikembangkan telah memenuhi kebutuhan PT Petronika dalam mengelola bahan baku dan produk jadi secara digital, menggantikan sistem manual yang sebelumnya digunakan.</li>
+        
+        <li><strong>Teknologi modern menghasilkan performa optimal</strong><br>
+        Penggunaan Next.js untuk frontend dan ASP.NET Core untuk backend menghasilkan aplikasi yang responsif, aman, dan mudah dikembangkan. Response time sistem < 500ms memenuhi standar performa yang diharapkan.</li>
+        
+        <li><strong>Responsive design meningkatkan accessibility</strong><br>
+        Implementasi mobile-first design memungkinkan sistem dapat diakses dari berbagai device, meningkatkan fleksibilitas penggunaan di lapangan produksi.</li>
+        
+        <li><strong>Real-time monitoring meningkatkan efisiensi</strong><br>
+        Dashboard yang menampilkan informasi real-time membantu manajemen dalam pengambilan keputusan yang lebih cepat dan akurat terkait inventori.</li>
+        
+        <li><strong>Metodologi Agile mendukung pengembangan efektif</strong><br>
+        Penggunaan metodologi Agile dengan pendekatan Scrum memungkinkan pengembangan yang iterative dan adaptive terhadap perubahan kebutuhan.</li>
+    </ol>
+    
+    <h2>5.2 Saran</h2>
+    <p>Untuk pengembangan sistem lebih lanjut, disarankan:</p>
+    
+    <ol>
+        <li><strong>Implementasi fitur advanced reporting</strong><br>
+        Mengembangkan sistem pelaporan yang lebih komprehensif dengan visualisasi grafik dan export ke berbagai format (PDF, Excel, CSV) untuk mendukung analisis bisnis yang lebih mendalam.</li>
+        
+        <li><strong>Integrasi dengan sistem ERP</strong><br>
+        Mengintegrasikan sistem inventori dengan sistem ERP yang lebih luas untuk sinkronisasi data dengan module keuangan, produksi, dan penjualan.</li>
+        
+        <li><strong>Implementasi notifikasi real-time</strong><br>
+        Menambahkan sistem notifikasi push notification atau email untuk alert penting seperti low stock, expired items, atau transaksi anomali.</li>
+        
+        <li><strong>Machine Learning untuk demand forecasting</strong><br>
+        Implementasi algoritma machine learning untuk prediksi kebutuhan bahan baku berdasarkan historical data dan trend produksi.</li>
+        
+        <li><strong>Mobile native application</strong><br>
+        Mengembangkan aplikasi mobile native (Android/iOS) untuk meningkatkan user experience dan performa di mobile device.</li>
+        
+        <li><strong>Implementasi barcode/QR code scanning</strong><br>
+        Menambahkan fitur scanning barcode atau QR code untuk mempercepat proses input data dan mengurangi human error.</li>
+        
+        <li><strong>Enhanced security measures</strong><br>
+        Implementasi two-factor authentication, audit logging yang lebih detail, dan security monitoring untuk meningkatkan keamanan sistem.</li>
+        
+        <li><strong>Performance optimization</strong><br>
+        Optimisasi database dengan indexing yang lebih baik, implementasi caching mechanism, dan CDN untuk static assets.</li>
+    </ol>
+    
+    <h2>5.3 Refleksi Pembelajaran</h2>
+    <p>Melalui pelaksanaan Prakerin ini, penulis memperoleh pengalaman berharga dalam:</p>
+    
+    <ul>
+        <li><strong>Technical Skills:</strong> Penguasaan teknologi modern seperti Next.js, TypeScript, ASP.NET Core, dan SQL Server dalam konteks proyek real-world.</li>
+        
+        <li><strong>Project Management:</strong> Pengalaman menggunakan metodologi Agile/Scrum dalam pengembangan software dengan timeline dan deliverables yang jelas.</li>
+        
+        <li><strong>Problem Solving:</strong> Kemampuan menganalisis kebutuhan bisnis dan mentranslasikannya menjadi solusi teknis yang efektif.</li>
+        
+        <li><strong>Collaboration:</strong> Pengalaman bekerja dengan tim multidisiplin dan berkomunikasi dengan stakeholder yang berbeda background.</li>
+        
+        <li><strong>Industry Understanding:</strong> Pemahaman mendalam tentang proses bisnis manufacturing dan pentingnya sistem informasi dalam operasional perusahaan.</li>
+    </ul>
+    
+    <p>Prakerin ini tidak hanya memberikan pengalaman teknis, tetapi juga mengajarkan pentingnya soft skills, profesionalisme, dan adaptability dalam dunia kerja yang sebenarnya.</p>
+
+</div>
+
+<!-- DAFTAR PUSTAKA -->
+<div class="page-break content-page">
+    <h1>DAFTAR PUSTAKA</h1>
+    
+    <div class="references">
+        <p>Fowler, M. (2018). <em>Refactoring: Improving the Design of Existing Code</em>. 2nd Edition. Addison-Wesley Professional.</p>
+        
+        <p>Freeman, E., Robson, E., Bates, B., & Sierra, K. (2020). <em>Head First Design Patterns</em>. 2nd Edition. O'Reilly Media.</p>
+        
+        <p>Hunt, A., & Thomas, D. (2019). <em>The Pragmatic Programmer: Your Journey to Mastery</em>. 20th Anniversary Edition. Addison-Wesley Professional.</p>
+        
+        <p>Microsoft Corporation. (2024). <em>ASP.NET Core Documentation</em>. Retrieved from https://docs.microsoft.com/en-us/aspnet/core/</p>
+        
+        <p>Osmani, A. (2021). <em>Learning JavaScript Design Patterns</em>. O'Reilly Media.</p>
+        
+        <p>Pressman, R. S., & Maxim, B. R. (2019). <em>Software Engineering: A Practitioner's Approach</em>. 9th Edition. McGraw-Hill Education.</p>
+        
+        <p>React Team. (2024). <em>React Documentation</em>. Retrieved from https://reactjs.org/docs/</p>
+        
+        <p>Schwaber, K., & Sutherland, J. (2020). <em>The Scrum Guide</em>. Retrieved from https://scrumguides.org/</p>
+        
+        <p>Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). <em>Operating System Concepts</em>. 10th Edition. John Wiley & Sons.</p>
+        
+        <p>Sommerville, I. (2019). <em>Software Engineering</em>. 10th Edition. Pearson.</p>
+        
+        <p>Vercel Inc. (2024). <em>Next.js Documentation</em>. Retrieved from https://nextjs.org/docs</p>
+        
+        <p>W3C Web Accessibility Initiative. (2023). <em>Web Content Accessibility Guidelines (WCAG) 2.1</em>. Retrieved from https://www.w3.org/WAI/WCAG21/</p>
+    </div>
+
+</div>
+
+<!-- LAMPIRAN -->
+<div class="page-break content-page">
+    <h1>LAMPIRAN</h1>
+    
+    <h2>Lampiran 1: Entity Relationship Diagram (ERD)</h2>
+    
+    <div class="erd-diagram">
+        <svg width="100%" height="700" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+            <!-- Users Table -->
+            <g id="users-table">
+                <rect x="50" y="50" width="180" height="200" fill="white" stroke="black" stroke-width="2"/>
+                <rect x="50" y="50" width="180" height="30" fill="#4a90e2" stroke="black" stroke-width="2"/>
+                <text x="140" y="70" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">Users</text>
+                <text x="60" y="95" font-family="Arial" font-size="11" font-weight="bold">🔑 Id (PK)</text>
+                <text x="60" y="110" font-family="Arial" font-size="11">Username</text>
+                <text x="60" y="125" font-family="Arial" font-size="11">Password</text>
+                <text x="60" y="140" font-family="Arial" font-size="11">Name</text>
+                <text x="60" y="155" font-family="Arial" font-size="11">Role</text>
+                <text x="60" y="170" font-family="Arial" font-size="11">IsActive</text>
+                <text x="60" y="185" font-family="Arial" font-size="11">CreatedAt</text>
+                <text x="60" y="200" font-family="Arial" font-size="11">UpdatedAt</text>
+            </g>
+
+            <!-- Suppliers Table -->
+            <g id="suppliers-table">
+                <rect x="320" y="50" width="180" height="180" fill="white" stroke="black" stroke-width="2"/>
+                <rect x="320" y="50" width="180" height="30" fill="#4a90e2" stroke="black" stroke-width="2"/>
+                <text x="410" y="70" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">Suppliers</text>
+                <text x="330" y="95" font-family="Arial" font-size="11" font-weight="bold">🔑 Id (PK)</text>
+                <text x="330" y="110" font-family="Arial" font-size="11">Name</text>
+                <text x="330" y="125" font-family="Arial" font-size="11">Code</text>
+                <text x="330" y="140" font-family="Arial" font-size="11">Contact</text>
+                <text x="330" y="155" font-family="Arial" font-size="11">Phone</text>
+                <text x="330" y="170" font-family="Arial" font-size="11">Email</text>
+                <text x="330" y="185" font-family="Arial" font-size="11">IsActive</text>
+                <text x="330" y="200" font-family="Arial" font-size="11">CreatedAt</text>
+                <text x="330" y="215" font-family="Arial" font-size="11">UpdatedAt</text>
+            </g>
+
+            <!-- Raw Materials Table -->
+            <g id="rawmaterials-table">
+                <rect x="580" y="50" width="200" height="230" fill="white" stroke="black" stroke-width="2"/>
+                <rect x="580" y="50" width="200" height="30" fill="#4a90e2" stroke="black" stroke-width="2"/>
+                <text x="680" y="70" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">RawMaterials</text>
+                <text x="590" y="95" font-family="Arial" font-size="11" font-weight="bold">🔑 Id (PK)</text>
+                <text x="590" y="110" font-family="Arial" font-size="11" font-weight="bold" fill="#2c3e50">🔗 SupplierId (FK)</text>
+                <text x="590" y="125" font-family="Arial" font-size="11">Name</text>
+                <text x="590" y="140" font-family="Arial" font-size="11">Code</text>
+                <text x="590" y="155" font-family="Arial" font-size="11">Description</text>
+                <text x="590" y="170" font-family="Arial" font-size="11">Unit</text>
+                <text x="590" y="185" font-family="Arial" font-size="11">CurrentStock</text>
+                <text x="590" y="200" font-family="Arial" font-size="11">MinimumStock</text>
+                <text x="590" y="215" font-family="Arial" font-size="11">Price</text>
+                <text x="590" y="230" font-family="Arial" font-size="11">CreatedAt</text>
+                <text x="590" y="245" font-family="Arial" font-size="11">UpdatedAt</text>
+            </g>
+
+            <!-- Finished Products Table -->
+            <g id="finishedproducts-table">
+                <rect x="860" y="50" width="200" height="200" fill="white" stroke="black" stroke-width="2"/>
+                <rect x="860" y="50" width="200" height="30" fill="#4a90e2" stroke="black" stroke-width="2"/>
+                <text x="960" y="70" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="white">FinishedProducts</text>
+                <text x="870" y="95" font-family="Arial" font-size="11" font-weight="bold">🔑 Id (PK)</text>
+                <text x="870" y="110" font-family="Arial" font-size="11">Name</text>
+                <text x="870" y="125" font-family="Arial" font-size="11">Code</text>
+                <text x="870" y="140" font-family="Arial" font-size="11">Description</text>
+                <text x="870" y="155" font-family="Arial" font-size="11">Unit</text>
+                <text x="870" y="170" font-family="Arial" font-size="11">CurrentStock</text>
+                <text x="870" y="185" font-family="Arial" font-size="11">MinimumStock</text>
+                <text x="870" y="200" font-family="Arial" font-size="11">Price</text>
+                <text x="870" y="215" font-family="Arial" font-size="11">CreatedAt</text>
+                <text x="870" y="230" font-family="Arial" font-size="11">UpdatedAt</text>
+            </g>
+
+            <!-- Stock Transactions Table -->
+            <g id="stocktransactions-table">
+                <rect x="450" y="400" width="220" height="250" fill="white" stroke="black" stroke-width="2"/>
+                <rect x="450" y="400" width="220" height="30" fill="#4a90e2" stroke="black" stroke-width="2"/>
+                <text x="560" y="420" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="white">StockTransactions</text>
+                <text x="460" y="445" font-family="Arial" font-size="11" font-weight="bold">🔑 Id (PK)</text>
+                <text x="460" y="460" font-family="Arial" font-size="11">ItemType</text>
+                <text x="460" y="475" font-family="Arial" font-size="11">TransactionType</text>
+                <text x="460" y="490" font-family="Arial" font-size="11">Quantity</text>
+                <text x="460" y="505" font-family="Arial" font-size="11">Unit</text>
+                <text x="460" y="520" font-family="Arial" font-size="11">Reference</text>
+                <text x="460" y="535" font-family="Arial" font-size="11">Notes</text>
+                <text x="460" y="550" font-family="Arial" font-size="11" font-weight="bold" fill="#2c3e50">🔗 UserId (FK)</text>
+                <text x="460" y="565" font-family="Arial" font-size="11" font-weight="bold" fill="#2c3e50">🔗 RawMaterialId (FK)</text>
+                <text x="460" y="580" font-family="Arial" font-size="11" font-weight="bold" fill="#2c3e50">🔗 FinishedProductId (FK)</text>
+                <text x="460" y="595" font-family="Arial" font-size="11">CreatedAt</text>
+                <text x="460" y="610" font-family="Arial" font-size="11">UpdatedAt</text>
+            </g>
+
+            <!-- Relationship Lines -->
+            <!-- Suppliers to RawMaterials (1:Many) -->
+            <line x1="500" y1="140" x2="580" y2="110" stroke="#2c3e50" stroke-width="2" stroke-dasharray="none" marker-end="url(#arrowhead)"/>
+            <text x="540" y="125" font-family="Arial" font-size="10" fill="#2c3e50" font-weight="normal">1:N</text>
+            
+            <!-- Users to StockTransactions (1:Many) -->
+            <line x1="230" y1="150" x2="450" y2="550" stroke="#2c3e50" stroke-width="2" stroke-dasharray="none" marker-end="url(#arrowhead)"/>
+            <text x="340" y="350" font-family="Arial" font-size="10" fill="#2c3e50" font-weight="normal">1:N</text>
+            
+            <!-- RawMaterials to StockTransactions (1:Many) -->
+            <line x1="680" y1="280" x2="560" y2="400" stroke="#2c3e50" stroke-width="2" stroke-dasharray="none" marker-end="url(#arrowhead)"/>
+            <text x="620" y="340" font-family="Arial" font-size="10" fill="#2c3e50" font-weight="normal">1:N</text>
+            
+            <!-- FinishedProducts to StockTransactions (1:Many) -->
+            <line x1="860" y1="250" x2="580" y2="400" stroke="#2c3e50" stroke-width="2" stroke-dasharray="none" marker-end="url(#arrowhead)"/>
+            <text x="720" y="325" font-family="Arial" font-size="10" fill="#2c3e50" font-weight="normal">1:N</text>
+
+            <!-- Arrow marker definition -->
+            <defs>
+                <marker id="arrowhead" markerWidth="8" markerHeight="6" 
+                        refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <polygon points="0 0, 8 3, 0 6" fill="#2c3e50" stroke="#2c3e50" stroke-width="1"/>
+                </marker>
+            </defs>
+            
+            <!-- Legend -->
+            <g id="legend">
+                <rect x="50" y="500" width="250" height="120" fill="white" stroke="black" stroke-width="1" fill-opacity="0.9"/>
+                <text x="60" y="520" font-family="Arial" font-size="12" font-weight="bold">Legend:</text>
+                <text x="60" y="540" font-family="Arial" font-size="10">🔑 = Primary Key</text>
+                <text x="60" y="555" font-family="Arial" font-size="10">🔗 = Foreign Key</text>
+                <line x1="60" y1="570" x2="90" y2="570" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <text x="100" y="575" font-family="Arial" font-size="10">= One to Many</text>
+                <text x="60" y="590" font-family="Arial" font-size="10">1:N = One to Many relationship</text>
+                <text x="60" y="605" font-family="Arial" font-size="10">Blue header = Table name</text>
+            </g>
+        </svg>
+    </div>
+                <text x="410" y="485" font-family="Arial" font-size="11">Reference</text>
+                <text x="410" y="500" font-family="Arial" font-size="11">Notes</text>
+                <text x="410" y="515" font-family="Arial" font-size="11" style="text-decoration: underline;">UserId (FK)</text>
+                <text x="410" y="530" font-family="Arial" font-size="11">CreatedAt</text>
+            </g>
+
+            <!-- Relationships -->
+            <!-- Suppliers to RawMaterials (One-to-Many) -->
+            <line x1="480" y1="150" x2="550" y2="150" stroke="black" stroke-width="2"/>
+            <circle cx="485" cy="150" r="3" fill="black"/>
+            <text x="510" y="145" font-family="Arial" font-size="10">1</text>
+            <text x="530" y="145" font-family="Arial" font-size="10">*</text>
+
+            <!-- Users to StockTransactions (One-to-Many) -->
+            <line x1="140" y1="250" x2="140" y2="300" stroke="black" stroke-width="2"/>
+            <line x1="140" y1="300" x2="410" y2="300" stroke="black" stroke-width="2"/>
+            <line x1="410" y1="300" x2="410" y2="350" stroke="black" stroke-width="2"/>
+            <circle cx="145" cy="255" r="3" fill="black"/>
+            <text x="125" y="280" font-family="Arial" font-size="10">1</text>
+            <text x="395" y="345" font-family="Arial" font-size="10">*</text>
+
+            <!-- Legend -->
+            <g id="legend">
+                <rect x="50" y="500" width="300" height="80" fill="#f8f8f8" stroke="black" stroke-width="1"/>
+                <text x="60" y="520" font-family="Arial" font-size="12" font-weight="bold">Legend:</text>
+                <text x="60" y="540" font-family="Arial" font-size="11">PK = Primary Key</text>
+                <text x="60" y="555" font-family="Arial" font-size="11">FK = Foreign Key</text>
+                <text x="200" y="540" font-family="Arial" font-size="11">1 = One</text>
+                <text x="200" y="555" font-family="Arial" font-size="11">* = Many</text>
+            </g>
+        </svg>
+    </div>
+    
+    <h2>Lampiran 2: API Documentation Sample</h2>
+    
+    <h3>Authentication API</h3>
+    <div class="code-block">
+POST /api/auth/login
+Content-Type: application/json
+
+Request Body:
+{
+  "username": "admin",
+  "password": "password123"
+}
+
+Response Success (200):
+{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "id": 1,
+      "username": "admin",
+      "name": "Administrator",
+      "role": "Admin"
+    }
+  }
+}
+
+Response Error (401):
+{
+  "success": false,
+  "message": "Invalid credentials"
+}
+    </div>
+    
+    <h3>Raw Materials API</h3>
+    <div class="code-block">
+GET /api/raw-materials
+Authorization: Bearer {token}
+
+Response Success (200):
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Phthalic Anhydride",
+      "code": "PA-001",
+      "description": "Raw material for DOP production",
+      "unit": "KG",
+      "currentStock": 1500.00,
+      "minimumStock": 500.00,
+      "price": 25000.00,
+      "supplierId": 1,
+      "supplier": {
+        "id": 1,
+        "name": "PT Supplier Chemical"
+      },
+      "createdAt": "2024-01-15T08:30:00Z",
+      "updatedAt": "2024-01-20T10:15:00Z"
+    }
+  ]
+}
+    </div>
+    
+    <h2>Lampiran 3: Database Schema Script</h2>
+    <div class="code-block">
+-- Create Database
+CREATE DATABASE InventoryManagement;
+GO
+
+USE InventoryManagement;
+GO
+
+-- Users Table
+CREATE TABLE Users (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    Username nvarchar(50) UNIQUE NOT NULL,
+    Password nvarchar(255) NOT NULL,
+    Name nvarchar(100) NOT NULL,
+    Role nvarchar(20) NOT NULL DEFAULT 'User',
+    IsActive bit NOT NULL DEFAULT 1,
+    CreatedAt datetime2 NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt datetime2 NOT NULL DEFAULT GETUTCDATE()
+);
+
+-- Suppliers Table
+CREATE TABLE Suppliers (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    Name nvarchar(100) NOT NULL,
+    Code nvarchar(20) UNIQUE NOT NULL,
+    Contact nvarchar(100),
+    Phone nvarchar(20),
+    Email nvarchar(100),
+    IsActive bit NOT NULL DEFAULT 1,
+    CreatedAt datetime2 NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt datetime2 NOT NULL DEFAULT GETUTCDATE()
+);
+
+-- Raw Materials Table
+CREATE TABLE RawMaterials (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    Name nvarchar(100) NOT NULL,
+    Code nvarchar(20) UNIQUE NOT NULL,
+    Description nvarchar(500),
+    Unit nvarchar(20) NOT NULL,
+    CurrentStock decimal(18,2) NOT NULL DEFAULT 0,
+    MinimumStock decimal(18,2) NOT NULL DEFAULT 0,
+    Price decimal(18,2) NOT NULL DEFAULT 0,
+    SupplierId int NOT NULL,
+    CreatedAt datetime2 NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt datetime2 NOT NULL DEFAULT GETUTCDATE(),
+    FOREIGN KEY (SupplierId) REFERENCES Suppliers(Id)
+);
+
+-- Finished Products Table
+CREATE TABLE FinishedProducts (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    Name nvarchar(100) NOT NULL,
+    Code nvarchar(20) UNIQUE NOT NULL,
+    Description nvarchar(500),
+    Unit nvarchar(20) NOT NULL,
+    CurrentStock decimal(18,2) NOT NULL DEFAULT 0,
+    MinimumStock decimal(18,2) NOT NULL DEFAULT 0,
+    Price decimal(18,2) NOT NULL DEFAULT 0,
+    CreatedAt datetime2 NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt datetime2 NOT NULL DEFAULT GETUTCDATE()
+);
+
+-- Stock Transactions Table
+CREATE TABLE StockTransactions (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    ItemId int NOT NULL,
+    ItemType nvarchar(20) NOT NULL CHECK (ItemType IN ('RAW_MATERIAL', 'FINISHED_PRODUCT')),
+    TransactionType nvarchar(10) NOT NULL CHECK (TransactionType IN ('IN', 'OUT')),
+    Quantity decimal(18,2) NOT NULL,
+    Unit nvarchar(20) NOT NULL,
+    Reference nvarchar(50),
+    Notes nvarchar(500),
+    UserId int NOT NULL,
+    CreatedAt datetime2 NOT NULL DEFAULT GETUTCDATE(),
+    FOREIGN KEY (UserId) REFERENCES Users(Id)
+);
+
+-- Indexes for better performance
+CREATE INDEX IX_RawMaterials_SupplierId ON RawMaterials(SupplierId);
+CREATE INDEX IX_StockTransactions_ItemId ON StockTransactions(ItemId);
+CREATE INDEX IX_StockTransactions_ItemType ON StockTransactions(ItemType);
+CREATE INDEX IX_StockTransactions_CreatedAt ON StockTransactions(CreatedAt);
+
+-- Insert sample data
+INSERT INTO Users (Username, Password, Name, Role) VALUES 
+('admin', '$2a$11$hashed_password_here', 'Administrator', 'Admin'),
+('user1', '$2a$11$hashed_password_here', 'Regular User', 'User');
+
+INSERT INTO Suppliers (Name, Code, Contact, Phone, Email) VALUES
+('PT Supplier Chemical', 'SUP-001', 'John Doe', '021-12345678', 'john@supplier.com'),
+('PT Chemical Indonesia', 'SUP-002', 'Jane Smith', '021-87654321', 'jane@chemical.co.id');
+    </div>
+    
+    <h2>Lampiran 4: Deployment Configuration</h2>
+    
+    <h3>Backend - appsettings.Production.json</h3>
+    <div class="code-block">
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=production-server;Database=InventoryManagement;Trusted_Connection=true;MultipleActiveResultSets=true"
+  },
+  "JwtSettings": {
+    "SecretKey": "your-production-secret-key-here",
+    "Issuer": "InventorySystem",
+    "Audience": "InventoryUsers",
+    "ExpirationInMinutes": 60
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Cors": {
+    "AllowedOrigins": [
+      "https://inventory-react-omega.vercel.app",
+      "https://your-production-domain.com"
+    ]
+  }
+}
+    </div>
+    
+    <h3>Frontend - Environment Variables</h3>
+    <div class="code-block">
+# .env.production
+NEXT_PUBLIC_API_URL=https://simamen.belakanglayar.com/api
+NEXT_PUBLIC_APP_NAME=Inventory Management System
+NEXT_PUBLIC_VERSION=1.0.0
+    </div>
+    
+    <h2>Lampiran 5: Testing Results Summary</h2>
+    
+    <table style="width: 100%; border-collapse: collapse; margin-top: 1cm;">
+        <thead>
+            <tr style="background-color: #f5f5f5;">
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Test Category</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Test Cases</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Passed</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Failed</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Success Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Authentication</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">15</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">15</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">0</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">100%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Raw Materials CRUD</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">20</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">20</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">0</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">100%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Finished Products CRUD</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">20</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">20</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">0</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">100%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Suppliers CRUD</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">18</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">18</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">0</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">100%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Stock Transactions</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">25</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">24</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">1</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">96%</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Dashboard</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">12</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">12</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">0</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">100%</td>
+            </tr>
+            <tr style="background-color: #f9f9f9; font-weight: bold;">
+                <td style="border: 1px solid #ddd; padding: 8px;">Total</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">110</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">109</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">1</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">99.1%</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

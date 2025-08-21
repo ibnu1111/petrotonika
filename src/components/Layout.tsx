@@ -17,6 +17,7 @@ const navigation = [
   { name: 'Suppliers', href: '/suppliers', icon: '🏢' },
   { name: 'Stock Transactions', href: '/transactions', icon: '📋' },
   { name: 'Reports', href: '/reports', icon: '📈' },
+  { name: 'Laporan Prakerin', href: '/laporan-prakerin', icon: '📄' },
 ];
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
