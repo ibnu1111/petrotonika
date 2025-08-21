@@ -42,7 +42,7 @@ export default function LaporanPrakerinPage() {
           <Card title="📄 View Report">
             <div className="space-y-4">
               <p className="text-sm text-gray-600">
-                Buka laporan dalam tab baru untuk dibaca atau di-print.
+                Buka laporan dalam tab baru untuk dibaca atau dicetak.
               </p>
               <Button 
                 onClick={handleViewReport}
@@ -57,7 +57,7 @@ export default function LaporanPrakerinPage() {
           <Card title="🖨️ Print Report">
             <div className="space-y-4">
               <p className="text-sm text-gray-600">
-                Print langsung laporan atau save as PDF dari browser.
+                Print langsung laporan atau simpan sebagai PDF dari browser.
               </p>
               <Button 
                 onClick={handlePrintReport}
@@ -89,7 +89,7 @@ export default function LaporanPrakerinPage() {
         <Card title="📖 Preview Laporan">
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
-              Preview laporan di bawah ini. Untuk pengalaman terbaik, gunakan tombol "View Report" di atas.
+              Preview laporan di bawah ini. Untuk pengalaman terbaik, gunakan tombol &quot;View Report&quot; di atas.
             </p>
             <div className="border border-gray-200 rounded-lg overflow-hidden" style={{ height: '600px' }}>
               <iframe 
