@@ -19,13 +19,16 @@ export default function LaporanPrakerinPage() {
   };
 
   const handleDownloadReport = () => {
-    // Create a link element and trigger download
-    const link = document.createElement('a');
-    link.href = '/laporan-prakerin.html';
-    link.download = 'Laporan_Prakerin_Sistem_Inventori.html';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Open the report in a new window and trigger print dialog for PDF save
+    const reportWindow = window.open('/laporan-prakerin.html', '_blank');
+    if (reportWindow) {
+      reportWindow.onload = () => {
+        // Give the page time to fully load before printing
+        setTimeout(() => {
+          reportWindow.print();
+        }, 1000);
+      };
+    }
   };
 
   return (
@@ -69,17 +72,17 @@ export default function LaporanPrakerinPage() {
             </div>
           </Card>
 
-          <Card title="💾 Download Report">
+          <Card title="� Download PDF">
             <div className="space-y-4">
               <p className="text-sm text-gray-600">
-                Download file HTML laporan untuk disimpan atau dibagikan.
+                Download laporan sebagai file PDF melalui dialog print browser.
               </p>
               <Button 
                 onClick={handleDownloadReport}
                 className="w-full"
                 variant="ghost"
               >
-                Download HTML
+                Download PDF
               </Button>
             </div>
           </Card>

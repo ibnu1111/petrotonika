@@ -28,13 +28,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       // Check if session is valid using sessionManager
       if (!sessionManager.isSessionValid()) {
+        console.log('Session invalid - no token or user found');
         setLoading(false);
         return;
       }
 
-      // Check for inactivity (24 hours)
-      if (sessionManager.isInactive()) {
-        console.log('Session expired due to inactivity');
+      // Check for inactivity (24 hours) - but be more lenient
+      if (sessionManager.isInactive(48 * 60 * 60 * 1000)) { // 48 hours instead of 24
+        console.log('Session expired due to inactivity (48 hours)');
         sessionManager.clearSession();
         setLoading(false);
         return;
@@ -47,36 +48,47 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         sessionManager.updateActivity();
         setLoading(false);
         
-        // Verify token in background without blocking UI
-        setTimeout(async () => {
-          try {
-            await authApi.me();
-            console.log('Background token verification successful');
-            sessionManager.updateActivity();
-          } catch (error: unknown) {
-            console.warn('Background token verification failed');
-            const errorResponse = error as { response?: { status?: number } };
-            if (errorResponse.response?.status === 401 || errorResponse.response?.status === 403) {
-              logout();
+        // Verify token in background without blocking UI - only if online
+        if (navigator.onLine) {
+          setTimeout(async () => {
+            try {
+              await authApi.me();
+              console.log('Background token verification successful');
+              sessionManager.updateActivity();
+            } catch (error: unknown) {
+              console.warn('Background token verification failed:', error);
+              const errorResponse = error as { response?: { status?: number; data?: unknown } };
+              // Only logout for clear auth errors, not network issues
+              if (errorResponse.response?.status === 401) {
+                console.log('Token expired (401), logging out');
+                logout();
+              } else if (errorResponse.response?.status === 403) {
+                console.log('Access forbidden (403), logging out');
+                logout();
+              } else {
+                console.log('Non-auth error during background verification, keeping user logged in');
+              }
             }
-          }
-        }, 2000);
+          }, 3000); // Increased delay to 3 seconds
+        }
         
         return;
       }
 
-      // If no cached user, verify with backend
-      const response = await authApi.me();
-      if (response.data.success) {
-        const userData = response.data.data as unknown as User;
-        setUser(userData);
-        const token = sessionManager.getItem('token');
-        if (typeof token === 'string') {
-          sessionManager.storeUserSession(token, response.data.data);
+      // If no cached user, verify with backend only if online
+      if (navigator.onLine) {
+        const response = await authApi.me();
+        if (response.data.success) {
+          const userData = response.data.data as unknown as User;
+          setUser(userData);
+          const token = sessionManager.getItem('token');
+          if (typeof token === 'string') {
+            sessionManager.storeUserSession(token, response.data.data);
+          }
+        } else {
+          console.warn('Auth verification failed:', response.data);
+          sessionManager.clearSession();
         }
-      } else {
-        console.warn('Auth verification failed:', response.data);
-        sessionManager.clearSession();
       }
     } catch (error: unknown) {
       console.error('Auth check failed:', error);
@@ -102,6 +114,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     checkAuthStatus();
+    
+    // Add activity listeners to keep session alive
+    const updateActivity = () => {
+      if (sessionManager.isSessionValid()) {
+        sessionManager.updateActivity();
+      }
+    };
+    
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    
+    // Throttle activity updates to once per minute
+    let lastUpdate = 0;
+    const throttledUpdate = () => {
+      const now = Date.now();
+      if (now - lastUpdate > 60000) { // 1 minute
+        updateActivity();
+        lastUpdate = now;
+      }
+    };
+    
+    events.forEach(event => {
+      document.addEventListener(event, throttledUpdate, true);
+    });
+    
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, throttledUpdate, true);
+      });
+    };
   }, [checkAuthStatus]);
 
   const login = async (username: string, password: string): Promise<boolean> => {

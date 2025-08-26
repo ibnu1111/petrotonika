@@ -18,6 +18,7 @@ const navigation = [
   { name: 'Stock Transactions', href: '/transactions', icon: '📋' },
   { name: 'Reports', href: '/reports', icon: '📈' },
   { name: 'Laporan Prakerin', href: '/laporan-prakerin', icon: '📄' },
+  { name: 'Laporan Prakerin V2', href: '/laporan-prakerin-v2', icon: '📋' },
 ];
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {

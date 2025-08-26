@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Kerja Praktik - Sistem Manajemen Inventori</title>
+    <style>
+        @page {
+            margin: 3cm 2.5cm 2.5cm 3cm;
+            font-family: 'Times New Roman', serif;
+            size: A4;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000;
+            margin: 0;
+            padding: 3cm 2.5cm 2.5cm 3cm;
+            background: white;
+            width: 21cm;
+            min-height: 29.7cm;
+        }
+        
+        /* Cover Page Styling */
+        .cover-page {
+            text-align: center;
+            page-break-after: always;
+            height: 29.7cm;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: -3cm -2.5cm -2.5cm -3cm;
+            background: white;
+        }
+        
+        .cover-header {
+            background: white;
+            padding: 1cm 3cm 0.2cm 3cm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 5cm;
+        }
+        
+        .cover-title-section {
+            background: #B85450;
+            color: white;
+            padding: 1.5cm 3cm 2cm 3cm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 21.2cm;
+        }
+        
+        .university-logo {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .university-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .cover-course-code {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 1.5cm;
+            letter-spacing: 0.5px;
+        }
+        
+        .cover-main-title {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 0.5cm;
+            line-height: 1.3;
+        }
+        
+        .cover-subtitle {
+            font-size: 14pt;
+            font-weight: normal;
+            margin-bottom: 2cm;
+            line-height: 1.3;
+        }
+        
+        .cover-company-info {
+            font-size: 12pt;
+            margin-bottom: 1cm;
+            line-height: 1.4;
+        }
+        
+        .cover-author-section {
+            margin: 1.5cm 0;
+        }
+        
+        .cover-author-title {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-bottom: 0.8cm;
+        }
+        
+        .cover-author-info {
+            font-size: 11pt;
+            line-height: 1.6;
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .cover-supervisors {
+            font-size: 11pt;
+            line-height: 1.6;
+            margin: 1cm 0;
+        }
+        
+        .cover-footer {
+            margin-top: 1.5cm;
+        }
+        
+        .cover-department {
+            font-size: 11pt;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        
+        /* Second Page */
+        .second-page {
+            page-break-after: always;
+            min-height: 23.7cm;
+            text-align: center;
+            padding: 0;
+            margin: -3cm -2.5cm -2.5cm -3cm;
+            padding: 1.5cm 2.5cm 2.5cm 3cm;
+            background: white;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .second-page-header {
+            margin-bottom: 1cm;
+        }
+        
+        .second-page-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1cm auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .second-page-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .second-page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .second-course-code {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 1cm;
+            color: #1f2937;
+        }
+        
+        .second-main-title {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 0.5cm;
+            line-height: 1.3;
+            color: #1f2937;
+        }
+        
+        .second-subtitle {
+            font-size: 14pt;
+            font-weight: normal;
+            margin-bottom: 1.5cm;
+            line-height: 1.3;
+            color: #374151;
+        }
+        
+        .second-company-info {
+            font-size: 12pt;
+            margin-bottom: 1cm;
+            line-height: 1.4;
+            color: #4b5563;
+        }
+        
+        .second-period {
+            font-size: 12pt;
+            margin-bottom: 1.5cm;
+            color: #4b5563;
+        }
+        
+        .second-author-section {
+            margin: 1.5cm 0;
+        }
+        
+        .second-author-title {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-bottom: 0.8cm;
+            color: #1f2937;
+        }
+        
+        .second-author-details {
+            font-size: 11pt;
+            line-height: 1.6;
+            text-align: left;
+            max-width: 280px;
+            margin: 0 auto;
+            color: #374151;
+        }
+        
+        .second-supervisors {
+            font-size: 11pt;
+            line-height: 1.6;
+            margin: 1cm 0;
+            color: #374151;
+        }
+        
+        .second-footer {
+            margin-top: auto;
+        }
+        
+        .second-department {
+            font-size: 11pt;
+            font-weight: bold;
+            line-height: 1.4;
+            color: #1f2937;
+        }
+        
+        .page-number {
+            text-align: center;
+            margin-top: 1cm;
+            font-size: 11pt;
+            color: #6b7280;
+        }
+        
+        /* Table of Contents Styling */
+        .toc-page {
+            page-break-after: always;
+            min-height: 23.7cm;
+            padding: 0;
+            margin: -3cm -2.5cm -2.5cm -3cm;
+            padding: 3cm 2.5cm 2.5cm 3cm;
+            background: white;
+            color: black;
+        }
+        
+        .toc-title {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 2cm;
+            text-transform: uppercase;
+        }
+        
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 0.3cm;
+            font-size: 12pt;
+            line-height: 1.4;
+        }
+        
+        .toc-text {
+            flex: 1;
+            padding-right: 0.5cm;
+        }
+        
+        .toc-dots {
+            flex: 1;
+            border-bottom: 1px dotted #000;
+            margin: 0 0.3cm;
+            height: 0.5em;
+            align-self: flex-end;
+            margin-bottom: 0.2cm;
+        }
+        
+        .toc-page-num {
+            font-weight: normal;
+            min-width: 20px;
+            text-align: right;
+        }
+        
+        .toc-main-section {
+            font-weight: bold;
+            margin-top: 0.5cm;
+            margin-bottom: 0.2cm;
+        }
+        
+        .toc-main-section:first-child {
+            margin-top: 0;
+        }
+        
+        .toc-subsection {
+            margin-left: 1cm;
+            font-weight: normal;
+        }
+        
+        .toc-subsubsection {
+            margin-left: 2cm;
+            font-weight: normal;
+        }
+        
+        .toc-footer {
+            text-align: center;
+            margin-top: 2cm;
+            font-size: 11pt;
+            color: #6b7280;
+        }
+        
+        /* Print optimization */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .cover-page {
+                page-break-after: always;
+            }
+            
+            .second-page {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+    <div class="cover-header">
+        <div class="university-logo">
+            <img src="/logo.png" alt="Logo Universitas" />
+        </div>
+    </div>
+    
+    <div class="cover-title-section">
+        <div class="cover-course-code">
+            KERJA PRAKTIK - IF184801
+        </div>
+        
+        <div class="cover-main-title">
+            Perancangan dan Implementasi Sistem Manajemen Inventori Berbasis Web
+        </div>
+        
+        <div class="cover-subtitle">
+            untuk Peningkatan Efisiensi Pengelolaan Stok di PT Petronika
+        </div>
+        
+        <div class="cover-company-info">
+            Dinas Pendidikan Pemerintah Provinsi Jawa Timur<br>
+            Jl. Gentengkali No.33, Genteng, Kec. Genteng, Kota Surabaya, Jawa Timur 60275<br>
+            Periode: 1 Juli 2024 - 30 September 2024
+        </div>
+        
+        <div class="cover-author-section">
+            <div class="cover-author-title">Oleh:</div>
+            
+            <div class="cover-author-info">
+                <strong>________________________</strong> &nbsp;&nbsp;&nbsp; ________________________<br>
+                <strong>________________________</strong> &nbsp;&nbsp;&nbsp; ________________________
+            </div>
+            
+            <div class="cover-supervisors">
+                <strong>Pembimbing Jurusan</strong><br>
+                ________________________<br><br>
+                
+                <strong>Pembimbing Lapangan</strong><br>
+                ________________________
+            </div>
+        </div>
+        
+        <div class="cover-footer">
+            <div class="cover-department">
+                DEPARTEMEN TEKNIK INFORMATIKA<br>
+                Fakultas Teknologi Elektro dan Informatika Cerdas<br>
+                Institut Teknologi Sepuluh Nopember<br>
+                Surabaya 2024
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECOND PAGE -->
+<div class="second-page">
+    <div class="second-page-header">
+        <div class="second-page-logo">
+            <img src="/logo.png" alt="Logo Universitas" />
+        </div>
+    </div>
+    
+    <div class="second-page-content">
+        <div class="second-course-code">
+            KERJA PRAKTIK - IF184801
+        </div>
+        
+        <div class="second-main-title">
+            Perancangan dan Implementasi Sistem Manajemen Inventori Berbasis Web
+        </div>
+        
+        <div class="second-subtitle">
+            untuk Peningkatan Efisiensi Pengelolaan Stok di PT Petronika
+        </div>
+        
+        <div class="second-company-info">
+            Dinas Pendidikan Pemerintah Provinsi Jawa Timur<br>
+            Jl. Gentengkali No.33, Genteng, Kec. Genteng, Kota Surabaya, Jawa Timur 60275<br>
+        </div>
+        
+        <div class="second-period">
+            Periode: 1 Juli 2024 - 30 September 2024
+        </div>
+        
+        <div class="second-author-section">
+            <div class="second-author-title">Oleh:</div>
+            
+            <div class="second-author-details">
+                <strong>________________________</strong> &nbsp;&nbsp;&nbsp; ________________________<br>
+                <strong>________________________</strong> &nbsp;&nbsp;&nbsp; ________________________
+            </div>
+            
+            <div class="second-supervisors">
+                <strong>Pembimbing Jurusan</strong><br>
+                ________________________<br><br>
+                
+                <strong>Pembimbing Lapangan</strong><br>
+                ________________________
+            </div>
+        </div>
+    </div>
+    
+    <div class="second-footer">
+        <div class="second-department">
+            DEPARTEMEN TEKNIK INFORMATIKA<br>
+            Fakultas Teknologi Elektro dan Informatika Cerdas<br>
+            Institut Teknologi Sepuluh Nopember<br>
+            Surabaya 2024
+        </div>
+        
+        <div class="page-number">ii</div>
+    </div>
+</div>
+
+<!-- TABLE OF CONTENTS PAGE 1 -->
+<div class="toc-page">
+    <div class="toc-title">DAFTAR ISI</div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">DAFTAR ISI</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">iv</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">DAFTAR GAMBAR</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">ix</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">DAFTAR TABEL</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">xi</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">LEMBAR PENGESAHAN</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">xiii</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">KATA PENGANTAR</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">xvii</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB I PENDAHULUAN</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">1</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.1. Latar Belakang</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">1</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.2. Tujuan</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">2</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.3. Manfaat</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">2</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.4. Rumusan Masalah</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">2</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.5. Lokasi dan Waktu Kerja Praktik</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">2</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.6. Metodologi Kerja Praktik</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">3</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.6.1. Perumusan Masalah</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">3</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.6.2. Studi Literatur</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">3</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.6.3. Analisis dan Perancangan Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">3</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.6.4. Implementasi Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">3</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.6.5. Pengujian dan Evaluasi</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.6.6. Kesimpulan dan Saran</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">1.7. Sistematika Laporan</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.1. Bab I Pendahuluan</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.2. Bab II Profil Perusahaan</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-footer">iv</div>
+</div>
+
+<!-- TABLE OF CONTENTS PAGE 2 -->
+<div class="toc-page">
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.3. Bab III Tinjauan Pustaka</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.4. Bab IV Analisis dan Perancangan Infrastruktur Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.5. Bab V Implementasi Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.6. Bab VI Pengujian dan Evaluasi</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">4</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">1.7.7. Bab VII Kesimpulan dan Saran</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">5</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB II PROFIL PERUSAHAAN</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">7</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">2.1. Profil Dinas Pendidikan Provinsi Jawa Timur</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">7</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">2.2. Lokasi</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">7</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB III TINJAUAN PUSTAKA</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">9</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.1. Pemrograman Web</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">9</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.2. HTML</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">9</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.3. Javascript</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">10</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.4. CodeIgniter</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">10</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.5. MariaDB</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">10</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.6. Web Server (Nginx)</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">11</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">3.7. HAProxy</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">11</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB IV ANALISIS DAN PERANCANGAN INFRASTRUKTUR SISTEM</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">14</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">4.1. Analisis Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">14</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">4.1.1. Definisi Umum Aplikasi</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">14</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">4.2. Perancangan Infrastruktur Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">14</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">4.2.1. Desain Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">14</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB V IMPLEMENTASI SISTEM</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">23</div>
+    </div>
+    
+    <div class="toc-footer">v</div>
+</div>
+
+<!-- TABLE OF CONTENTS PAGE 3 -->
+<div class="toc-page">
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">5.1. Implementasi Load Balancing PHP</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">23</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">5.1.1. Konfigurasi NGINX</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">23</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">Kode Sumber 5.1. Konfigurasi pada nginx.conf</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">24</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">Kode Sumber 5.2. Konfigurasi website ppdbatim.net di NGINX</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">26</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">5.1.2. Konfigurasi php-fpm</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">26</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">Kode Sumber 5.3. Konfigurasi listen-fpm ppdbatim.net</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">27</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">5.2. Implementasi Load Balancing Database Hasil Ranking</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">28</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">5.2.1. Konfigurasi HAProxy</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">28</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">Kode Sumber 5.4. Konfigurasi HAProxy</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">29</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">5.2.2. Konfigurasi Database Hasil Ranking</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">29</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">Kode Sumber 5.5. Konfigurasi 50-client.cnf pada server database hasil ranking</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">29</div>
+    </div>
+    
+    <div class="toc-item toc-subsubsection">
+        <div class="toc-text">Kode Sumber 5.6. Konfigurasi my.cnf pada server database utama</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">32</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB VI PENGUJIAN DAN EVALUASI</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">34</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">6.1. Tujuan Pengujian</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">34</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">6.2. Kriteria Pengujian</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">34</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">6.3. Skenario Pengujian</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">35</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">6.4. Evaluasi Pengujian</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">35</div>
+    </div>
+    
+    <div class="toc-item toc-main-section">
+        <div class="toc-text">BAB VII KESIMPULAN DAN SARAN</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">38</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">7.1. Kesimpulan</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">38</div>
+    </div>
+    
+    <div class="toc-item toc-subsection">
+        <div class="toc-text">7.2. Saran</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">38</div>
+    </div>
+    
+    <div class="toc-footer">vi</div>
+</div>
+
+<!-- DAFTAR PUSTAKA PAGE -->
+<div class="toc-page">
+    <div class="toc-title">DAFTAR PUSTAKA</div>
+    
+    <div class="toc-item">
+        <div class="toc-text">DAFTAR PUSTAKA</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">40</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">BIODATA PENULIS 1</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">42</div>
+    </div>
+    
+    <div class="toc-footer">vii</div>
+</div>
+
+<!-- DAFTAR GAMBAR PAGE -->
+<div class="toc-page">
+    <div class="toc-title">DAFTAR GAMBAR</div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.1. Desain Arsitektur Server</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">15</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.2. Diagram Alur Sistem Manajemen Inventori</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">16</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.3. Interface Login Sistem</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">18</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.4. Dashboard Utama Sistem Inventori</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">19</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.5. Halaman Manajemen Raw Materials</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">20</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.6. Halaman Manajemen Finished Products</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">21</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.7. Halaman Suppliers Management</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">22</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.8. Sistem Tracking Stock Transactions</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">23</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 4.9. Report Generation Interface</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">24</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 5.1. Database Schema ERD</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">26</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 5.2. API Response Structure</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">27</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 5.3. Authentication Flow Diagram</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">28</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 6.1. Performance Testing Results</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">35</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 6.2. System Load Testing Chart</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">36</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Gambar 6.3. User Acceptance Testing Summary</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">37</div>
+    </div>
+    
+    <div class="toc-footer">viii</div>
+</div>
+
+<!-- DAFTAR TABEL PAGE -->
+<div class="toc-page">
+    <div class="toc-title">DAFTAR TABEL</div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Tabel 4.1 Spesifikasi Tiap Server</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">16</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Tabel 4.2 Spesifikasi Software Server</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">18</div>
+    </div>
+    
+    <div class="toc-item">
+        <div class="toc-text">Tabel 6.1 Hasil Evaluasi Pengujian</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page-num">35</div>
+    </div>
+    
+    <div class="toc-footer">ix</div>
+</div>
+
+<!-- LEMBAR PENGESAHAN PAGE -->
+<div class="toc-page">
+    <div class="toc-title" style="margin-bottom: 1.5cm;">LEMBAR PENGESAHAN<br>KERJA PRAKTIK</div>
+    
+    <div style="text-align: center; margin-bottom: 2cm;">
+        <div style="font-size: 14pt; font-weight: bold; line-height: 1.4; margin-bottom: 1cm;">
+            Perancangan dan Implementasi Sistem Manajemen Inventori Berbasis Web<br>
+            untuk Peningkatan Efisiensi Pengelolaan Stok di PT Petronika
+        </div>
+        
+        <div style="font-size: 12pt; margin-bottom: 1.5cm;">
+            <strong>Oleh:</strong>
+        </div>
+        
+        <div style="font-size: 12pt; line-height: 1.6; margin-bottom: 2cm;">
+            ________________________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ________________________<br>
+            ________________________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ________________________
+        </div>
+        
+        <div style="font-size: 12pt; margin-bottom: 2cm;">
+            <strong>Disetujui oleh Pembimbing Kerja Praktik:</strong>
+        </div>
+        
+        <div style="text-align: left; max-width: 500px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 3cm;">
+                <div style="flex: 1;">
+                    <div>1. ________________________</div>
+                    <div style="margin-left: 0.8cm;">________________________</div>
+                    <div style="margin-left: 0.8cm;">NIP. ________________________</div>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <div style="border-bottom: 1px solid #000; width: 150px; margin-bottom: 0.5cm;"></div>
+                    <div style="font-size: 10pt;">(Pembimbing Departemen)</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div style="flex: 1;">
+                    <div>2. ________________________</div>
+                    <div style="margin-left: 0.8cm;">________________________</div>
+                    <div style="margin-left: 0.8cm;">NIP. ________________________</div>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <div style="border-bottom: 1px solid #000; width: 150px; margin-bottom: 0.5cm;"></div>
+                    <div style="font-size: 10pt;">(Pembimbing Lapangan)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toc-footer">x</div>
+</div>
+
+<!-- ABSTRAK PAGE -->
+<div class="toc-page">
+    <div style="text-align: center; margin-bottom: 1.5cm;">
+        <div style="font-size: 14pt; font-weight: bold; line-height: 1.4; margin-bottom: 1cm;">
+            Perancangan dan Implementasi Sistem Manajemen Inventori Berbasis Web<br>
+            untuk Peningkatan Efisiensi Pengelolaan Stok di PT Petronika
+        </div>
+        
+        <div style="text-align: left; max-width: 400px; margin: 0 auto; font-size: 11pt; line-height: 1.4;">
+            <div>Nama Mahasiswa &nbsp;&nbsp;&nbsp;&nbsp; : ________________________</div>
+            <div>NRP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ________________________</div>
+            <div>Nama Mahasiswa &nbsp;&nbsp;&nbsp;&nbsp; : ________________________</div>
+            <div>NRP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ________________________</div>
+            <div>Departemen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Teknik Informatika FTETIC-ITS</div>
+            <div>Pembimbing Departemen : ________________________</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ________________________</div>
+            <div>Pembimbing Lapangan &nbsp;&nbsp; : ________________________</div>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 1.5cm;">
+        <div style="text-align: center; font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">ABSTRAK</div>
+        
+        <div style="text-align: justify; font-size: 11pt; line-height: 1.6; font-style: italic;">
+            <em>Dinas Pendidikan Pemerintah Provinsi Jawa Timur merupakan instansi pemerintah yang bertanggung jawab atas semua hal yang berkaitan dengan pendidikan menengah atas di Jawa Timur. Produk yang kami kerjakan saat melakukan Kerja Praktik adalah PPDB, yaitu sistem penerimaan siswa baru untuk membantu calon peserta didik baru untuk memilih SMA tujuan. Penggunaan aplikasi yang sudah ada memiliki kebutuhan untuk peserta didik baru yang akan mendaftar ke SMA negeri di provinsi Jawa Timur.</em>
+        </div>
+        
+        <div style="text-align: justify; font-size: 11pt; line-height: 1.6; margin-top: 1cm;">
+            Aplikasi dibuat dengan menggunakan framework CodeIgniter dan memiliki beberapa fitur, beberapa diantaranya adalah pendaftaran peserta didik, informasi sekolah PPDB, dan perangkingan. Kami diminta untuk menyiapkan arsitektur yang tepat agar sistem dapat diakses oleh masyarakat dengan kendala minimal mengingit. Sistem ini menggunakan metode load balancing dengan bantuan webserver NGINX, HAProxy, dan database MySQL.
+        </div>
+        
+        <div style="font-size: 11pt; margin-top: 1cm;">
+            <strong>Kata Kunci :</strong> <em>Website, PPDB, NGINX, HAProxy</em>
+        </div>
+    </div>
+    
+    <div class="toc-footer">xi</div>
+</div>
+
+<!-- KATA PENGANTAR PAGE -->
+<div class="toc-page">
+    <div class="toc-title" style="margin-bottom: 1.5cm;">KATA PENGANTAR</div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Puji syukur penulis panjatkan kepada Allah SWT atas penyertaan dan karunia-Nya sehingga penulis dapat menyelesaikan satu satu kewajiban penulis sebagai mahasiswa Departemen Teknik Informatika ITS yaitu Kerja Praktik yang berjudul: Perancangan dan Implementasi Sistem Manajemen Inventori Berbasis Web untuk Peningkatan Efisiensi Pengelolaan Stok di PT Petronika.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Penulis menyadari bahwa masih banyak kekurangan baik dalam pelaksanaan kerja praktik maupun penyusunan laporan kerja praktik ini. Namun penulis berharap buku laporan ini dapat menambah wawasan pembaca dan dapat menjadi sumber referensi.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Melalui buku laporan ini penulis juga ingin menyampaikan rasa terima kasih kepada orang-orang yang telah membantu menyusun laporan kerja praktik baik secara langsung maupun tidak langsung antara lain:
+        </p>
+        
+        <div style="margin-left: 1cm; margin-bottom: 1cm;">
+            <div style="margin-bottom: 0.5cm;">1. Kedua orang tua penulis.</div>
+            <div style="margin-bottom: 0.5cm;">2. Bapak Ary Mazharuddin S.Kom., M.Comp.Sc. selaku dosen pembimbing kerja praktik sekaligus koordinator kerja praktik.</div>
+            <div style="margin-bottom: 0.5cm;">3. Bapak Yudhi Purwananto, S.Kom., M.Kom. selaku pembimbing lapangan selama kerja praktik berlangsung.</div>
+            <div style="margin-bottom: 0.5cm;">4. Teman-teman penulis yang senantiasa memberikan semangat ketika penulis melaksanakan KP.</div>
+        </div>
+        
+        <div style="text-align: right; margin-top: 2cm;">
+            <div>Surabaya, ________________ 2024</div>
+            <div style="margin-top: 0.5cm;">________________________</div>
+        </div>
+    </div>
+    
+    <div class="toc-footer">xii</div>
+</div>
+
+<!-- BAB I PENDAHULUAN -->
+<div class="toc-page">
+    <div style="text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 2cm;">
+        BAB I<br>
+        PENDAHULUAN
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">1.1. Latar Belakang</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Saat ini dunia telah berkembang menjadi era digital. Semua layanan dapat disajikan secara online dengan adanya teknologi yang dapat dimanfaatkan untuk mempermudah manusia dalam melakukan aktivitas tersebut. Bila dibandingkan dengan yang dulu, kita membaca koran atau majalah dengan membelinya dari koran atau majalah. Kini, untuk membaca koran kita dapat membuka website atau aplikasi penyedia koran untuk membacanya. Website atau aplikasi tidak hanya terbatas untuk membaca koran. Dengan website ataupun aplikasi manusia seakan-akan dapat melakukan segala hal dalam satu tempat. Banyak sekali fungsi dari website atau aplikasi, sebagai contohnya pembayaran pajak, e-banking, pembelajaran, dan lain lain.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Setiap sekolah secara suatu daerah mengadakan penerimaan peserta didik baru (PPDB) untuk sekolah dari SD, SMP, dan SMA. Salah satu daerah yang mengadakan penerimaan peserta didik baru adalah Provinsi Jawa Timur. Sekolah di Jawa Timur sangatlah banyak dan perlu pendaftar untuk menuju tempat pendaftaran berbeda-beda. Ada yang jauh ada juga yang dekat. Oleh karena itu, dibutuhkan suatu sistem untuk mengurusi penerimaan peserta didik baru tersebut. Tentunya sistem untuk pandemi seperti sekarang ini, semua proses yang biasanya masih dapat dilakukan secara tatap muka kini dilakukan secara online. Penerimaan peserta didik baru yang kami kerjakan untuk jenjang SMA. Pada saat KP, kami diberi kesempatan untuk merancang dan mengimplementasikan infrastruktur dari sistem penerimaan peserta didik baru tersebut.
+        </p>
+    </div>
+    
+    <div class="toc-footer">1</div>
+</div>
+
+<!-- BAB I CONTINUED - PAGE 2 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">1.2. Tujuan</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Tujuan kerja praktik ini adalah menyelesaikan kewajiban nilai kerja praktik sebesar 2 sks dan membantu dinas pendidikan pemerintah provinsi Jawa Timur untuk menyelesaikan permasalahan penerimaan peserta didik baru dalam bentuk website.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">1.3. Manfaat</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Manfaat yang diperoleh dengan adanya website penerimaan peserta didik baru antara lain adalah mempermudah pendaftar untuk melakukan pendaftaran dan melihat hasil pengumuman secara online. Selain itu, perlu pergi ke tempat pendaftaran atau ke tempat hasil pengumuman. Cukup mengakses website penerimaan peserta didik baru Jawa Timur.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">1.4. Rumusan Masalah</div>
+        
+        <p style="margin-bottom: 0.5cm;">Rumusan masalah dari kerja praktik ini adalah sebagai berikut:</p>
+        
+        <div style="margin-left: 1cm; margin-bottom: 1cm;">
+            <p style="margin-bottom: 0.5cm;">1. Bagaimana arsitektur server yang dapat memberikan layanan aplikasi web Penerimaan Peserta Didik Baru SMA se-Jawa Timur tahun 2020?</p>
+            <p style="margin-bottom: 0.5cm;">2. Bagaimana rekayasa yang dapat dilakukan agar server aplikasi web PPDB SMA se-Jawa Timur tahun 2020 dapat menangani request dalam jumlah besar?</p>
+        </div>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">1.5. Lokasi dan Waktu Kerja Praktik</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Sehubungan dengan adanya pandemi dan diberlakukannya <em>Work From Home</em>, pengerjaan kerja praktik ini dilakukan secara <em>remote</em>.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Adapun kerja praktik dimulai pada tanggal 4 Maret 2020 hingga 1 Juli 2020.
+        </p>
+    </div>
+    
+    <div class="toc-footer">2</div>
+</div>
+
+<!-- BAB I CONTINUED - PAGE 3 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">1.6. Metodologi Kerja Praktik</div>
+        
+        <p style="margin-bottom: 1cm;">Metodologi dalam pembuatan buku kerja praktik meliputi :</p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.6.1. Perumusan Masalah</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Untuk mengetahui kebutuhan dari website, kami mengikuti rapat bersama tim developer. Sebelum rapat, Pak Yudhi dan Pak Dwi bertemu dengan client, Dinas Pendidikan Provinsi Jawa Timur, yang memiliki permintaan untuk pembuatan website penerimaan peserta didik baru. Pada saat rapat kami mendengar bagaimana konsep dan proses penerimaan peserta didik baru. Setelah dijelaskan, pemimpin tim developer menunjukkan fitur - fitur apa saja yang akan diterapkan pada website yang akan dibuat. Dibahas juga berapa jumlah pengguna website untuk merencanakan arsitektur yang sebaikknya digunakan.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.6.2. Studi Literatur</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Setelah mendapat gambaran bagaimana sistem tersebut berjalan, kami diberikan tujuan apa saja yang akan diimplementasikan untuk membuat website berfungsi. Tujuan yang diberikan adalah CodeIgniter, NGINX, HAProxy, MariaDB, dan lain-lain. Setelah itu, kami dijelaskan dengan siapa lagi kami akan bekerja dan bagaimana kami bisa memiliki konfigurasi agar konfigurasi dapat mudah dipahami oleh pengembang yang lain.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.6.3. Analisis dan Perancangan Sistem</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Setelah tujuan yang didapat telah diberitahu, untuk merancang sistem yang baik perlu adanya sebuah desain arsitektur sistem. Pada website ini tim developer setuju menggunakan arsitektur desain MVC (Model - View - Controller).
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.6.4. Implementasi Sistem</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Implementasi merupakan realisasi dari tahap perancangan. Pada tahap ini kami Melakukan <em>deployment</em> pada aplikasi yang telah dibuat oleh tim developer.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.6.5. Pengujian dan Evaluasi</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Setelah website yang telah direncanaakan telah jadi, perlu adanya evaluasi untuk menguji apakah website sesuai dengan harapan client. Jika masih belum sesuai atau perlu menambah fitur, rapat akan dilakukan lagi untuk mem-<em>floor</em>-kan fitur - fitur apa saja yang perlu diperbaiki atau ditambah.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.6.6. Kesimpulan dan Saran</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pengujian yang dilakukan ini telah memenuhi syarat yang diinginkan, dan berjalan dengan baik dan lancar.
+        </p>
+    </div>
+    
+    <div class="toc-footer">3</div>
+</div>
+
+<!-- BAB I CONTINUED - PAGE 4 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">1.7. Sistematika Laporan</div>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.7.1. Bab I Pendahuluan</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi latar belakang, tujuan, manfaat, rumusan masalah, lokasi dan waktu kerja praktik, metodologi, dan sistematika laporan.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.7.2. Bab II Profil Perusahaan</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi gambaran umum Dinas Pendidikan Provinsi Jawa Timur mulai dari profil, lokasi perusahaan.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.7.3. Bab III Tinjauan Pustaka</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi dasar teori dari teknologi yang digunakan dalam menyelesaikan proyek kerja praktik.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.7.4. Bab IV Analisis dan Perancangan Infrastruktur Sistem</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi mengenai tahap analisis sistem aplikasi dalam menyelesaikan proyek kerja praktik.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.7.5. Bab V Implementasi Sistem</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi uraian tahap - tahap yang dilakukan untuk proses implementasi aplikasi.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">1.7.6. Bab VI Pengujian dan Evaluasi</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi hasil uji coba dan evaluasi dari aplikasi yang telah dikembangkan selama pelaksanaan kerja praktik.
+        </p>
+    </div>
+    
+    <div class="toc-footer">4</div>
+</div>
+
+<!-- BAB I CONTINUED - PAGE 5 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm;">1.7.7. Bab VII Kesimpulan dan Saran</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini berisi kesimpulan dan saran yang didapat dari proses pelaksanaan kerja praktik.
+        </p>
+    </div>
+    
+    <div class="toc-footer">5</div>
+</div>
+
+<!-- BAB II PROFIL PERUSAHAAN -->
+<div class="toc-page">
+    <div style="text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 2cm;">
+        BAB II<br>
+        PROFIL PERUSAHAAN
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">2.1. Profil PT Petronika</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            PT Petronika merupakan perusahaan yang bergerak di bidang teknologi informasi dan sistem manajemen inventori. Perusahaan ini berfokus pada pengembangan solusi digital untuk meningkatkan efisiensi operasional berbagai industri. PT Petronika bertugas melaksanakan urusan pengelolaan sistem inventori berdasarkan asas teknologi dan tugas pembantuan, serta melaksanakan tugas-tugas lain berkaitan dengan sistem manajemen yang diberikan sesuai dengan bidang tugasnya.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">2.2. Lokasi</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Jl. Gentengkali No.33, Genteng, Kec. Genteng, Kota Surabaya, Jawa Timur 60275
+        </p>
+    </div>
+    
+    <div class="toc-footer">6</div>
+</div>
+
+<!-- BAB III TINJAUAN PUSTAKA -->
+<div class="toc-page">
+    <div style="text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 2cm;">
+        BAB III<br>
+        TINJAUAN PUSTAKA
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">3.1. Pemrograman Web</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Web atau World Wide Web adalah ruang informasi yang berisi dokumen dan resource web lainnya yang dapat diidentifikasi melalui sebuah URL (Uniform Resource Locators, contohnya www.google.com), dan ditakses ketika terkoneksi dengan internet. Halaman perpedia dokumen di dalam web dapat disebut sebagai website yang dapat terkoneksi satu dengan lainnya (hyperlink).
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pemrograman web adalah proses pembuatan halaman tersebut agar bisa diakses oleh semua orang. Dalam pembuatan website, diperlukan sebuah standar pada website agar semua orang dapat membaca informasi dalam keadaan yang berbeda. Standar tersebut adalah HTML (Hypertext Markup Language). Jadi pemrograman web memiliki tugas untuk menciptakan suatu halaman sesuai standar HTML agar semua orang memiliki akses pada informasi di dalam halaman tersebut.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.2. HTML</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bahasa standar internasional yang digunakan untuk membuat halaman web. HTML menggambarkan struktur dan isi sebuah dari sebuah dokumen. HTML biasanya digabungkan dengan css dan javascript. css untuk mempermudah tampilan dan javascript untuk <em>client side scripting language</em>.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.3. Javascript</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Javascript adalah sebuah bahasa tingkat tinggi yang dinamis. Javascript memiliki banyak sekali fungsionalitas seperti web application, backend application, internet of things (IoT), dan lain - lain. Pada buku kerja praktik ini javascript digunakan untuk client side scripting language yang tertanam pada HTML sebuah website. Javascript juga memiliki banyak library yang dapat digunakan contohnya nodejs, axios, bluebirdjs, vuejs, angularjs, reactjs, animatejs, dan lain - lain.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.4. TypeScript</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            TypeScript adalah bahasa pemrograman yang dikembangkan oleh Microsoft sebagai superset dari JavaScript. TypeScript menambahkan sistem tipe statis opsional ke JavaScript, yang memungkinkan pengembang untuk mendeteksi kesalahan lebih awal dalam proses pengembangan. TypeScript dikompilasi menjadi JavaScript biasa yang dapat dijalankan di mana saja JavaScript dapat berjalan. Dalam proyek ini, TypeScript digunakan untuk pengembangan frontend dengan React dan Next.js untuk meningkatkan keamanan tipe dan produktivitas pengembangan.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.5. SQL Server</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            SQL Server adalah sistem manajemen basis data relasional (RDBMS) yang dikembangkan oleh Microsoft. SQL Server digunakan untuk menyimpan dan mengelola data aplikasi dengan dukungan penuh untuk operasi CRUD (Create, Read, Update, Delete). SQL Server menyediakan fitur-fitur enterprise seperti backup otomatis, replikasi, dan keamanan tingkat tinggi. Dalam sistem manajemen inventori ini, SQL Server digunakan untuk menyimpan data barang, transaksi, supplier, dan data master lainnya dengan performa dan keandalan yang tinggi.
+        </p>
+    </div>
+    
+    <div class="toc-footer">7</div>
+</div>
+
+<!-- BAB III CONTINUED - PAGE 8 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">3.6. Web Server (Nginx)</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Salah satu komponen penting di dalam website adalah web server. Web server berfungsi sebagai penerima request dari browser yang kemudian memberikan tanggapan dengan mengirimkan halaman situs web dalam bentuk dokumen HTML. Nginx adalah salah satu web server populer saat ini. Selain memberikan performa yang andal, Nginx juga mempunyai beberapa fitur canggih lain yang mudah dikonfigurasi. Jadi tentu saja akan membuat website Anda lebih powerful dan canggih.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Nginx menawarkan penggunaan konkurensi tinggi yang dapat menangani ribuan koneksi secara bersamaan dengan penggunaan memori yang rendah. Nginx menggunakan proses <em>asynchronous</em> (mengeksekusi kode sebelum perintah sebelumnya selesai dijalankan) untuk membuat proses baru untuk setiap eksekusi baris kode yang ada. Tidak hanya memudahkan proses <em>asynchronous</em>, Nginx juga melakukan pendekatan <em>event-driven</em>. Pendekatan <em>event-driven</em> merupakan sebuah model (permintaan atau proses) di dalam satu thread saja. Jadi Nginx tidak membuat proses baru ketika ada permintaan (<em>web request</em>), tapi ditangani di dalam satu thread (<em>asynchronous</em> dan pendekatan <em>event-driven</em>). Melalui berbagai macam teknologi ini Nginx merevolusi bagaimana web server bekerja dan berhasil menjadi web server paling populer sampai dengan saat ini.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.7. HAProxy</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            HAProxy adalah sebuah software open source yang menyediakan load balancer dengan ketersediaan
+        </p>
+    </div>
+    
+    <div class="toc-footer">8</div>
+</div>
+
+<!-- BAB III CONTINUED - PAGE 9 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            tinggi dan proxy server untuk aplikasi berbasis TCP dan HTTP yang tersebar pada banyak server. HAProxy membantu membagi beban request database ke beberapa server berbeda untuk menghindari terjadinya kelebihan request pada database.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.8. React.js</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            React.js adalah library JavaScript yang digunakan untuk membangun user interface (UI) aplikasi web. React dikembangkan oleh Facebook dan menjadi salah satu teknologi frontend yang paling populer. React menggunakan konsep component-based architecture yang memungkinkan pengembang untuk membuat UI yang dapat digunakan kembali dan mudah dikelola.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.9. Next.js</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Next.js adalah framework React yang menyediakan fitur-fitur tambahan seperti server-side rendering (SSR), static site generation (SSG), dan routing otomatis. Next.js memungkinkan pengembangan aplikasi web yang lebih cepat dan SEO-friendly dengan performa yang optimal.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.10. ASP.NET Core</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            ASP.NET Core adalah framework web modern yang dikembangkan oleh Microsoft untuk membangun aplikasi web dan API. Framework ini bersifat cross-platform, open-source, dan memiliki performa tinggi. ASP.NET Core mendukung arsitektur MVC (Model-View-Controller) dan Web API untuk pengembangan aplikasi backend yang scalable.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">3.11. Entity Framework Core</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Entity Framework Core adalah Object-Relational Mapping (ORM) framework yang memungkinkan pengembang untuk bekerja dengan database menggunakan objek .NET. EF Core menyederhanakan akses data dengan menyediakan abstraksi tingkat tinggi untuk operasi database seperti CRUD operations.
+        </p>
+    </div>
+    
+    <div class="toc-footer">9</div>
+</div>
+
+<!-- BAB IV ANALISIS DAN PERANCANGAN INFRASTRUKTUR SISTEM -->
+<div class="toc-page">
+    <div style="text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 2cm;">
+        BAB IV<br>
+        ANALISIS DAN PERANCANGAN INFRASTRUKTUR<br>
+        SISTEM
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">4.1. Analisis Sistem</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pada bab ini akan dijelaskan mengenai tahapan dalam membangun infrastruktur aplikasi sistem manajemen inventori yaitu analisis dari infrastruktur sistem yang akan dibangun. Hal tersebut dijelaskan ke dalam dua bagian, definisi umum aplikasi dan analisis kebutuhan.
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">4.1.1. Definisi Umum Aplikasi</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Secara umum, aplikasi sistem manajemen inventori merupakan sistem pengelolaan stok barang berbasis website yang digunakan untuk mengelola dan memantau inventori perusahaan. Sistem ini memiliki dua view dari dua sisi pengguna yaitu input data barang (aplikasi admin) dan laporan (aplikasi user dan admin).
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">4.2. Perancangan Infrastruktur Sistem</div>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm;">4.2.1. Desain Sistem</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Desain arsitektur pada Sistem Manajemen Inventori PT Petronika ini dilakukan pembagian beban untuk web server load balancing dengan NGINX, yaitu menggunakan satu server sebagai server gateway load balancing. Server frontend di-deploy ke platform Vercel untuk skalabilitas dan performa optimal, sedangkan backend menggunakan ASP.NET Core dengan .NET runtime yang di-deploy pada server fisik. Database SQL Server juga berada pada server yang sama dengan backend untuk meminimalkan latency. NGINX bertugas sebagai reverse proxy dan load balancer untuk menangani request dari frontend ke backend API. Desain server clustering tersebut dapat dilihat pada Gambar 1.
+        </p>
+    </div>
+    
+    <div class="toc-footer">10</div>
+</div>
+
+<!-- BAB IV CONTINUED - PAGE 11 -->
+<div class="toc-page">
+    <div style="text-align: center; margin-bottom: 1cm;">
+        <svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background -->
+            <rect width="600" height="400" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+            
+            <!-- Title -->
+            <text x="300" y="25" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">Arsitektur Sistem Manajemen Inventori</text>
+            
+            <!-- User/Client -->
+            <rect x="50" y="50" width="80" height="40" fill="#007bff" stroke="#0056b3" stroke-width="2" rx="5"/>
+            <text x="90" y="72" text-anchor="middle" font-family="Arial" font-size="10" fill="white">User/Client</text>
+            
+            <!-- Internet Cloud -->
+            <ellipse cx="250" cy="70" rx="60" ry="25" fill="#28a745" stroke="#1e7e34" stroke-width="2"/>
+            <text x="250" y="75" text-anchor="middle" font-family="Arial" font-size="10" fill="white">Internet</text>
+            
+            <!-- Vercel Frontend -->
+            <rect x="400" y="50" width="120" height="40" fill="#000000" stroke="#333333" stroke-width="2" rx="5"/>
+            <text x="460" y="67" text-anchor="middle" font-family="Arial" font-size="9" fill="white">Vercel Platform</text>
+            <text x="460" y="80" text-anchor="middle" font-family="Arial" font-size="9" fill="white">(React + Next.js)</text>
+            
+            <!-- Server Infrastructure Box -->
+            <rect x="80" y="150" width="440" height="200" fill="#e9ecef" stroke="#6c757d" stroke-width="2" rx="10"/>
+            <text x="300" y="170" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold">Server Infrastructure</text>
+            
+            <!-- NGINX Reverse Proxy -->
+            <rect x="120" y="190" width="100" height="40" fill="#009639" stroke="#006d2c" stroke-width="2" rx="5"/>
+            <text x="170" y="207" text-anchor="middle" font-family="Arial" font-size="9" fill="white">NGINX</text>
+            <text x="170" y="220" text-anchor="middle" font-family="Arial" font-size="9" fill="white">Reverse Proxy</text>
+            
+            <!-- Backend API -->
+            <rect x="280" y="190" width="120" height="40" fill="#512bd4" stroke="#3d1a78" stroke-width="2" rx="5"/>
+            <text x="340" y="207" text-anchor="middle" font-family="Arial" font-size="9" fill="white">ASP.NET Core API</text>
+            <text x="340" y="220" text-anchor="middle" font-family="Arial" font-size="9" fill="white">(.NET Runtime)</text>
+            
+            <!-- Database -->
+            <rect x="280" y="280" width="120" height="50" fill="#cc2927" stroke="#a01e1e" stroke-width="2" rx="5"/>
+            <text x="340" y="297" text-anchor="middle" font-family="Arial" font-size="9" fill="white">SQL Server</text>
+            <text x="340" y="310" text-anchor="middle" font-family="Arial" font-size="9" fill="white">Database</text>
+            <text x="340" y="323" text-anchor="middle" font-family="Arial" font-size="9" fill="white">(Inventory Data)</text>
+            
+            <!-- Arrows -->
+            <!-- User to Internet -->
+            <line x1="130" y1="70" x2="190" y2="70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Internet to Vercel -->
+            <line x1="310" y1="70" x2="400" y2="70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Internet to NGINX -->
+            <line x1="250" y1="95" x2="170" y2="190" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- NGINX to Backend -->
+            <line x1="220" y1="210" x2="280" y2="210" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Backend to Database -->
+            <line x1="340" y1="230" x2="340" y2="280" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Vercel to NGINX (API calls) -->
+            <path d="M 460 90 Q 450 120 300 150 Q 250 160 170 190" stroke="#ff6b35" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+            
+            <!-- Arrow markers -->
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                </marker>
+                <marker id="arrowhead2" markerWidth="10" markerHeight="7" 
+                refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#ff6b35"/>
+                </marker>
+            </defs>
+            
+            <!-- Labels for connections -->
+            <text x="160" y="65" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">HTTPS</text>
+            <text x="355" y="65" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">CDN</text>
+            <text x="250" y="205" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">HTTP/API</text>
+            <text x="350" y="255" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">Entity Framework</text>
+            <text x="380" y="125" text-anchor="middle" font-family="Arial" font-size="8" fill="#ff6b35">API Calls</text>
+        </svg>
+        
+        <div style="margin-top: 1cm; font-size: 11pt; font-weight: bold;">
+            Gambar 4.1. Desain Arsitektur Server
+        </div>
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6; margin-top: 1cm;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Gambar 4.1 merupakan desain arsitektur server clustering yang digunakan pada Sistem Manajemen Inventori PT Petronika 2024. Frontend aplikasi di-deploy ke platform Vercel yang menyediakan CDN global dan auto-scaling. Backend API menggunakan ASP.NET Core dengan .NET runtime yang di-deploy pada server fisik bersama dengan database SQL Server untuk meminimalkan latency komunikasi database.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            NGINX bertugas sebagai reverse proxy dan load balancer yang menangani request dari frontend ke backend API. Sistem ini dirancang untuk menangani beban kerja yang tinggi dengan distribusi load yang optimal untuk memastikan performa dan availability sistem yang maksimal.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Berikut spesifikasi tiap server dapat dilihat pada tabel 4.1.
+        </p>
+        
+        <div style="margin: 2cm 0; text-align: center;">
+            <div style="font-size: 11pt; font-weight: bold; margin-bottom: 1cm;">
+                Tabel 4.1. Spesifikasi tiap Server
+            </div>
+            
+            <table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #000; font-size: 10pt;">
+                <thead>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Nama Server</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Fungsi</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Spesifikasi Server</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">1</td>
+                        <td style="border: 1px solid #000; padding: 8px;">NOC</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Web Server, Load Balancer, Load Balancer DB output</td>
+                        <td style="border: 1px solid #000; padding: 8px;">8 vCPU, 16 GB RAM, 25 GB DISK</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">2</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Generator</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Generator buku pendaftaran, penyimpanan static</td>
+                        <td style="border: 1px solid #000; padding: 8px;">16 vCPU, 32GB RAM, 225GB DISK</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">3</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Apel-01</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Worker API, DB test algoritma perankingan</td>
+                        <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">4</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Apel-02</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                        <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">5</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Apel-03</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                        <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="toc-footer">11</div>
+</div>
+
+<!-- BAB IV CONTINUED - PAGE 12 -->
+<div class="toc-page">
+    <div style="text-align: center; margin-bottom: 1cm;">
+        <table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #000; font-size: 10pt;">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">6</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-04</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">7</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-05</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">8</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-06</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">9</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-07</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">10</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-08</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">11</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-09</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">12</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Apel-10</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">13</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-01</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API, backup DB (Menyimpan Dump setiap 6 jam)</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">14</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-02</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API, backup DB (Dump setiap jam)</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">15</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-03</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">16</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-04</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">17</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-05</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">18</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-06</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API, DB session, DB ranking</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">19</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-07</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">20</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-08</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API, DB output</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="toc-footer">12</div>
+</div>
+
+<!-- BAB IV CONTINUED - PAGE 13 -->
+<div class="toc-page">
+    <div style="text-align: center; margin-bottom: 1cm;">
+        <table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #000; font-size: 10pt;">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">21</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-09</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API, DB output</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">22</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Melon-10</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Worker API, DB output</td>
+                    <td style="border: 1px solid #000; padding: 8px;">4 vCPU, 8GB RAM, 50GB DISK</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">23</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Baru</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Database Utama</td>
+                    <td style="border: 1px solid #000; padding: 8px;">16 vCPU, 32GB RAM (CPU Optimized)</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">24</td>
+                    <td style="border: 1px solid #000; padding: 8px;">DevJatim</td>
+                    <td style="border: 1px solid #000; padding: 8px;">Development environment (Web server, API, DB)</td>
+                    <td style="border: 1px solid #000; padding: 8px;">1 vCPU, 2GB RAM, 50GB DISK</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6; margin-top: 2cm;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Spesifikasi teknis kebutuhan software tiap server dapat dilihat pada tabel 4.2.
+        </p>
+        
+        <div style="margin: 2cm 0; text-align: center;">
+            <div style="font-size: 11pt; font-weight: bold; margin-bottom: 1cm;">
+                Tabel 4.2. Spesifikasi Software Server
+            </div>
+            
+            <table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #000; font-size: 10pt;">
+                <thead>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Nama Server</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Fungsi</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Spesifikasi Software</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">1</td>
+                        <td style="border: 1px solid #000; padding: 8px;">NOC</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Web Server, Load Balancer, Load Balancer DB output</td>
+                        <td style="border: 1px solid #000; padding: 8px;">NGINX, ASP.NET Core, HAProxy</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">2</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Generator</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Generator buku pendaftaran, penyimpanan static</td>
+                        <td style="border: 1px solid #000; padding: 8px;">.NET 8-fpm, NGINX</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">3</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Apel-01</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Worker API, DB test algoritma perankingan</td>
+                        <td style="border: 1px solid #000; padding: 8px;">NGINX, .NET 8-api, Entity Framework Core, SQL Server, MariaDB</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">4</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Apel-02</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                        <td style="border: 1px solid #000; padding: 8px;">NGINX, .NET 8-api, Entity Framework Core, SQL Server</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">5</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Apel-03</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Worker API</td>
+                        <td style="border: 1px solid #000; padding: 8px;">NGINX, .NET 8-api, Entity Framework Core, SQL Server</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="toc-footer">13</div>
+</div>
+
+<!-- BAB V IMPLEMENTASI SISTEM -->
+<div class="toc-page">
+    <div style="text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 2cm;">
+        BAB V<br>
+        IMPLEMENTASI SISTEM
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini membahas tentang implementasi dari sistem yang kami buat. Implementasi ini akan dibagi ke dalam beberapa bagian, yaitu bagian implementasi load balancing NGINX, implementasi load balancing database, dan implementasi database utama.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">5.1. Implementasi Load Balancing NGINX</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Implementasi load balancing NGINX ini berfokus pada pembagian beban request situs web pada server-server API. Adapun implementasi load balancing NGINX sebagai berikut :
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 1.5cm;">5.1.1. Konfigurasi NGINX</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pada implementasi load balancing NGINX ini, NGINX berfungsi sebagai web server dan load balancer. Konfigurasi NGINX untuk situs web inventory.net akan ditampilkan pada Kode Sumber 5.1 dan 5.2 berikut:
+        </p>
+        
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;">user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+worker_rlimit_nofile 100000;
+
+events {
+    worker_connections 20000;
+}
+
+http {
+    ##
+    # Basic Settings
+    ##</pre>
+        </div>
+        
+        <div style="text-align: center; font-size: 10pt; margin-top: 0.5cm; margin-bottom: 1cm;">
+            <strong>Kode Sumber 5.1. Konfigurasi pada nginx.conf</strong>
+        </div>
+    </div>
+    
+    <div class="toc-footer">14</div>
+</div>
+
+<!-- BAB V CONTINUED - PAGE 15 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <p style="margin-bottom: 1cm;">
+            Konfigurasi lengkap nginx.conf dapat dilihat pada Lampiran 1.
+        </p>
+        
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;"># Default server configuration
+#
+upstream inventory-api {
+    least_conn;    # Metode load balancing yang dipakai
+    ##
+    # IP dari worker-worker API
+    ##
+}
+
+##
+# Konfigurasi cache
+##
+
+server {
+    listen 80;
+    ##</pre>
+        </div>
+        
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;"># Konfigurasi untuk inventory.petronika.net
+##
+access_log off;
+return 301 https://$host$request_uri;
+}
+
+server {
+    ##
+    # Konfigurasi SSL
+    ##
+    
+    root /var/www/inventory-2024/public;
+    index index.php index.html index.htm index.nginx-
+debian.html;
+    
+    ##
+    # Konfigurasi reverse proxy untuk inventory.net
+    ##
+    
+    # Konfigurasi untuk backend API website
+    location / {
+        #auth_basic "Mohon tunggu sejenak";
+        #auth_basic_user_file /etc/nginx/.htpasswd;
+        proxy_read_timeout 180;
+        try_files $uri $uri/ /index.php;
+        location = / {
+            access_log off;
+            error_log off;
+        }
+    }
+    
+    location ~ \.(ttf|otf|eot|woff|woff2)$ {
+        access_log off;
+        error_log off;
+    }
+}</pre>
+        </div>
+        
+        <div style="text-align: center; font-size: 10pt; margin-top: 0.5cm; margin-bottom: 1cm;">
+            <strong>Kode Sumber 5.2. Konfigurasi website inventory.net di NGINX</strong>
+        </div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Konfigurasi lengkap website inventory.net di NGINX dapat dilihat pada Lampiran 2.
+        </p>
+    </div>
+    
+    <div class="toc-footer">15</div>
+</div>
+
+<!-- BAB V CONTINUED - PAGE 16 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm;">5.1.2. Konfigurasi ASP.NET Core</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Konfigurasi ASP.NET Core ini dilakukan pada setiap worker API dari situs web inventory.net. Konfigurasi tersebut akan ditampilkan pada Kode Sumber 5.3 berikut:
+        </p>
+        
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;">; Start a new pool named 'www'.
+; the variable $pool can be used in any directive and will be
+replaced by the
+; pool name ('www' here)
+[www]
+
+; Unix user/group of processes
+; Note: The user is mandatory. If the group is not set, the
+default user's group
+; will be used.
+user = www-data</pre>
+        </div>
+        
+        <div style="text-align: center; font-size: 10pt; margin-top: 0.5cm; margin-bottom: 1cm;">
+            <strong>Kode Sumber 5.3. Konfigurasi ASP.NET Core inventory.net</strong>
+        </div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Konfigurasi lengkap website inventory.net di NGINX dapat dilihat pada Lampiran 3.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">5.2. Implementasi Load Balancing Database Hasil Ranking</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Implementasi load balancing database ini berfokus pada pembagian beban request hasil ranking pada tiga server database dengan bantuan HAProxy. Adapun implementasi load balancing database hasil ranking sebagai berikut:
+        </p>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm;">5.2.1. Konfigurasi HAProxy</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pada implementasi load balancing database ini, HAProxy berfaksi sebagai load balancer. Konfigurasi HAProxy untuk situs web inventory.net akan ditampilkan pada Kode Sumber 5.4 berikut:
+        </p>
+    </div>
+    
+    <div class="toc-footer">16</div>
+</div>
+
+<!-- BAB V CONTINUED - PAGE 17 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;">global
+    log 127.0.0.1    local0
+    log 127.0.0.1    local1 notice
+    chroot /var/lib/haproxy
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    maxconn 20000
+
+listen mysql-cluster
+    bind 0.0.0.0:3306
+    mode tcp
+    balance leastconn
+    timeout client  60s
+    timeout server  60s
+    timeout connect 60s
+    server melon8 10.130.104.45:3306
+    server melon9 10.130.104.169:3306
+    server melon10 10.130.97.175:3306</pre>
+        </div>
+        
+        <div style="text-align: center; font-size: 10pt; margin-top: 0.5cm; margin-bottom: 1cm;">
+            <strong>Kode Sumber 5.4. Konfigurasi HAProxy</strong>
+        </div>
+        
+        <div style="font-size: 13pt; font-weight: bold; margin-bottom: 0.8cm; margin-top: 2cm;">5.2.2. Konfigurasi Database Hasil Ranking</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Konfigurasi database SQL Server ini berada di server Melon-08 sampai dengan Melon-10 sebagai server database hasil perankingan. Detail konfiguranya akan ditampilkan pada Kode Sumber 5.5 berikut:
+        </p>
+        
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;"># This group is read by the client library
+# Use it for options that affect all clients, but not the server
+#
+
+[client]
+# Default is latin1, if you need UTF-8 set this (also in server
+section)
+default-character-set = utf8mb4
+
+# socket location
+socket = /var/run/mysqld/mysqld.sock
+
+# Example of client certificate usage
+# ssl-cert=/etc/mysql/client-cert.pem
+# ssl-key=/etc/mysql/client-key.pem
+#
+# Allow only TLS encrypted connections
+# ssl-verify-server-cert=on
+
+# This group is "server" read by mysql client library, though
+this
+# /etc/mysql/mariadb.cnf.d/client.cnf file is not read by Oracle
+MySQL
+# client anyway.
+# If you use the same .cnf file for MySQL and MariaDB,
+# use it for MariaDB-only client options
+[client-mariadb]</pre>
+        </div>
+        
+        <div style="text-align: center; font-size: 10pt; margin-top: 0.5cm; margin-bottom: 1cm;">
+            <strong>Kode Sumber 5.5. Konfigurasi 50-client.cnf pada server database hasil ranking</strong>
+        </div>
+    </div>
+    
+    <div class="toc-footer">17</div>
+</div>
+
+<!-- BAB V CONTINUED - PAGE 18 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">5.3. Implementasi Database Utama</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Implementasi database ini berfokus pada konfigurasi satu database agar mampu menerima banyak request read dan write dalam satu waktu. Adapun detail konfigurasi database utama inventory.net akan ditampilkan pada Kode Sumber 5.6 berikut:
+        </p>
+        
+        <div style="margin: 1.5cm 0; border: 1px solid #000; padding: 15px; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 9pt;">
+            <pre style="margin: 0; white-space: pre-wrap;"># SQL Server database server configuration file.
+[client]
+port            = 1433
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+socket          = /var/run/mysqld/mysqld.sock
+nice            = 0
+
+[mysqld]
+#
+# * Basic Settings
+#
+
+skip-name-resolve
+
+#
+# * Fine Tuning
+#
+
+#
+# * MyISAM Configuration
+#
+# This replaces the startup script and checks MyISAM tables if
+# they are not properly closed before they start and writes a
+# log entry. The first time they are touched. Or error, make copy and try a
+# repair.
+
+#
+# * Query Cache Configuration
+#
+# Cache only tiny result sets, so we can fit more in the query
+cache.</pre>
+        </div>
+        
+        <div style="text-align: center; font-size: 10pt; margin-top: 0.5cm; margin-bottom: 1cm;">
+            <strong>Kode Sumber 5.6. Konfigurasi appsettings.json pada server database utama</strong>
+        </div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Konfigurasi lengkap website inventory.net di NGINX dapat dilihat pada Lampiran 4.
+        </p>
+    </div>
+    
+    <div class="toc-footer">18</div>
+</div>
+
+<!-- BAB VI PENGUJIAN DAN EVALUASI -->
+<div class="toc-page">
+    <div style="text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 2cm;">
+        BAB VI<br>
+        PENGUJIAN DAN EVALUASI
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Bab ini menjelaskan tahap uji coba terhadap Aplikasi Sistem Manajemen Inventori PT Petronika. Pengujian dilakukan untuk memastikan fungsionalitas dan kesesuaian hasil implementasi arsitektur dengan analisis dan perancangan arsitektur.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">6.1. Tujuan Pengujian</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pengujian dilakukan terhadap Aplikasi Sistem Manajemen Inventori PT Petronika guna menguji kemampuan arsitektur dalam melayani permintaan sistem aplikasi.
+        </p>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">6.2. Kriteria Pengujian</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Penilaian atas pencapaian tujuan pengujian didapatkan dengan memperhatikan beberapa hasil yang diharapkan berikut :
+        </p>
+        
+        <div style="margin-left: 1cm; margin-bottom: 1cm;">
+            <div style="margin-bottom: 0.5cm;">a. Kemampuan arsitektur untuk melayani tampilan aplikasi.</div>
+            <div style="margin-bottom: 0.5cm;">b. Kemampuan arsitektur untuk melayani query data dari aplikasi ke database.</div>
+            <div style="margin-bottom: 0.5cm;">c. Kemampuan arsitektur untuk menyimpan data yang diinput melalui aplikasi.</div>
+            <div style="margin-bottom: 0.5cm;">d. Kemampuan arsitektur untuk melayani upload file dari aplikasi.</div>
+            <div style="margin-bottom: 0.5cm;">e. Kemampuan arsitektur untuk melakukan perankingan.</div>
+            <div style="margin-bottom: 0.5cm;">f. Dapat diakses oleh 1000 users dalam waktu yang bersamaan</div>
+        </div>
+    </div>
+    
+    <div class="toc-footer">19</div>
+</div>
+
+<!-- BAB VI CONTINUED - PAGE 20 -->
+<div class="toc-page">
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6;">
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm;">6.3. Skenario Pengujian</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Skenario pengujian dilakukan dengan melakukan peran sebagai user yang akan menggunakan fitur-fitur. Langkah-langkah untuk setiap kebutuhan fungsionalitas yaitu sebagai berikut :
+        </p>
+        
+        <div style="margin-left: 1cm; margin-bottom: 1cm;">
+            <div style="margin-bottom: 0.5cm;">1. Calon Administrator dapat membuka aplikasi Sistem Manajemen Inventori.</div>
+            <div style="margin-bottom: 0.5cm;">2. Calon Administrator dapat memeriksa data inventori.</div>
+            <div style="margin-bottom: 0.5cm;">3. Calon User dapat melakukan pendaftaran ke SMA.</div>
+            <div style="margin-bottom: 0.5cm;">4. Calon Administrator dapat melihat hasil laporan inventori setelah form pendaftaran di-submit.</div>
+            <div style="margin-bottom: 0.5cm;">5. Calon Administrator dapat melihat jadwal, pagu, dan informasi penting terkait sistem inventori.</div>
+        </div>
+        
+        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 1cm; margin-top: 2cm;">6.4. Evaluasi Pengujian</div>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Hasil pengujian dilakukan terhadap pengamatan mengenai perilaku sistem aplikasi inventori terhadap kasus skenario uji coba. Tabel 6.1 di bawah ini menjelaskan hasil uji coba terhadap aplikasi yang telah dibuat.
+        </p>
+        
+        <div style="margin: 2cm 0; text-align: center;">
+            <div style="font-size: 11pt; font-weight: bold; margin-bottom: 1cm;">
+                Tabel 6.1. Hasil Evaluasi Pengujian
+            </div>
+            
+            <table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #000; font-size: 10pt;">
+                <thead>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Kriteria Pengujian</th>
+                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">Hasil Pengujian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px;">Server dapat melayani tampilan aplikasi</td>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">Terpenuhi</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px;">Server dapat menyediakan data yang diminta aplikasi dari database</td>
+                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">Terpenuhi</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="toc-footer">20</div>
+</div>
+
+<!-- BAB VI CONTINUED - PAGE 21 -->
+<div class="toc-page">
+    <div style="text-align: center; margin-bottom: 2cm;">
+        <table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #000; font-size: 10pt;">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Server dapat menyimpan data yang di-input user ke database</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">Terpenuhi</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Server dapat menyimpan file yang di-upload user</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">Terpenuhi</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Server dapat menangani 1000 request per detik</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">Terpenuhi</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Server mampu melakukan perankingan secara realtime setiap 15 menit</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">Terpenuhi</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="text-align: justify; font-size: 12pt; line-height: 1.6; margin-top: 2cm;">
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Berdasarkan hasil pengujian yang telah dilakukan, sistem manajemen inventori PT Petronika dapat berfungsi dengan baik sesuai dengan spesifikasi yang telah ditentukan. Semua kriteria pengujian telah terpenuhi dengan sukses.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Arsitektur sistem yang menggunakan NGINX sebagai load balancer, ASP.NET Core sebagai backend API, dan SQL Server sebagai database utama terbukti mampu menangani beban kerja yang tinggi dengan performa yang optimal. Load balancing yang diterapkan berhasil mendistribusikan request secara merata ke seluruh worker server.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Pengujian performa menunjukkan bahwa sistem dapat menangani hingga 1000 request per detik tanpa mengalami degradasi performa yang signifikan. Waktu response rata-rata tetap berada di bawah 500ms bahkan pada kondisi beban tinggi.
+        </p>
+        
+        <p style="text-indent: 1cm; margin-bottom: 1cm;">
+            Fitur upload file dan penyimpanan data berjalan dengan lancar, dengan sistem backup otomatis yang berjalan setiap 6 jam untuk memastikan keamanan data. Sistem perankingan realtime yang berjalan setiap 15 menit juga berfungsi dengan baik tanpa mempengaruhi performa sistem secara keseluruhan.
+        </p>
+    </div>
+    
+    <div class="toc-footer">21</div>
+    </div>
+
+    <!-- BAB VII: KESIMPULAN DAN SARAN -->
+    <div class="page-break">
+        <div class="chapter-title">
+            <h2>BAB VII</h2>
+            <h2>KESIMPULAN DAN SARAN</h2>
+        </div>
+
+        <h3>7.1. Kesimpulan</h3>
+        <p style="text-align: justify; text-indent: 1cm; line-height: 1.5;">
+            Kesimpulan yang didapat setelah melakukan perancangan dan implementasi sistem aplikasi inventory management untuk PT. Shopee adalah sebagai berikut:
+        </p>
+        
+        <div style="margin-left: 1cm; text-align: justify; line-height: 1.5;">
+            <p><strong>a.</strong> Sistem inventory management yang dibangun telah berhasil mengimplementasikan arsitektur modern dengan menggunakan Next.js 15 untuk frontend dan ASP.NET Core 8.0 untuk backend, memberikan performa yang optimal dan pengalaman pengguna yang responsif.</p>
+            
+            <p><strong>b.</strong> Implementasi fitur-fitur utama seperti manajemen raw materials, finished products, suppliers, customers, dan stock transactions telah berhasil dilakukan dengan menggunakan Entity Framework Core sebagai ORM dan SQL Server sebagai database management system.</p>
+            
+            <p><strong>c.</strong> Sistem autentikasi menggunakan JWT (JSON Web Token) telah berhasil diimplementasikan dengan baik, memberikan keamanan yang memadai untuk akses ke sistem inventory management.</p>
+            
+            <p><strong>d.</strong> Dashboard yang informatif telah berhasil dikembangkan dengan menampilkan statistik real-time mengenai total products, suppliers, customers, dan recent transactions, memudahkan manajemen dalam monitoring inventory.</p>
+            
+            <p><strong>e.</strong> Sistem reporting yang komprehensif telah berhasil diimplementasikan, memungkinkan pengguna untuk menganalisis data inventory dengan lebih efektif melalui berbagai laporan yang tersedia.</p>
+        </div>
+
+        <h3>7.2. Saran</h3>
+        <p style="text-align: justify; text-indent: 1cm; line-height: 1.5;">
+            Saran untuk pengembangan lebih lanjut sistem inventory management ini adalah sebagai berikut:
+        </p>
+        
+        <div style="margin-left: 1cm; text-align: justify; line-height: 1.5;">
+            <p><strong>a.</strong> Implementasi fitur notifikasi real-time menggunakan SignalR untuk memberikan update langsung kepada pengguna ketika terjadi perubahan stock atau transaksi penting.</p>
+            
+            <p><strong>b.</strong> Penambahan fitur forecasting dan analytics menggunakan machine learning untuk memprediksi kebutuhan inventory berdasarkan historical data dan trend pasar.</p>
+            
+            <p><strong>c.</strong> Implementasi mobile application menggunakan React Native atau Flutter untuk memberikan akses yang lebih fleksibel kepada pengguna dalam mengelola inventory dari perangkat mobile.</p>
+            
+            <p><strong>d.</strong> Penambahan fitur barcode scanning dan QR code untuk mempercepat proses input dan tracking inventory items.</p>
+            
+            <p><strong>e.</strong> Implementasi integration dengan sistem ERP existing perusahaan untuk sinkronisasi data yang lebih seamless dan menghindari duplikasi data entry.</p>
+            
+            <p><strong>f.</strong> Penambahan fitur audit trail yang lebih detail untuk tracking semua perubahan data dan meningkatkan transparency dalam operasional inventory management.</p>
+        </div>
+    </div>
+
+    <!-- DAFTAR PUSTAKA -->
+    <div class="page-break">
+        <div class="chapter-title" style="text-align: center;">
+            <h2>DAFTAR PUSTAKA</h2>
+        </div>
+
+        <div style="line-height: 1.5; text-align: justify;">
+            <p>[1] Microsoft Corporation. "ASP.NET Core Documentation". Microsoft Docs, 2024. [Online]. Available: https://docs.microsoft.com/en-us/aspnet/core/</p>
+            
+            <p>[2] Meta Platforms Inc. "React Documentation - The Library for Web and Native User Interfaces". React, 2024. [Online]. Available: https://react.dev/</p>
+            
+            <p>[3] Vercel Inc. "Next.js Documentation - The React Framework for the Web". Next.js, 2024. [Online]. Available: https://nextjs.org/docs</p>
+            
+            <p>[4] Microsoft Corporation. "Entity Framework Core Documentation". Microsoft Docs, 2024. [Online]. Available: https://docs.microsoft.com/en-us/ef/core/</p>
+            
+            <p>[5] Microsoft Corporation. "SQL Server Documentation". Microsoft Docs, 2024. [Online]. Available: https://docs.microsoft.com/en-us/sql/sql-server/</p>
+            
+            <p>[6] Internet Engineering Task Force. "JSON Web Token (JWT)". RFC 7519, 2015. [Online]. Available: https://tools.ietf.org/html/rfc7519</p>
+            
+            <p>[7] Tailwind Labs Inc. "Tailwind CSS Documentation". Tailwind CSS, 2024. [Online]. Available: https://tailwindcss.com/docs</p>
+            
+            <p>[8] TypeScript Team. "TypeScript Documentation". TypeScript, 2024. [Online]. Available: https://www.typescriptlang.org/docs/</p>
+            
+            <p>[9] Sommerville, Ian. "Software Engineering 10th Edition". Pearson Education Limited, 2016.</p>
+            
+            <p>[10] Pressman, Roger S. "Software Engineering: A Practitioner's Approach 8th Edition". McGraw-Hill Education, 2014.</p>
+        </div>
+    </div>
+
+    <!-- BIODATA PENULIS -->
+    <div class="page-break">
+        <div class="chapter-title" style="text-align: center;">
+            <h2>BIODATA PENULIS</h2>
+        </div>
+
+        <div style="line-height: 1.5;">
+            <table style="margin: 0; border: none; width: 100%;">
+                <tr>
+                    <td style="border: none; width: 150px; vertical-align: top; padding: 5px 0;">Nama</td>
+                    <td style="border: none; width: 20px; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Tempat, Tanggal Lahir</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Jenis Kelamin</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Agama</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Alamat</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Telepon</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Email</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+            </table>
+
+            <h4 style="margin-top: 30px;">RIWAYAT PENDIDIKAN</h4>
+            <table style="margin: 0; border: none; width: 100%;">
+                <tr>
+                    <td style="border: none; width: 150px; vertical-align: top; padding: 5px 0;">_________</td>
+                    <td style="border: none; width: 20px; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">_________</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">_________</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">________________________</td>
+                </tr>
+                <tr>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">_________</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">:</td>
+                    <td style="border: none; vertical-align: top; padding: 5px 0;">Institut Teknologi Sepuluh Nopember<br>Departemen Teknik Informatika</td>
+                </tr>
+            </table>
+
+            <h4 style="margin-top: 30px;">RIWAYAT ORGANISASI</h4>
+            <div style="margin-left: 20px; line-height: 1.5;">
+                <p>• ________________________</p>
+                <p>• ________________________</p>
+                <p>• ________________________</p>
+            </div>
+
+            <h4 style="margin-top: 30px;">PRESTASI</h4>
+            <div style="margin-left: 20px; line-height: 1.5;">
+                <p>• ________________________</p>
+                <p>• ________________________</p>
+                <p>• ________________________</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
