@@ -65,33 +65,7 @@ export default function LaporanPrakerinV2() {
     }
   };
 
-  const initializeBrowser = async () => {
-    setIsPdfExporting(true);
-    try {
-      const result = await puppeteerExportService.initializeBrowser();
-      console.log('Browser initialized:', result);
-      alert('✅ Browser berhasil diinisialisasi!\n🌐 Chromium browser siap digunakan\n📄 Sekarang bisa export PDF dengan akurasi tinggi');
-    } catch (error) {
-      console.error('Failed to initialize browser:', error);
-      alert('❌ Gagal inisialisasi browser: ' + (error as Error).message + '\n\n💡 Pastikan:\n- Koneksi internet tersedia\n- Disk space cukup (~100MB)\n- .NET server running');
-    } finally {
-      setIsPdfExporting(false);
-    }
-  };
 
-  const testExport = async () => {
-    setIsPdfExporting(true);
-    try {
-      const testBlob = await puppeteerExportService.testExport();
-      saveAs(testBlob, `PDF_Test_${new Date().toISOString().slice(0,10)}.pdf`);
-      alert('✅ Test PDF berhasil!\n📄 Test PDF downloaded\n🎯 Service berfungsi dengan baik');
-    } catch (error) {
-      console.error('PDF test failed:', error);
-      alert('❌ Test PDF gagal: ' + (error as Error).message);
-    } finally {
-      setIsPdfExporting(false);
-    }
-  };
 
   const printReport = () => {
     const iframe = document.querySelector('iframe');

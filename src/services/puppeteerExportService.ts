@@ -1,6 +1,45 @@
 // PuppeteerSharp Export Service untuk integrasi dengan .NET API
 // File: services/puppeteerExportService.ts
 
+// Type definitions
+interface ExportOptions {
+  marginTop?: number;
+  marginRight?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  includeBackground?: boolean;
+  format?: string;
+  width?: number;
+  height?: number;
+}
+
+interface BrowserStatus {
+  isInitialized: boolean;
+  browserVersion?: string;
+  status: string;
+  message?: string;
+}
+
+interface ServiceInfo {
+  serviceName: string;
+  version: string;
+  status: string;
+  browserStatus: BrowserStatus;
+}
+
+interface HealthCheckResult {
+  isHealthy: boolean;
+  status: string;
+  message: string;
+  timestamp: string;
+}
+
+interface BrowserInitResult {
+  success: boolean;
+  message: string;
+  browserVersion?: string;
+}
+
 export class PuppeteerExportService {
   private readonly baseUrl: string;
 
@@ -12,7 +51,7 @@ export class PuppeteerExportService {
    * Export ke PDF menggunakan PuppeteerSharp (95-99% akurasi)
    * Menggunakan Chromium browser untuk hasil identik dengan web
    */
-  async exportToPdf(htmlContent: string, options?: any): Promise<Blob> {
+  async exportToPdf(htmlContent: string, options?: ExportOptions): Promise<Blob> {
     try {
       const response = await fetch(`${this.baseUrl}/api/puppeteer/export-pdf`, {
         method: 'POST',
@@ -41,7 +80,7 @@ export class PuppeteerExportService {
   /**
    * Initialize PuppeteerSharp browser (download Chromium if needed)
    */
-  async initializeBrowser(): Promise<any> {
+  async initializeBrowser(): Promise<BrowserInitResult> {
     try {
       const response = await fetch(`${this.baseUrl}/api/puppeteer/initialize`, {
         method: 'POST',
@@ -65,7 +104,7 @@ export class PuppeteerExportService {
   /**
    * Get PuppeteerSharp browser status
    */
-  async getBrowserStatus(): Promise<any> {
+  async getBrowserStatus(): Promise<BrowserStatus> {
     try {
       const response = await fetch(`${this.baseUrl}/api/puppeteer/status`);
 
@@ -103,7 +142,7 @@ export class PuppeteerExportService {
   /**
    * Get PuppeteerSharp service info dan capabilities
    */
-  async getServiceInfo(): Promise<any> {
+  async getServiceInfo(): Promise<ServiceInfo> {
     try {
       const response = await fetch(`${this.baseUrl}/api/puppeteer/info`);
 
@@ -122,7 +161,7 @@ export class PuppeteerExportService {
   /**
    * Health check untuk PuppeteerSharp service
    */
-  async healthCheck(): Promise<any> {
+  async healthCheck(): Promise<HealthCheckResult> {
     try {
       const response = await fetch(`${this.baseUrl}/api/puppeteer/health`);
       

@@ -1,6 +1,22 @@
 // Backend Export Service untuk integrasi dengan .NET API
 // File: services/backendExportService.ts
 
+interface ExportOptions {
+  marginTop?: number;
+  marginRight?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  includeBackground?: boolean;
+  format?: string;
+}
+
+interface ExportInfo {
+  status: string;
+  message: string;
+  timestamp: string;
+  availableFormats: string[];
+}
+
 export class BackendExportService {
   private readonly baseUrl: string;
 
@@ -11,7 +27,7 @@ export class BackendExportService {
   /**
    * Export ke PDF menggunakan iTextSharp (70-85% akurasi)
    */
-  async exportToPdf(htmlContent: string, options?: any): Promise<Blob> {
+  async exportToPdf(htmlContent: string, options?: ExportOptions): Promise<Blob> {
     try {
       const response = await fetch(`${this.baseUrl}/api/report/export-pdf`, {
         method: 'POST',
@@ -42,44 +58,12 @@ export class BackendExportService {
     }
   }
 
-  /**
-   * Export ke Word menggunakan backend (95-99% akurasi)
-   */
-  async exportToWord(htmlContent: string, options?: any): Promise<Blob> {
-    try {
-      const response = await fetch(`${this.baseUrl}/api/report/export-word`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          htmlContent,
-          options: options || {
-            marginTop: 3.0,
-            marginRight: 2.5,
-            marginBottom: 2.5,
-            marginLeft: 3.0,
-            includeBackground: true,
-            format: 'A4'
-          }
-        })
-      });
 
-      if (!response.ok) {
-        throw new Error(`Backend export failed: ${response.statusText}`);
-      }
-
-      return await response.blob();
-    } catch (error) {
-      console.error('Backend Word export error:', error);
-      throw error;
-    }
-  }
 
   /**
    * Get export info dari backend
    */
-  async getExportInfo(): Promise<any> {
+  async getExportInfo(): Promise<ExportInfo> {
     try {
       const response = await fetch(`${this.baseUrl}/api/report/export-info`);
       if (!response.ok) {

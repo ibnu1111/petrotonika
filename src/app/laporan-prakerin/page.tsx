@@ -8,7 +8,6 @@ import { puppeteerExportService } from '@/services/puppeteerExportService';
 
 export default function LaporanPrakerinPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [puppeteerStatus, setPuppeteerStatus] = useState<string>('Unknown');
   const backendService = new BackendExportService();
   const handleViewReport = () => {
     window.open('/laporan-prakerin.html', '_blank');
@@ -78,7 +77,6 @@ export default function LaporanPrakerinPage() {
     setIsLoading(true);
     try {
       const result = await puppeteerExportService.initializeBrowser();
-      setPuppeteerStatus('Initialized');
       alert('PuppeteerSharp browser initialized successfully!');
       console.log('Browser initialized:', result);
     } catch (error) {
