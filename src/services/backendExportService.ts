@@ -20,7 +20,7 @@ interface ExportInfo {
 export class BackendExportService {
   private readonly baseUrl: string;
 
-  constructor(baseUrl: string = 'https://localhost:44385') {
+  constructor(baseUrl: string = 'https://simamen.belakanglayar.com/api') {
     this.baseUrl = baseUrl;
   }
 
