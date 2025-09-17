@@ -1,3 +1,12 @@
+interface ExportInfo {
+  formats: string[];
+  defaultOptions: ExportOptions;
+  features: string[];
+  endpoints: {
+    [key: string]: string;
+  };
+}
+
 interface ExportOptions {
   marginTop?: number;
   marginRight?: number;
@@ -142,7 +151,7 @@ class AdobeWordExportService {
         };
       }
 
-      const data = await response.json();
+      // Response is successful, no need to process data for health check
       return {
         status: 'healthy',
         adobeAvailable: true,
@@ -160,7 +169,7 @@ class AdobeWordExportService {
   /**
    * Get export info and available formats
    */
-  async getExportInfo(): Promise<any> {
+  async getExportInfo(): Promise<ExportInfo> {
     try {
       const response = await fetch(`${this.baseUrl}/report/export-info`, {
         method: 'GET',
@@ -183,4 +192,6 @@ export const adobeWordExportService = new AdobeWordExportService();
 
 // Export the class for potential custom instances
 export { AdobeWordExportService };
-export type { ExportOptions, ExportResponse };
+
+// Export types
+export type { ExportOptions, ExportResponse, ExportInfo };
