@@ -25,7 +25,7 @@ interface ExportResponse {
 }
 
 class AdobeWordExportService {
-  private baseUrl = 'https://localhost:44385/api'; // Updated to match backend port
+  private baseUrl = 'https://simamen.belakanglayar.com/api'; // Updated to match backend port
 
   /**
    * Export HTML to premium DOCX using Adobe PDF Services
