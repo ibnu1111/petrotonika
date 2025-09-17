@@ -45,7 +45,7 @@ export class PuppeteerExportService {
 
   constructor(baseUrl: string = 'https://simamen.belakanglayar.com') {
     this.baseUrl = baseUrl;
-  }
+  } 
 
   /**
    * Export ke PDF menggunakan PuppeteerSharp (95-99% akurasi)
