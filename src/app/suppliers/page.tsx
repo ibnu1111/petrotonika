@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { Layout } from '@/components/Layout';
 import { Button, Card, Input } from '@/components/ui';
 import { suppliersApi } from '@/services/api';
@@ -9,6 +10,7 @@ import { Supplier } from '@/types/inventory';
 export default function SuppliersPage() {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingItem, setEditingItem] = useState<Supplier | null>(null);
   const [formData, setFormData] = useState({
@@ -43,11 +45,10 @@ export default function SuppliersPage() {
             } as Supplier;
           });
           setSuppliers(processedSuppliers);
-          console.log('Successfully loaded suppliers from backend');
           return;
         }
       } catch (apiError) {
-        console.warn('Backend API not available, using mock data:', apiError);
+        // Fallback to mock data if backend is not available
       }
       
       // Fallback to mock data for PT Petronika suppliers
@@ -112,19 +113,82 @@ export default function SuppliersPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent double submission
+    if (submitting) {
+      return;
+    }
+    
+    // Add form validation
+    if (!formData.name || !formData.code || !formData.contact) {
+      toast.error('Please fill in all required fields', {
+        duration: 3000,
+        position: 'top-right',
+      });
+      return;
+    }
+    
+    setSubmitting(true);
+    
     try {
       if (editingItem) {
-        console.log('Update supplier:', formData);
+        // Update existing supplier
+        const response = await suppliersApi.update(editingItem.id, formData);
+        if (response.data.success) {
+          toast.success('Supplier updated successfully!', {
+            duration: 3000,
+            position: 'top-right',
+          });
+        } else {
+          throw new Error(response.data.message || 'Failed to update supplier');
+        }
       } else {
-        console.log('Create supplier:', formData);
+        // Create new supplier
+        const response = await suppliersApi.create(formData);
+        if (response.data.success) {
+          toast.success('Supplier created successfully!', {
+            duration: 3000,
+            position: 'top-right',
+          });
+        } else {
+          throw new Error(response.data.message || 'Failed to create supplier');
+        }
       }
       
       setShowAddForm(false);
       setEditingItem(null);
       resetForm();
-      loadData();
+      loadData(); // Reload data to show changes
     } catch (error) {
       console.error('Failed to save supplier:', error);
+      
+      // Handle different error types
+      if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as any;
+        if (axiosError.response?.data?.message) {
+          toast.error(axiosError.response.data.message, {
+            duration: 4000,
+            position: 'top-right',
+          });
+        } else if (axiosError.response?.status) {
+          toast.error(`HTTP Error ${axiosError.response.status}: ${axiosError.response.statusText || 'Request failed'}`, {
+            duration: 4000,
+            position: 'top-right',
+          });
+        } else {
+          toast.error(error instanceof Error ? error.message : 'An unexpected error occurred', {
+            duration: 4000,
+            position: 'top-right',
+          });
+        }
+      } else {
+        toast.error(error instanceof Error ? error.message : 'An unexpected error occurred', {
+          duration: 4000,
+          position: 'top-right',
+        });
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -154,6 +218,91 @@ export default function SuppliersPage() {
     setShowAddForm(true);
   };
 
+  const handleDelete = async (id: number, name: string) => {
+    // Create a custom confirmation toast
+    toast((t) => (
+      <div className="flex flex-col space-y-3">
+        <div className="flex items-center space-x-2">
+          <div className="flex-shrink-0">
+            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.88-.833-2.65 0L3.732 19c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-900">Delete Supplier</p>
+            <p className="text-sm text-gray-500">Are you sure you want to delete "{name}"?</p>
+          </div>
+        </div>
+        <div className="flex space-x-2">
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              try {
+                const response = await suppliersApi.delete(id);
+                if (response.data.success) {
+                  toast.success('Supplier deleted successfully!', {
+                    duration: 3000,
+                    position: 'top-right',
+                  });
+                  loadData();
+                } else {
+                  throw new Error(response.data.message || 'Failed to delete supplier');
+                }
+              } catch (error) {
+                console.error('Failed to delete supplier:', error);
+                
+                if (error && typeof error === 'object' && 'response' in error) {
+                  const axiosError = error as any;
+                  if (axiosError.response?.data?.message) {
+                    toast.error(axiosError.response.data.message, {
+                      duration: 4000,
+                      position: 'top-right',
+                    });
+                  } else if (axiosError.response?.status) {
+                    toast.error(`HTTP Error ${axiosError.response.status}: ${axiosError.response.statusText || 'Request failed'}`, {
+                      duration: 4000,
+                      position: 'top-right',
+                    });
+                  } else {
+                    toast.error(error instanceof Error ? error.message : 'An unexpected error occurred', {
+                      duration: 4000,
+                      position: 'top-right',
+                    });
+                  }
+                } else {
+                  toast.error(error instanceof Error ? error.message : 'An unexpected error occurred', {
+                    duration: 4000,
+                    position: 'top-right',
+                  });
+                }
+              }
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition-colors"
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: Infinity,
+      position: 'top-center',
+      style: {
+        background: '#fff',
+        color: '#000',
+        border: '1px solid #e5e7eb',
+        borderRadius: '8px',
+        padding: '16px',
+        minWidth: '320px',
+      },
+    });
+  };
+
   const toggleStatus = async (supplier: Supplier) => {
     try {
       console.log('Toggle status for supplier:', supplier.id);
@@ -176,22 +325,60 @@ export default function SuppliersPage() {
 
   return (
     <Layout>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          // Default options for all toasts
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+            borderRadius: '8px',
+            fontSize: '14px',
+            padding: '12px 16px',
+          },
+          // Success toast styling
+          success: {
+            style: {
+              background: '#10B981',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#10B981',
+            },
+          },
+          // Error toast styling
+          error: {
+            style: {
+              background: '#EF4444',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#EF4444',
+            },
+          },
+        }}
+      />
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Suppliers</h1>
             <p className="text-gray-600">Manage chemical suppliers and vendors</p>
           </div>
-          <Button
-            onClick={() => {
-              setShowAddForm(true);
-              setEditingItem(null);
-              resetForm();
-            }}
-          >
-            Add Supplier
-          </Button>
+          <div className="flex-shrink-0">
+            <Button
+              onClick={() => {
+                setShowAddForm(true);
+                setEditingItem(null);
+                resetForm();
+              }}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+            >
+              <span className="text-lg">🏭</span>
+              <span>Add Supplier</span>
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
@@ -273,12 +460,13 @@ export default function SuppliersPage() {
                 placeholder="Complete address including city and postal code"
               />
               <div className="flex space-x-4">
-                <Button type="submit">
-                  {editingItem ? 'Update' : 'Create'}
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? 'Processing...' : (editingItem ? 'Update' : 'Create')}
                 </Button>
                 <Button
                   type="button"
                   variant="ghost"
+                  disabled={submitting}
                   onClick={() => {
                     setShowAddForm(false);
                     setEditingItem(null);
@@ -373,7 +561,7 @@ export default function SuppliersPage() {
                         View
                       </button>
                       <button
-                        onClick={() => console.log('Delete:', supplier.id)}
+                        onClick={() => handleDelete(supplier.id, supplier.name)}
                         className="text-red-600 hover:text-red-900"
                       >
                         Delete
@@ -436,7 +624,7 @@ export default function SuppliersPage() {
                     View
                   </button>
                   <button
-                    onClick={() => console.log('Delete:', supplier.id)}
+                    onClick={() => handleDelete(supplier.id, supplier.name)}
                     className="text-red-600 hover:text-red-900 text-sm font-medium"
                   >
                     Delete

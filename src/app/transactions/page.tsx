@@ -215,57 +215,222 @@ export default function TransactionsPage() {
     <Layout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Stock Transactions</h1>
             <p className="text-gray-600">Track all inventory movements and transactions</p>
           </div>
-          <Button
-            onClick={() => {
-              setShowAddForm(true);
-              resetForm();
-            }}
-          >
-            Add Transaction
-          </Button>
+          <div className="flex-shrink-0">
+            <Button
+              onClick={() => {
+                setShowAddForm(true);
+                resetForm();
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+            >
+              <span className="text-lg">📝</span>
+              <span>Add Transaction</span>
+            </Button>
+          </div>
         </div>
 
-        {/* Filters */}
-        <Card title="Filters">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select
-              label="Transaction Type"
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              options={[
-                { value: '', label: 'All Types' },
-                { value: 'IN', label: 'Stock In' },
-                { value: 'OUT', label: 'Stock Out' }
-              ]}
-            />
-            <Select
-              label="Item Type"
-              value={filterItemType}
-              onChange={(e) => setFilterItemType(e.target.value)}
-              options={[
-                { value: '', label: 'All Items' },
-                { value: 'RAW_MATERIAL', label: 'Raw Materials' },
-                { value: 'FINISHED_PRODUCT', label: 'Finished Products' }
-              ]}
-            />
-            <div className="flex items-end">
-              <Button
-                variant="ghost"
+        {/* Enhanced Filters */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-lg">🔍</span>
+                <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
+              </div>
+              <button
                 onClick={() => {
                   setFilterType('');
                   setFilterItemType('');
                 }}
+                className="flex items-center space-x-1 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
               >
-                Clear Filters
-              </Button>
+                <span className="text-base">🗑️</span>
+                <span>Clear</span>
+              </button>
             </div>
           </div>
-        </Card>
+
+          <div className="p-6">
+            {/* Transaction Type Filter - Visual Cards */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-3">Transaction Type</label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* All Types */}
+                <button
+                  onClick={() => setFilterType('')}
+                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    filterType === ''
+                      ? 'border-blue-500 bg-blue-50 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-2xl">📊</span>
+                    <div className="text-left">
+                      <div className={`font-medium ${filterType === '' ? 'text-blue-900' : 'text-gray-900'}`}>
+                        All Types
+                      </div>
+                      <div className={`text-sm ${filterType === '' ? 'text-blue-600' : 'text-gray-500'}`}>
+                        Show everything
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Stock In */}
+                <button
+                  onClick={() => setFilterType('IN')}
+                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    filterType === 'IN'
+                      ? 'border-green-500 bg-green-50 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-2xl">📥</span>
+                    <div className="text-left">
+                      <div className={`font-medium ${filterType === 'IN' ? 'text-green-900' : 'text-gray-900'}`}>
+                        Stock In
+                      </div>
+                      <div className={`text-sm ${filterType === 'IN' ? 'text-green-600' : 'text-gray-500'}`}>
+                        Incoming stock
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Stock Out */}
+                <button
+                  onClick={() => setFilterType('OUT')}
+                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    filterType === 'OUT'
+                      ? 'border-red-500 bg-red-50 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-2xl">📤</span>
+                    <div className="text-left">
+                      <div className={`font-medium ${filterType === 'OUT' ? 'text-red-900' : 'text-gray-900'}`}>
+                        Stock Out
+                      </div>
+                      <div className={`text-sm ${filterType === 'OUT' ? 'text-red-600' : 'text-gray-500'}`}>
+                        Outgoing stock
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Item Type Filter - Visual Cards */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">Item Category</label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* All Items */}
+                <button
+                  onClick={() => setFilterItemType('')}
+                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    filterItemType === ''
+                      ? 'border-purple-500 bg-purple-50 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-2xl">🏷️</span>
+                    <div className="text-left">
+                      <div className={`font-medium ${filterItemType === '' ? 'text-purple-900' : 'text-gray-900'}`}>
+                        All Categories
+                      </div>
+                      <div className={`text-sm ${filterItemType === '' ? 'text-purple-600' : 'text-gray-500'}`}>
+                        Everything
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Raw Materials */}
+                <button
+                  onClick={() => setFilterItemType('RAW_MATERIAL')}
+                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    filterItemType === 'RAW_MATERIAL'
+                      ? 'border-orange-500 bg-orange-50 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-2xl">🧪</span>
+                    <div className="text-left">
+                      <div className={`font-medium ${filterItemType === 'RAW_MATERIAL' ? 'text-orange-900' : 'text-gray-900'}`}>
+                        Raw Materials
+                      </div>
+                      <div className={`text-sm ${filterItemType === 'RAW_MATERIAL' ? 'text-orange-600' : 'text-gray-500'}`}>
+                        Chemical inputs
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Finished Products */}
+                <button
+                  onClick={() => setFilterItemType('FINISHED_PRODUCT')}
+                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    filterItemType === 'FINISHED_PRODUCT'
+                      ? 'border-indigo-500 bg-indigo-50 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-2xl">🛢️</span>
+                    <div className="text-left">
+                      <div className={`font-medium ${filterItemType === 'FINISHED_PRODUCT' ? 'text-indigo-900' : 'text-gray-900'}`}>
+                        Finished Products
+                      </div>
+                      <div className={`text-sm ${filterItemType === 'FINISHED_PRODUCT' ? 'text-indigo-600' : 'text-gray-500'}`}>
+                        Ready to sell
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Active Filters Display */}
+            {(filterType || filterItemType) && (
+              <div className="mt-6 pt-4 border-t border-gray-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-700">Active filters:</span>
+                    <div className="flex space-x-2">
+                      {filterType && (
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          filterType === 'IN' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {filterType === 'IN' ? '📥 Stock In' : '📤 Stock Out'}
+                        </span>
+                      )}
+                      {filterItemType && (
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          filterItemType === 'RAW_MATERIAL' ? 'bg-orange-100 text-orange-800' : 'bg-indigo-100 text-indigo-800'
+                        }`}>
+                          {filterItemType === 'RAW_MATERIAL' ? '🧪 Raw Materials' : '🛢️ Finished Products'}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <span className="text-sm text-gray-500">
+                    {transactions.length} result{transactions.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

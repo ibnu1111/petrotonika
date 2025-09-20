@@ -244,21 +244,24 @@ export default function RawMaterialsPage() {
     <Layout>
       <div className="space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
-          <div className="text-center sm:text-left">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Raw Materials</h1>
-            <p className="text-gray-600 text-sm sm:text-base">Manage chemical raw materials inventory</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Raw Materials</h1>
+            <p className="text-gray-600">Manage chemical raw materials inventory</p>
           </div>
-          <Button
-            onClick={() => {
-              setShowAddForm(true);
-              setEditingItem(null);
-              resetForm();
-            }}
-            className="w-full sm:w-auto"
-          >
-            Add Raw Material
-          </Button>
+          <div className="flex-shrink-0">
+            <Button
+              onClick={() => {
+                setShowAddForm(true);
+                setEditingItem(null);
+                resetForm();
+              }}
+              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+            >
+              <span className="text-lg">🧪</span>
+              <span>Add Raw Material</span>
+            </Button>
+          </div>
         </div>
 
         {/* Add/Edit Form */}
