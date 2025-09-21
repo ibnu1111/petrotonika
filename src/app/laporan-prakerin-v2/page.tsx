@@ -168,26 +168,11 @@ export default function LaporanPrakerinV2() {
                 <h1 className="text-2xl font-bold text-gray-900 mb-2">
                   Laporan Kerja Praktik - Versi 2
                 </h1>
-                <p className="text-gray-600 mb-2">
-                  Format akademik resmi sesuai standar Institut Teknologi
-                </p>
                 
-                {/* Export Info */}
-                <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mt-2 text-sm">
-                  <h3 className="font-semibold text-blue-800 mb-1">📄 Export Methods Available:</h3>
-                  <ul className="text-blue-700 space-y-1">
-                    <li><strong>🌐 Export PDF:</strong> Chromium-based rendering (95-99% akurasi)</li>
-                    <li><strong>� Export Word Premium:</strong> Adobe PDF Services (99% akurasi, full DOCX)</li>
-                    <li><strong>📝 Export Word Standard:</strong> HTML-compatible fallback (90-95% akurasi)</li>
-                    <li className="text-xs text-blue-600">💡 Premium Word export menggunakan Adobe conversion technology</li>
-                    <li className="text-xs text-green-600">🔧 Backend diupgrade: HTML → Puppeteer PDF → Adobe DOCX untuk akurasi maksimal</li>
-                  </ul>
-                </div>
               </div>
               
               {/* Export Buttons */}
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-700 mb-2">📄 Export Methods:</h4>
                 <div className="flex gap-2 flex-wrap">
                   {/* Export PDF */}
                   <button
@@ -242,60 +227,6 @@ export default function LaporanPrakerinV2() {
                       </>
                     )}
                   </button>
-                  
-                  {/* Initialize Browser */}
-                  {/* <button
-                    onClick={initializeBrowser}
-                    disabled={isPdfExporting}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isPdfExporting 
-                        ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-orange-600 hover:bg-orange-700'
-                    } text-white flex items-center gap-2`}
-                    title="Initialize Chromium browser (One time setup)"
-                  >
-                    {isPdfExporting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Initializing...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        Init Browser
-                      </>
-                    )}
-                  </button> */}
-                  
-                  {/* Test Export */}
-                  {/* <button
-                    onClick={testExport}
-                    disabled={isPdfExporting}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isPdfExporting 
-                        ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-green-600 hover:bg-green-700'
-                    } text-white flex items-center gap-2`}
-                    title="Test PDF export dengan sample content"
-                  >
-                    {isPdfExporting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Testing...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Test PDF
-                      </>
-                    )}
-                  </button> */}
 
                   {/* Print */}
                   <button
