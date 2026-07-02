@@ -1,12 +1,14 @@
 # syntax=docker/dockerfile:1
 
-# Stage 1: Dependencies - build for target platform
+# Stage 1: Dependencies - build for target platform (Linux)
 FROM node:20-alpine AS deps
-RUN apk add --no-cache libc6-compat openssl libssl3
+RUN apk add --no-cache libc6-compat openssl3 libssl3
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-RUN npm ci
+# Force reinstall with Linux platform
+RUN npm install --platform=linux --ignore-scripts && \
+    rm -rf node_modules/.cache
 
 # Stage 2: Build
 FROM node:20-alpine AS builder
