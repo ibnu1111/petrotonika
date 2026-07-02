@@ -2,6 +2,9 @@
   "name": "inventory-react",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "tsx server.ts",
     "dev:next": "next dev --turbopack",

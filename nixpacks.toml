@@ -1,0 +1,5 @@
+[phases.setup]
+nixpkgs = ["unstable"]
+
+[phases.setup.env]
+NODE_VERSION = "20"
