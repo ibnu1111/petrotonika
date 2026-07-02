@@ -43,7 +43,7 @@ interface BrowserInitResult {
 export class PuppeteerExportService {
   private readonly baseUrl: string;
 
-  constructor(baseUrl: string = 'https://simamen.belakanglayar.com') {
+  constructor(baseUrl: string = '/api') {
     this.baseUrl = baseUrl;
   } 
 

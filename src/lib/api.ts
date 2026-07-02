@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { sessionManager } from './sessionManager';
 
-// Create axios instance
+// Create axios instance - use relative URL for same-origin deployment
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://simamen.belakanglayar.com/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
   timeout: 30000, // 30 second timeout
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-console.log('API Base URL:', process.env.NEXT_PUBLIC_API_URL || 'https://simamen.belakanglayar.com/api');
+console.log('API Base URL:', process.env.NEXT_PUBLIC_API_URL || '/api');
 
 // Request interceptor for auth
 api.interceptors.request.use(
