@@ -36,6 +36,9 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=deps /app/node_modules ./node_modules
 
+# Generate Prisma client for the runner environment BEFORE switching to nextjs user
+RUN npx prisma generate
+
 USER nextjs
 
 EXPOSE 3000
@@ -43,4 +46,4 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["sh", "-c", "npx prisma generate && npx tsx server.ts"]
+CMD ["npx", "tsx", "server.ts"]
