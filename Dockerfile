@@ -5,11 +5,11 @@ FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+COPY package.json ./
 RUN npm install
 
 # Stage 2: Build
-FROM node:20-alpine AS builder
+FROM deps AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -19,7 +19,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Stage 3: Production
-FROM node:20-alpine AS runner
+FROM deps AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -27,11 +27,11 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
+COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/server.ts ./server.ts
+COPY --from=builder /app/src ./src
 COPY --from=deps /app/node_modules ./node_modules
 
 USER nextjs
