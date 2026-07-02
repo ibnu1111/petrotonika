@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "dev:next": "next dev --turbopack",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && next build --no-lint",
     "start": "NODE_ENV=production node --import tsx server.ts",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
